@@ -21,10 +21,14 @@ namespace AUTOMATIC_STREAMING_WORLD
         
         
         
-        [ContextMenu("Sort To Chunks")]
-        private void SortToChunks()
+        [ContextMenu("Sort To Chunks Small Objects")]
+        private void SortToChunksSmallObjects() => SortToChunksByTags(m_aws_Settings.UnityTagsSmallObjects, "Small Objects");
+        
+        private void SortToChunksByTags(string[] tagsFilters, string chunkPrefixName = "")
         {
             var chunks = new Dictionary<Vector3Int, List<Transform>>();
+
+            m_objectsToSort = GetObjectsToSortByTags(tagsFilters);
 
             foreach (var obj in m_objectsToSort)
             {
@@ -38,13 +42,75 @@ namespace AUTOMATIC_STREAMING_WORLD
                 chunks[chunkCoord].Add(obj);
             }
             
-            OrganizeObjectsInChunks(chunks);
+            OrganizeObjectsInChunks(chunks, chunkPrefixName);
 
             MarkCurrentSceneDirty();
         }
+
         
         
+        private List<Transform> GetObjectsToSortByTags(string[] tagsFilters)
+        {
+            List<Transform> objectsToSort = new List<Transform>();
+            Transform[] allObjectsToSort = FindObjectsByType<Transform>(FindObjectsSortMode.None);
+            
+            if (m_aws_Settings.UseStreamingBySizeObjects)
+            {
+                foreach (var obj in allObjectsToSort)
+                {
+                    if (
+                        ContainOneTag(obj, tagsFilters) 
+                        && !HasParentWithTag(obj, tagsFilters)
+                        ) 
+                        objectsToSort.Add(obj);
+                }
+            }
+            
+            return objectsToSort;
+            
+            
+
+            bool HasParentWithTag(Transform obj, string[] tags)
+            {
+                List<Transform> allParents = new List<Transform>();
+
+
+                AddAllParents(obj);
+                
+                foreach (var parent in allParents)
+                {
+                    if (ContainOneTag(parent, tags))
+                        return true;
+                }
+                return false;
+                
+                
+                void AddAllParents(Transform obj)
+                {
+                    if (obj.parent != null)
+                    {
+                        allParents.Add(obj.parent);
+                        AddAllParents(obj.parent);
+                    }
+                }
+            }
+
+            
+            
+            bool ContainOneTag(Transform obj, string[] tags)
+            {
+                foreach (var tag in tags)
+                {
+                    if (obj.CompareTag(tag))
+                        return true;
+                }
+                
+                return false;
+            }
+        }
+
         
+
         private Vector3Int CalculateChunkCoordinate(Vector3 worldPosition)
         {
             return new Vector3Int(
@@ -56,7 +122,7 @@ namespace AUTOMATIC_STREAMING_WORLD
 
         
         
-        private void OrganizeObjectsInChunks(Dictionary<Vector3Int, List<Transform>> chunks)
+        private void OrganizeObjectsInChunks(Dictionary<Vector3Int, List<Transform>> chunks, string chunkPrefixName = "")
         {
             foreach (var chunk in chunks)
             {
@@ -66,7 +132,7 @@ namespace AUTOMATIC_STREAMING_WORLD
                     chunk.Key.z * m_chunkSize.z + m_chunkSize.z / 2
                 );
 
-                GameObject chunkParent = new GameObject($"Chunk_{chunk.Key}")
+                GameObject chunkParent = new GameObject($"{chunkPrefixName}_Chunk_{chunk.Key}")
                 {
                     transform = { position = chunkCenter }
                 };

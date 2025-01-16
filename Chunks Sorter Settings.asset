@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Chunks Sorter Settings
   m_EditorClassIdentifier: 
   <ChunkSize>k__BackingField: {x: 59.2, y: 28.6, z: 32.7}
-  <UseStreamingBySizeObjects>k__BackingField: 0
+  <UseStreamingBySizeObjects>k__BackingField: 1
   LoopTimeCheckDistance: 5
   LoopTimeAutomaticSortEditor: 5
-  UnityTagsSmallObjects: []
+  UnityTagsSmallObjects:
+  - Wheel
   LayersSmallObjects:
     serializedVersion: 2
     m_Bits: 0
