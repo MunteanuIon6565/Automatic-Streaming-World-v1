@@ -1,14 +1,16 @@
 #if UNITY_EDITOR
 
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-namespace ThisProject.__Project.Scripts.Optimization
+namespace AutomaticChunkSystem
 {
     /// <summary>
     /// This script organizes a list of objects into spatial chunks based on their global positions. 
     /// Useful for scene optimization by grouping objects within specified chunk boundaries.
     /// </summary>
+    //[CreateAssetMenu(fileName = "ChunkSorterSettings", menuName = "STREAMING WORLD SYSTEM/Chunk Sorter Settings", order = 1)]
     public class ChunkSorter : MonoBehaviour
     {
         [Header("Transforms to Sort")]
@@ -19,15 +21,16 @@ namespace ThisProject.__Project.Scripts.Optimization
         [SerializeField] private Vector3 chunkSize = new Vector3(10, 10, 10);
         [SerializeField] private Vector3 maxChunkCoordinates = new Vector3(100, 100, 100);
 
-        /// <summary>
-        /// Adds all child transforms under this GameObject to the objectsToSort list.
-        /// </summary>
-        [ContextMenu("Add All Child Transforms")]
-        private void AddAllChildTransforms()
-        {
-            objectsToSort.Clear();
-            PopulateChildrenTransforms(transform);
-        }
+        
+        /*/// <summary>
+         /// Adds all child transforms under this GameObject to the objectsToSort list.
+         /// </summary>
+         [ContextMenu("Add All Child Transforms")]
+         private void AddAllChildTransforms()
+         {
+             objectsToSort.Clear();
+             PopulateChildrenTransforms(transform);
+         }*/
 
         /// <summary>
         /// Recursively populates all child transforms under a given parent transform.
@@ -53,6 +56,8 @@ namespace ThisProject.__Project.Scripts.Optimization
         private void SortToChunks()
         {
             var chunks = new Dictionary<Vector3Int, List<Transform>>();
+            
+            objectsToSort.AddRange(FindObjectsOfType<Transform>());
 
             foreach (var obj in objectsToSort)
             {
