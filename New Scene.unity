@@ -3022,9 +3022,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2163e771e71e2bb44995fa0c1a79e1a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectsToSort: []
-  chunkSize: {x: 10, y: 10, z: 10}
-  maxChunkCoordinates: {x: 100, y: 100, z: 100}
+  objectsToSort:
+  - {fileID: 2102094090}
+  - {fileID: 1395310346}
+  - {fileID: 788682539}
+  - {fileID: 1787466860}
+  - {fileID: 1418957426}
+  - {fileID: 142324311}
+  - {fileID: 424729747}
+  - {fileID: 664143625}
+  - {fileID: 312003214}
+  - {fileID: 875560147}
+  - {fileID: 646407641}
+  - {fileID: 223636220}
+  - {fileID: 1351771697}
+  - {fileID: 1789510172}
+  - {fileID: 337072097}
+  - {fileID: 1984507093}
+  chunkSize: {x: 19.02, y: 10, z: 18.81}
 --- !u!4 &539835127
 Transform:
   m_ObjectHideFlags: 0
