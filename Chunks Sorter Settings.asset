@@ -17,6 +17,7 @@ MonoBehaviour:
   LoopTimeCheckDistance: 5
   LoopTimeAutomaticSortEditor: 5
   UnityTagsSmallObjects:
+  - Untagged
   - Wheel
   LayersSmallObjects:
     serializedVersion: 2

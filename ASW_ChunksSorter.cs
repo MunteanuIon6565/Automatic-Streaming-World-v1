@@ -1,6 +1,7 @@
 #if UNITY_EDITOR
 
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -124,6 +125,8 @@ namespace AUTOMATIC_STREAMING_WORLD
         
         private void OrganizeObjectsInChunks(Dictionary<Vector3Int, List<Transform>> chunks, string chunkPrefixName = "")
         {
+            GameObject chunkParent = null;
+            
             foreach (var chunk in chunks)
             {
                 Vector3 chunkCenter = new Vector3(
@@ -132,15 +135,23 @@ namespace AUTOMATIC_STREAMING_WORLD
                     chunk.Key.z * m_chunkSize.z + m_chunkSize.z / 2
                 );
 
-                GameObject chunkParent = new GameObject($"{chunkPrefixName}_Chunk_{chunk.Key}")
+                chunkParent = new GameObject($"{chunkPrefixName}_Chunk_{chunk.Key}")
                 {
                     transform = { position = chunkCenter }
                 };
+                
+                chunkParent.tag = "EditorOnly";
 
                 foreach (var obj in chunk.Value)
                 {
                     obj.SetParent(chunkParent.transform);
                 }
+            }
+
+            foreach (var item in FindObjectsByType<Transform>(FindObjectsSortMode.None))
+            {
+                if (item.CompareTag("EditorOnly") && item.name.Equals(chunkParent.name)) 
+                    Destroy(item);
             }
         }
         

@@ -5,6 +5,7 @@ using UnityEditorInternal;
 #endif
 
 using System;
+using System.Linq;
 using UnityEngine;
 
 
@@ -49,6 +50,9 @@ namespace AUTOMATIC_STREAMING_WORLD
         public string[] UnityTagsLargeObjects;
         public LayerMask LayersLargeObjects;
         
+        
+        private string[] excludedTags = { "MainCamera","EditorOnly" };
+        
 #endif
         
 #if UNITY_EDITOR
@@ -57,18 +61,24 @@ namespace AUTOMATIC_STREAMING_WORLD
         [ContextMenu("Reset Array UnityTagsSmallObjects")]
         private void ResetArrayUnityTagsSmallObjects()
         {
-            UnityTagsSmallObjects = InternalEditorUtility.tags;
+            UnityTagsSmallObjects = InternalEditorUtility.tags
+                .Where(tag => !excludedTags.Contains(tag))
+                .ToArray();
         }
         
         [ContextMenu("Reset Array UnityTagsMediumObjects")]
         private void ResetArrayUnityTagsMediumObjects()
         {
-            UnityTagsSmallObjects = InternalEditorUtility.tags;
+            UnityTagsMediumObjects = InternalEditorUtility.tags
+                .Where(tag => !excludedTags.Contains(tag))
+                .ToArray();
         }
         [ContextMenu("Reset Array UnityTagsLargeObjects")]
         private void ResetArrayUnityTagsLargeObjects()
         {
-            UnityTagsLargeObjects = InternalEditorUtility.tags;
+            UnityTagsLargeObjects = InternalEditorUtility.tags
+                .Where(tag => !excludedTags.Contains(tag))
+                .ToArray();
         }
 
 
