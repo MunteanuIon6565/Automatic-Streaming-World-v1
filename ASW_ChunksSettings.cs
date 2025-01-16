@@ -6,7 +6,7 @@ namespace AUTOMATIC_STREAMING_WORLD
     public class ASW_ChunksSettings : ScriptableObject
     {
         [Header("Chunk Settings")] 
-        public Vector3 ChunkSize { get; private set; } = new Vector3(100, 100, 100);
+        [field:  SerializeField] public Vector3 ChunkSize { get; private set; } = new Vector3(100, 100, 100);
 
         [Header("Runtime Settings")] 
         public float LoopTimeCheckDistance = 5f;
