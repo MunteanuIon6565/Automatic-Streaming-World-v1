@@ -13,7 +13,7 @@ namespace AUTOMATIC_WORLD_STREAMING
         
         
 #if UNITY_EDITOR
-        
+        [Header("<color=red>DON'T REMOVE THIS COMPONENT OR OBJECT!\\\n<color=yellow>(Just when this object is completely unused.)</color></color>")]
         [SerializeField] private Vector3 m_chunkSize;
         
         public void Initialize(Vector3 chunkSize)

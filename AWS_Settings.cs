@@ -59,17 +59,17 @@ namespace AUTOMATIC_WORLD_STREAMING
         [Header(HEADER_SEPARATOR)] 
         [Header("Small Objects Sort Settings")]
         public string[] UnityTagsSmallObjects;
-        public LayerMask LayersSmallObjects;
+        //public LayerMask LayersSmallObjects;
         
         [Space(MEDIUM_SIZE_SPACE)][Header(HEADER_SEPARATOR)] 
         [Header("Small Objects Sort Settings")]
         public string[] UnityTagsMediumObjects;
-        public LayerMask LayersMediumObjects;
+        //public LayerMask LayersMediumObjects;
         
         [Space(MEDIUM_SIZE_SPACE)][Header(HEADER_SEPARATOR)] 
         [Header("Small Objects Sort Settings")]
         public string[] UnityTagsLargeObjects;
-        public LayerMask LayersLargeObjects;
+        //public LayerMask LayersLargeObjects;
         
         
         public string[] AllUnityTagsForSortInSimpleMode => InternalEditorUtility.tags

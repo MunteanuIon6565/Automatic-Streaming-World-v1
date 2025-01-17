@@ -13,10 +13,11 @@ namespace AUTOMATIC_WORLD_STREAMING
     {
         #region CONSTANTS
         private const string EDITOR_ONLY_TAG = "EditorOnly";
-        private const string SMALL_OBJECT_NAME = "Small_Objects";
-        private const string MEDIUM_OBJECT_NAME = "Medium_Objects";
-        private const string LARGE_OBJECT_NAME = "Large_Objects";
-        private const string SIMPLE_SORT_NAME = "All_Objects";
+        private const string SMALL_OBJECT_NAME = "Small";
+        private const string MEDIUM_OBJECT_NAME = "Medium";
+        private const string LARGE_OBJECT_NAME = "Large";
+        private const string SIMPLE_SORT_NAME = "All";
+        private const string MIDDLE_PART_SORT_NAME = "_Objects_Chunk_"; // it is used for delete copies of empty objects create with chunk system
         #endregion
 
 
@@ -50,14 +51,29 @@ namespace AUTOMATIC_WORLD_STREAMING
                 SortToChunksByTags(m_aws_Settings.AllUnityTagsForSortInSimpleMode, SIMPLE_SORT_NAME);
             else
                 Debug.LogError("Cannot sort to chunks because StreamingBySizeObjects is not disabled.");
-        } 
-        
+        }
 
+        
         #endregion
 
         
         #region MAIN FUNCTIONAL
+        
+        
+        [ContextMenu("SORT TO CHUNKS")]
+        public void SortToChunksByTags()
+        {
+            if (!m_aws_Settings.UseStreamingBySizeObjects) 
+                SortToChunksByTags(m_aws_Settings.AllUnityTagsForSortInSimpleMode, SIMPLE_SORT_NAME);
+            else
+            {
+                SortToChunksByTags(m_aws_Settings.UnityTagsLargeObjects, LARGE_OBJECT_NAME);
+                SortToChunksByTags(m_aws_Settings.UnityTagsMediumObjects, MEDIUM_OBJECT_NAME);
+                SortToChunksByTags(m_aws_Settings.UnityTagsSmallObjects, SMALL_OBJECT_NAME);
+            }
+        }
 
+        
         
         private void SortToChunksByTags(string[] tagsFilters, string chunkPrefixName = "")
         {
@@ -158,7 +174,6 @@ namespace AUTOMATIC_WORLD_STREAMING
         {
             GameObject chunkParent = null;
             string chunkName = null;
-            string chunkNamePrefixForDelete = null;
             
             foreach (var chunk in chunks)
             {
@@ -168,8 +183,7 @@ namespace AUTOMATIC_WORLD_STREAMING
                     chunk.Key.z * m_chunkSize.z + m_chunkSize.z / 2
                 );
 
-                chunkName = $"{chunkPrefixName}_Chunk_{chunk.Key}";
-                chunkNamePrefixForDelete = $"{chunkPrefixName}_Chunk";
+                chunkName = $"{chunkPrefixName}{MIDDLE_PART_SORT_NAME}{chunk.Key}";
                 chunkParent = new GameObject(chunkName)
                 {
                     transform = { position = chunkCenter }
@@ -182,22 +196,17 @@ namespace AUTOMATIC_WORLD_STREAMING
                 {
                     obj.SetParent(chunkParent.transform);
                 }
-                
-                if (chunkParent)
-                {
-                    foreach (var item in FindObjectsByType<Transform>(FindObjectsSortMode.None))
-                    {
-                        if (item.CompareTag(EDITOR_ONLY_TAG) && item.name.Contains(chunkName) && item.childCount == 0) 
-                            DestroyImmediate(item.gameObject);
-                    }
-                }
             }
             
             if (chunkParent)
             {
                 foreach (var item in FindObjectsByType<Transform>(FindObjectsSortMode.None))
                 {
-                    if (item.CompareTag(EDITOR_ONLY_TAG) && item.name.Contains(chunkNamePrefixForDelete) && item.childCount == 0) 
+                    if (item.CompareTag(EDITOR_ONLY_TAG) 
+                        && item.name.Contains(MIDDLE_PART_SORT_NAME) 
+                        && item.childCount == 0 
+                        && item.gameObject.GetComponentCount() <= 2 
+                        ) 
                         DestroyImmediate(item.gameObject);
                 }
             }

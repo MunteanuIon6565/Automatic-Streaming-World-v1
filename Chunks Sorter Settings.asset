@@ -12,28 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 728627ee28136a649bc944e72efc014f, type: 3}
   m_Name: Chunks Sorter Settings
   m_EditorClassIdentifier: 
-  <ChunkSize>k__BackingField: {x: 11.3, y: 28.6, z: 32.7}
-  <UseStreamingBySizeObjects>k__BackingField: 0
+  <ChunkSize>k__BackingField: {x: 50, y: 50, z: 50}
+  <UseStreamingBySizeObjects>k__BackingField: 1
   defaultExcludedTagsForSortInSimpleMode:
   - MainCamera
   - EditorOnly
   LoopTimeCheckDistance: 5
-  LoopTimeAutomaticSortEditor: 5
+  LoopTimeAutomaticSortEditor: 30
   ShowChunkSquareGizmos: 1
   UnityTagsSmallObjects:
   - Untagged
   - Wheel
-  LayersSmallObjects:
-    serializedVersion: 2
-    m_Bits: 0
   UnityTagsMediumObjects:
   - Road
-  LayersMediumObjects:
-    serializedVersion: 2
-    m_Bits: 0
   UnityTagsLargeObjects:
   - EnterExitPoint
   - IgnoreDamage
-  LayersLargeObjects:
-    serializedVersion: 2
-    m_Bits: 0
