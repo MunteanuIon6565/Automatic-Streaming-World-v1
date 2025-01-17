@@ -11,12 +11,17 @@ namespace AUTOMATIC_STREAMING_WORLD
 {
     public class ASW_ChunksSorter : MonoBehaviour
     {
+        #region CONSTANTS
         private const string EDITOR_ONLY_TAG = "EditorOnly";
         private const string SMALL_OBJECT_NAME = "Small_Objects";
         private const string MEDIUM_OBJECT_NAME = "Medium_Objects";
         private const string LARGE_OBJECT_NAME = "Large_Objects";
-        
-        
+        private const string SIMPLE_SORT_NAME = "All_Objects";
+        #endregion
+
+
+        #region FIELDS
+
         
         [SerializeField] 
         private List<Transform> m_objectsToSort = new List<Transform>();
@@ -25,7 +30,11 @@ namespace AUTOMATIC_STREAMING_WORLD
         private Vector3 m_chunkSize => m_aws_Settings.ChunkSize;
 
         
+        #endregion
+
         
+        #region TEST METHODS
+
         
         [ContextMenu("Sort To Chunks Small Objects")]
         private void SortToChunksSmallObjects() => SortToChunksByTags(m_aws_Settings.UnityTagsSmallObjects, SMALL_OBJECT_NAME);
@@ -33,6 +42,22 @@ namespace AUTOMATIC_STREAMING_WORLD
         private void SortToChunksMediumObjects() => SortToChunksByTags(m_aws_Settings.UnityTagsMediumObjects, MEDIUM_OBJECT_NAME);
         [ContextMenu("Sort To Chunks Large Objects")]
         private void SortToChunksLargeObjects() => SortToChunksByTags(m_aws_Settings.UnityTagsLargeObjects, LARGE_OBJECT_NAME);
+        
+        [ContextMenu("Sort To Chunks In Simple Mode")]
+        private void SortToChunksSimpleMode()
+        {
+            if (!m_aws_Settings.UseStreamingBySizeObjects) 
+                SortToChunksByTags(m_aws_Settings.AllUnityTagsForSortInSimpleMode, SIMPLE_SORT_NAME);
+            else
+                Debug.LogError("Cannot sort to chunks because StreamingBySizeObjects is not disabled.");
+        } 
+        
+
+        #endregion
+
+        
+        #region MAIN FUNCTIONAL
+
         
         private void SortToChunksByTags(string[] tagsFilters, string chunkPrefixName = "")
         {
@@ -168,7 +193,7 @@ namespace AUTOMATIC_STREAMING_WORLD
         
         
         
-        public static void MarkCurrentSceneDirty()
+        private static void MarkCurrentSceneDirty()
         {
             Scene activeScene = SceneManager.GetActiveScene();
             if (activeScene.IsValid())
@@ -182,6 +207,8 @@ namespace AUTOMATIC_STREAMING_WORLD
             }
         }
         
+
+        #endregion
         
 
         /// <summary>

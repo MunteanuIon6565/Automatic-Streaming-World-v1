@@ -6,7 +6,6 @@ using UnityEditorInternal;
 
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 
 namespace AUTOMATIC_STREAMING_WORLD
@@ -23,6 +22,7 @@ namespace AUTOMATIC_STREAMING_WORLD
         
         #region FIELDS
         
+        
         [field:  SerializeField, Header(HEADER_SEPARATOR), Header("Chunk Settings"), Tooltip("!For sort is used pivot point from objects.!")] 
         public Vector3 ChunkSize { get; private set; } = new Vector3(100, 100, 100);
         
@@ -34,11 +34,11 @@ namespace AUTOMATIC_STREAMING_WORLD
         private string[] defaultExcludedTagsForSortInSimpleMode = { "MainCamera","EditorOnly" };
 #endif
         
-
         [Space(MEDIUM_SIZE_SPACE)] [Header(HEADER_SEPARATOR)] 
         [Header("<b>Runtime Settings")] 
         public float LoopTimeCheckDistance = 5f;
 
+        
         #endregion
         
         
@@ -47,6 +47,7 @@ namespace AUTOMATIC_STREAMING_WORLD
         
         
         #region EDITOR ONLY FIELDS
+        
         
         [Space(MEDIUM_SIZE_SPACE)][Header(HEADER_SEPARATOR)] 
         [Header("<color=cyan>Editor Settings")] 
@@ -76,10 +77,12 @@ namespace AUTOMATIC_STREAMING_WORLD
             .Where(tag => !defaultExcludedTagsForSortInSimpleMode.Contains(tag))
             .ToArray();
         
+        
         #endregion
 
 
         #region EDITOR ONLY METHODS
+        
         
         [ContextMenu("Reset Array UnityTagsSmallObjects")]
         private void ResetArrayUnityTagsSmallObjects()
@@ -104,6 +107,7 @@ namespace AUTOMATIC_STREAMING_WORLD
                 .ToArray();
         }
 
+        
         #endregion
 
         
