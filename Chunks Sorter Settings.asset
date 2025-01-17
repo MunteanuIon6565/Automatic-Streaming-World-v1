@@ -14,19 +14,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ChunkSize>k__BackingField: {x: 59.2, y: 28.6, z: 32.7}
   <UseStreamingBySizeObjects>k__BackingField: 1
+  defaultExcludedTagsForSortInSimpleMode:
+  - MainCamera
+  - EditorOnly
   LoopTimeCheckDistance: 5
   LoopTimeAutomaticSortEditor: 5
+  ShowChunkSquareGizmos: 1
   UnityTagsSmallObjects:
   - Untagged
   - Wheel
   LayersSmallObjects:
     serializedVersion: 2
     m_Bits: 0
-  UnityTagsMediumObjects: []
+  UnityTagsMediumObjects:
+  - Road
   LayersMediumObjects:
     serializedVersion: 2
     m_Bits: 0
-  UnityTagsLargeObjects: []
+  UnityTagsLargeObjects:
+  - EnterExitPoint
+  - IgnoreDamage
   LayersLargeObjects:
     serializedVersion: 2
     m_Bits: 0

@@ -4,10 +4,9 @@ using UnityEditorInternal;
 
 #endif
 
-using System;
 using System.Linq;
 using UnityEngine;
-
+using UnityEngine.Serialization;
 
 
 namespace AUTOMATIC_STREAMING_WORLD
@@ -15,54 +14,78 @@ namespace AUTOMATIC_STREAMING_WORLD
     [CreateAssetMenu(fileName = "ASW Automatic Streaming World Settings", menuName = "STREAMING WORLD SYSTEM/ASW Automatic Streaming World Settings", order = 0)]
     public class ASW_Settings : ScriptableObject
     {
-        [Header("Chunk Settings")] 
-        [Tooltip("!For sort is used pivot point from objects.!")]
-        [field:  SerializeField] 
-        public Vector3 ChunkSize { get; private set; } = new Vector3(100, 100, 100);
-        
-        [field:  SerializeField]
-        public bool UseStreamingBySizeObjects { get; private set; } = false;
-        
+        #region CONSTANTS  
+        private const float MEDIUM_SIZE_SPACE = 20;
+        private const float LARGE_SIZE_SPACE = 40;
+        private const string HEADER_SEPARATOR = "_______________________________________________________________________________________________________________________________________";
+        #endregion
 
         
+        #region FIELDS
+        
+        [field:  SerializeField, Header(HEADER_SEPARATOR), Header("Chunk Settings"), Tooltip("!For sort is used pivot point from objects.!")] 
+        public Vector3 ChunkSize { get; private set; } = new Vector3(100, 100, 100);
+        
+        [field:  SerializeField, Tooltip("For sort objects by layer data method.(Small, Medium, Large objects.)")]
+        public bool UseStreamingBySizeObjects { get; private set; } = false;
+
+#if UNITY_EDITOR
+        [SerializeField, Tooltip("It use for sort if <b>UseStreamingBySizeObjects</b> is false.")] 
+        private string[] defaultExcludedTagsForSortInSimpleMode = { "MainCamera","EditorOnly" };
+#endif
+        
+
+        [Space(MEDIUM_SIZE_SPACE)] [Header(HEADER_SEPARATOR)] 
         [Header("<b>Runtime Settings")] 
         public float LoopTimeCheckDistance = 5f;
+
+        #endregion
         
         
+        #region EDITOR ONLY
 #if UNITY_EDITOR
         
+        
+        #region EDITOR ONLY FIELDS
+        
+        [Space(MEDIUM_SIZE_SPACE)][Header(HEADER_SEPARATOR)] 
         [Header("<color=cyan>Editor Settings")] 
-        public float LoopTimeAutomaticSortEditor = 5f;
+        public float LoopTimeAutomaticSortEditor = 30f;
+        public bool ShowChunkSquareGizmos = true;
         
-        
-        
+        [Space(LARGE_SIZE_SPACE)][Header(HEADER_SEPARATOR)] 
         [Header("<color=yellow>For use from down features tick true -> UseStreamingBySizeObjects")]
         [Header("<color=yellow>When sort objects to chunks it will move just the last parent object from hierarchy with this settings.")]
+        [Header(HEADER_SEPARATOR)] 
         [Header("Small Objects Sort Settings")]
         public string[] UnityTagsSmallObjects;
         public LayerMask LayersSmallObjects;
         
+        [Space(MEDIUM_SIZE_SPACE)][Header(HEADER_SEPARATOR)] 
         [Header("Small Objects Sort Settings")]
         public string[] UnityTagsMediumObjects;
         public LayerMask LayersMediumObjects;
         
+        [Space(MEDIUM_SIZE_SPACE)][Header(HEADER_SEPARATOR)] 
         [Header("Small Objects Sort Settings")]
         public string[] UnityTagsLargeObjects;
         public LayerMask LayersLargeObjects;
         
         
-        private string[] excludedTags = { "MainCamera","EditorOnly" };
+        public string[] AllUnityTagsForSortInSimpleMode => InternalEditorUtility.tags
+            .Where(tag => !defaultExcludedTagsForSortInSimpleMode.Contains(tag))
+            .ToArray();
         
-#endif
-        
-#if UNITY_EDITOR
+        #endregion
 
+
+        #region EDITOR ONLY METHODS
         
         [ContextMenu("Reset Array UnityTagsSmallObjects")]
         private void ResetArrayUnityTagsSmallObjects()
         {
             UnityTagsSmallObjects = InternalEditorUtility.tags
-                .Where(tag => !excludedTags.Contains(tag))
+                .Where(tag => !defaultExcludedTagsForSortInSimpleMode.Contains(tag))
                 .ToArray();
         }
         
@@ -70,18 +93,21 @@ namespace AUTOMATIC_STREAMING_WORLD
         private void ResetArrayUnityTagsMediumObjects()
         {
             UnityTagsMediumObjects = InternalEditorUtility.tags
-                .Where(tag => !excludedTags.Contains(tag))
+                .Where(tag => !defaultExcludedTagsForSortInSimpleMode.Contains(tag))
                 .ToArray();
         }
         [ContextMenu("Reset Array UnityTagsLargeObjects")]
         private void ResetArrayUnityTagsLargeObjects()
         {
             UnityTagsLargeObjects = InternalEditorUtility.tags
-                .Where(tag => !excludedTags.Contains(tag))
+                .Where(tag => !defaultExcludedTagsForSortInSimpleMode.Contains(tag))
                 .ToArray();
         }
 
+        #endregion
 
+        
 #endif
+        #endregion
     }
 }

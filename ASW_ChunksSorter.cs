@@ -12,6 +12,9 @@ namespace AUTOMATIC_STREAMING_WORLD
     public class ASW_ChunksSorter : MonoBehaviour
     {
         private const string EDITOR_ONLY_TAG = "EditorOnly";
+        private const string SMALL_OBJECT_NAME = "Small_Objects";
+        private const string MEDIUM_OBJECT_NAME = "Medium_Objects";
+        private const string LARGE_OBJECT_NAME = "Large_Objects";
         
         
         
@@ -25,7 +28,11 @@ namespace AUTOMATIC_STREAMING_WORLD
         
         
         [ContextMenu("Sort To Chunks Small Objects")]
-        private void SortToChunksSmallObjects() => SortToChunksByTags(m_aws_Settings.UnityTagsSmallObjects, "Small Objects");
+        private void SortToChunksSmallObjects() => SortToChunksByTags(m_aws_Settings.UnityTagsSmallObjects, SMALL_OBJECT_NAME);
+        [ContextMenu("Sort To Chunks Medium Objects")]
+        private void SortToChunksMediumObjects() => SortToChunksByTags(m_aws_Settings.UnityTagsMediumObjects, MEDIUM_OBJECT_NAME);
+        [ContextMenu("Sort To Chunks Large Objects")]
+        private void SortToChunksLargeObjects() => SortToChunksByTags(m_aws_Settings.UnityTagsLargeObjects, LARGE_OBJECT_NAME);
         
         private void SortToChunksByTags(string[] tagsFilters, string chunkPrefixName = "")
         {
@@ -57,16 +64,13 @@ namespace AUTOMATIC_STREAMING_WORLD
             List<Transform> objectsToSort = new List<Transform>();
             Transform[] allObjectsToSort = FindObjectsByType<Transform>(FindObjectsSortMode.None);
             
-            if (m_aws_Settings.UseStreamingBySizeObjects)
+            foreach (var obj in allObjectsToSort)
             {
-                foreach (var obj in allObjectsToSort)
-                {
-                    if (
-                        ContainOneTag(obj, tagsFilters) 
-                        && !HasParentWithTag(obj, tagsFilters)
-                        ) 
-                        objectsToSort.Add(obj);
-                }
+                if (
+                    ContainOneTag(obj, tagsFilters)
+                    && !HasParentWithTag(obj, tagsFilters)
+                )
+                    objectsToSort.Add(obj);
             }
             
             return objectsToSort;
@@ -185,6 +189,8 @@ namespace AUTOMATIC_STREAMING_WORLD
         /// </summary>
         private void OnDrawGizmos()
         {
+            if (!m_aws_Settings.ShowChunkSquareGizmos) return;
+            
             Gizmos.color = Color.blue;
             HashSet<Vector3Int> drawnChunks = new HashSet<Vector3Int>();
 
