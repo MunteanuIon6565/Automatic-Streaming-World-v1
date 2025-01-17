@@ -127,24 +127,19 @@ namespace AUTOMATIC_WORLD_STREAMING
             string currentSceneName = Path.GetFileNameWithoutExtension(currentScenePath);
 
 
-            string targetScenePath = Path.Combine(PATH_CREATE_CHUNKS, currentSceneName + ".unity");
+            string targetScenePath = Path.Combine(PATH_CREATE_CHUNKS, $"{currentSceneName}_{objectToMove.name}.unity");
             if (!File.Exists(targetScenePath))
             {
                 var newScene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Additive);
                 EditorSceneManager.SaveScene(newScene, targetScenePath);
                 EditorSceneManager.CloseScene(newScene, true);
 
-                AddSceneToAddressables(targetScenePath);
+                //AddSceneToAddressables(targetScenePath);
             }
 
-            if (!AssetDatabase.LoadAssetAtPath<SceneAsset>(targetScenePath))
-            {
-                Debug.LogError($"Scena la calea '{targetScenePath}' nu există sau nu este validă.");
-                return;
-            }
-            
+            //Scene targetScene = AssetDatabase.LoadAssetAtPath<SceneAsset>(targetScenePath);
             Scene targetScene = EditorSceneManager.GetSceneByPath(targetScenePath);
-            if (!targetScene.isLoaded/* && distance < DistanceThreshold*/)
+            if (targetScene.IsValid() && !targetScene.isLoaded/* && distance < DistanceThreshold*/)
             {
                 EditorSceneManager.OpenScene(targetScenePath, OpenSceneMode.Additive);
             }
