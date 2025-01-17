@@ -137,6 +137,12 @@ namespace AUTOMATIC_WORLD_STREAMING
                 AddSceneToAddressables(targetScenePath);
             }
 
+            if (!AssetDatabase.LoadAssetAtPath<SceneAsset>(targetScenePath))
+            {
+                Debug.LogError($"Scena la calea '{targetScenePath}' nu există sau nu este validă.");
+                return;
+            }
+            
             Scene targetScene = EditorSceneManager.GetSceneByPath(targetScenePath);
             if (!targetScene.isLoaded/* && distance < DistanceThreshold*/)
             {
