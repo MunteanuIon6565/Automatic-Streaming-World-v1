@@ -7,7 +7,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEditor;
 using System.IO;
-
+using UnityEditor.AddressableAssets;
+using UnityEditor.AddressableAssets.Settings;
+using UnityEditor.AddressableAssets.Settings.GroupSchemas;
 
 
 namespace AUTOMATIC_WORLD_STREAMING
@@ -89,9 +91,9 @@ namespace AUTOMATIC_WORLD_STREAMING
             
             if (chunkSimpleSort is { Count: > 0 })
             {
-                foreach (GameObject chunk in chunkSimpleSort)
+                for (int i = chunkSimpleSort.Count - 1; i >= 0; i--)
                 {
-                    MoveObjectToSceneChunk(chunk);
+                    MoveObjectToSceneChunk(chunkSimpleSort[i]);
                 }
             }
         }
@@ -121,29 +123,26 @@ namespace AUTOMATIC_WORLD_STREAMING
             float distance = Vector3.Distance(currentObject.transform.position, objectToMove.transform.position);
             */
 
-            // Obține calea și denumirea scenei curente
             string currentScenePath = EditorSceneManager.GetActiveScene().path;
             string currentSceneName = Path.GetFileNameWithoutExtension(currentScenePath);
 
 
-            // Verifică dacă scena țintă există
             string targetScenePath = Path.Combine(PATH_CREATE_CHUNKS, currentSceneName + ".unity");
             if (!File.Exists(targetScenePath))
             {
-                // Creează o scenă nouă
                 var newScene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Additive);
                 EditorSceneManager.SaveScene(newScene, targetScenePath);
                 EditorSceneManager.CloseScene(newScene, true);
+
+                AddSceneToAddressables(targetScenePath);
             }
 
-            // Încarcă scena țintă dacă este necesar
             Scene targetScene = EditorSceneManager.GetSceneByPath(targetScenePath);
             if (!targetScene.isLoaded/* && distance < DistanceThreshold*/)
             {
                 EditorSceneManager.OpenScene(targetScenePath, OpenSceneMode.Additive);
             }
 
-            // Mută obiectul dacă nu a fost deja mutat
             if (objectToMove.scene.path != targetScenePath)
             {
                 SceneManager.MoveGameObjectToScene(objectToMove, targetScene);
@@ -157,6 +156,29 @@ namespace AUTOMATIC_WORLD_STREAMING
                 EditorSceneManager.CloseScene(targetScene, true);
             }*/
         }
+        private void AddSceneToAddressables(string scenePath)
+        {
+            AddressableAssetSettings settings = AddressableAssetSettingsDefaultObject.GetSettings(true);
+
+            AddressableAssetGroup group = settings.FindGroup(AddressableGroupName);
+            if (group == null)
+            {
+                group = settings.CreateGroup(AddressableGroupName, false, false, true, null, typeof(BundledAssetGroupSchema));
+            }
+
+            if (!settings.GetLabels().Contains(AddressableLabelName))
+            {
+                settings.AddLabel(AddressableLabelName);
+            }
+
+            AddressableAssetEntry entry = settings.CreateOrMoveEntry(AssetDatabase.AssetPathToGUID(scenePath), group);
+            entry.SetLabel(AddressableLabelName, true);
+
+            settings.SetDirty(AddressableAssetSettings.ModificationEvent.EntryMoved, entry, true);
+            AssetDatabase.SaveAssets();
+            Debug.Log($"Scena a fost adăugată la Addressables cu label-ul \"{AddressableLabelName}\" în grupul \"{AddressableGroupName}\".");
+        }
+
 
 
 
