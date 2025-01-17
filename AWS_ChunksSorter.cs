@@ -1,11 +1,14 @@
 #if UNITY_EDITOR
 
 using System.Collections.Generic;
-using System.Linq;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
+using UnityEditor;
+using System.IO;
+
+
 
 namespace AUTOMATIC_WORLD_STREAMING
 {
@@ -19,6 +22,11 @@ namespace AUTOMATIC_WORLD_STREAMING
         private const string LARGE_OBJECT_NAME = "Large";
         private const string SIMPLE_SORT_NAME = "All";
         private const string MIDDLE_PART_SORT_NAME = "_Objects_Chunk_"; // it is used for delete copies of empty objects create with chunk system
+        
+        private const string PATH_CREATE_CHUNKS = "Assets/Plugins/AWS_Chunks";
+        private const string AddressableGroupName = "AWS_Chunks_Group";
+        private const string AddressableLabelName = "AWS_Chunks_Label";
+        /*private const float DistanceThreshold = 500f;*/
         #endregion
 
 
@@ -64,19 +72,95 @@ namespace AUTOMATIC_WORLD_STREAMING
         [ContextMenu("SORT TO CHUNKS")]
         public void SortToChunksByTags()
         {
+            List<GameObject> chunkSimpleSort = null;
+            List<GameObject> chunkSmallSort = null;
+            List<GameObject> chunkMediumSort = null;
+            List<GameObject> chunkLargeSort = null;
+            
             if (!m_aws_Settings.UseStreamingBySizeObjects) 
-                SortToChunksByTags(m_aws_Settings.AllUnityTagsForSortInSimpleMode, SIMPLE_SORT_NAME);
+                chunkSimpleSort = SortToChunksByTags(m_aws_Settings.AllUnityTagsForSortInSimpleMode, SIMPLE_SORT_NAME);
             else
             {
-                SortToChunksByTags(m_aws_Settings.UnityTagsLargeObjects, LARGE_OBJECT_NAME);
-                SortToChunksByTags(m_aws_Settings.UnityTagsMediumObjects, MEDIUM_OBJECT_NAME);
-                SortToChunksByTags(m_aws_Settings.UnityTagsSmallObjects, SMALL_OBJECT_NAME);
+                chunkLargeSort = SortToChunksByTags(m_aws_Settings.UnityTagsLargeObjects, LARGE_OBJECT_NAME);
+                chunkMediumSort = SortToChunksByTags(m_aws_Settings.UnityTagsMediumObjects, MEDIUM_OBJECT_NAME);
+                chunkSmallSort = SortToChunksByTags(m_aws_Settings.UnityTagsSmallObjects, SMALL_OBJECT_NAME);
+            }
+
+            
+            if (chunkSimpleSort is { Count: > 0 })
+            {
+                foreach (GameObject chunk in chunkSimpleSort)
+                {
+                    MoveObjectToSceneChunk(chunk);
+                }
             }
         }
 
-        
-        
-        private string SortToChunksByTags(string[] tagsFilters, string chunkPrefixName = "")
+
+
+        private void MoveObjectToSceneChunk(GameObject objectToMove)
+        {
+            if (!Application.isEditor || Application.isPlaying)
+                return;
+
+            if (objectToMove == null)
+            {
+                Debug.LogError("Referința la obiectul de mutat este null.");
+                return;
+            }
+
+            if (!AssetDatabase.IsValidFolder(PATH_CREATE_CHUNKS))
+            {
+                Directory.CreateDirectory(PATH_CREATE_CHUNKS);
+                AssetDatabase.Refresh();
+            }
+            
+            
+            
+            /*GameObject currentObject = this.gameObject;
+            float distance = Vector3.Distance(currentObject.transform.position, objectToMove.transform.position);
+            */
+
+            // Obține calea și denumirea scenei curente
+            string currentScenePath = EditorSceneManager.GetActiveScene().path;
+            string currentSceneName = Path.GetFileNameWithoutExtension(currentScenePath);
+
+
+            // Verifică dacă scena țintă există
+            string targetScenePath = Path.Combine(PATH_CREATE_CHUNKS, currentSceneName + ".unity");
+            if (!File.Exists(targetScenePath))
+            {
+                // Creează o scenă nouă
+                var newScene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Additive);
+                EditorSceneManager.SaveScene(newScene, targetScenePath);
+                EditorSceneManager.CloseScene(newScene, true);
+            }
+
+            // Încarcă scena țintă dacă este necesar
+            Scene targetScene = EditorSceneManager.GetSceneByPath(targetScenePath);
+            if (!targetScene.isLoaded/* && distance < DistanceThreshold*/)
+            {
+                EditorSceneManager.OpenScene(targetScenePath, OpenSceneMode.Additive);
+            }
+
+            // Mută obiectul dacă nu a fost deja mutat
+            if (objectToMove.scene.path != targetScenePath)
+            {
+                SceneManager.MoveGameObjectToScene(objectToMove, targetScene);
+                EditorSceneManager.MarkSceneDirty(targetScene);
+                EditorSceneManager.SaveScene(targetScene);
+            }
+
+            /*// Descărca scena dacă distanța este prea mare
+            if (distance >= DistanceThreshold && targetScene.isLoaded)
+            {
+                EditorSceneManager.CloseScene(targetScene, true);
+            }*/
+        }
+
+
+
+        private List<GameObject> SortToChunksByTags(string[] tagsFilters, string chunkPrefixName = "")
         {
             var chunks = new Dictionary<Vector3Int, List<Transform>>();
 
@@ -171,11 +255,11 @@ namespace AUTOMATIC_WORLD_STREAMING
 
         
         
-        private string OrganizeObjectsInChunks(Dictionary<Vector3Int, List<Transform>> chunks, string chunkPrefixName = "")
+        private List<GameObject> OrganizeObjectsInChunks(Dictionary<Vector3Int, List<Transform>> chunks, string chunkPrefixName = "")
         {
-            GameObject chunkParent = null;
-            string chunkName = null;
-            
+            List<GameObject> chunksParentList = new List<GameObject>();
+            GameObject chunkParent;
+
             foreach (var chunk in chunks)
             {
                 Vector3 chunkCenter = new Vector3(
@@ -184,11 +268,12 @@ namespace AUTOMATIC_WORLD_STREAMING
                     chunk.Key.z * m_chunkSize.z + m_chunkSize.z / 2
                 );
 
-                chunkName = $"{chunkPrefixName}{MIDDLE_PART_SORT_NAME}{chunk.Key}";
+                string chunkName = $"{chunkPrefixName}{MIDDLE_PART_SORT_NAME}{chunk.Key}";
                 chunkParent = new GameObject(chunkName)
                 {
                     transform = { position = chunkCenter }
                 };
+                chunksParentList.Add(chunkParent);
                 
                 chunkParent.AddComponent<AWS_Chunk>().Initialize(m_chunkSize);
                 chunkParent.tag = EDITOR_ONLY_TAG;
@@ -199,20 +284,18 @@ namespace AUTOMATIC_WORLD_STREAMING
                 }
             }
             
-            if (chunkParent)
+            // remove copies of empty chunk objects
+            foreach (var item in FindObjectsByType<Transform>(FindObjectsSortMode.None))
             {
-                foreach (var item in FindObjectsByType<Transform>(FindObjectsSortMode.None))
-                {
-                    if (item.CompareTag(EDITOR_ONLY_TAG) 
-                        && item.name.Contains(MIDDLE_PART_SORT_NAME) 
-                        && item.childCount == 0 
-                        && item.gameObject.GetComponentCount() <= 2 
-                        ) 
-                        DestroyImmediate(item.gameObject);
-                }
+                if (item.CompareTag(EDITOR_ONLY_TAG) 
+                    && item.name.Contains(MIDDLE_PART_SORT_NAME) 
+                    && item.childCount == 0 
+                    && item.gameObject.GetComponentCount() <= 2 
+                   ) 
+                    DestroyImmediate(item.gameObject);
             }
 
-            return chunkName;
+            return chunksParentList;
         }
         
         
