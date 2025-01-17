@@ -8,10 +8,10 @@ using System.Linq;
 using UnityEngine;
 
 
-namespace AUTOMATIC_STREAMING_WORLD
+namespace AUTOMATIC_WORLD_STREAMING
 {
-    [CreateAssetMenu(fileName = "ASW Automatic Streaming World Settings", menuName = "STREAMING WORLD SYSTEM/ASW Automatic Streaming World Settings", order = 0)]
-    public class ASW_Settings : ScriptableObject
+    [CreateAssetMenu(fileName = "ASW AUTOMATIC WORLD STREAMING Settings", menuName = "AUTOMATIC WORLD STREAMING/ASW Automatic World Streaming Settings", order = 0)]
+    public class AWS_Settings : ScriptableObject
     {
         #region CONSTANTS  
         private const float MEDIUM_SIZE_SPACE = 20;
@@ -34,8 +34,7 @@ namespace AUTOMATIC_STREAMING_WORLD
         private string[] defaultExcludedTagsForSortInSimpleMode = { "MainCamera","EditorOnly" };
 #endif
         
-        [Space(MEDIUM_SIZE_SPACE)] [Header(HEADER_SEPARATOR)] 
-        [Header("<b>Runtime Settings")] 
+        [Space(MEDIUM_SIZE_SPACE)] [Header(HEADER_SEPARATOR)] [Header("<b>Runtime Settings")] 
         public float LoopTimeCheckDistance = 5f;
 
         

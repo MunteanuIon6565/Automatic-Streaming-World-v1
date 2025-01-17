@@ -7,9 +7,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
-namespace AUTOMATIC_STREAMING_WORLD
+namespace AUTOMATIC_WORLD_STREAMING
 {
-    public class ASW_ChunksSorter : MonoBehaviour
+    public class AWS_ChunksSorter : MonoBehaviour
     {
         #region CONSTANTS
         private const string EDITOR_ONLY_TAG = "EditorOnly";
@@ -26,7 +26,7 @@ namespace AUTOMATIC_STREAMING_WORLD
         [SerializeField] 
         private List<Transform> m_objectsToSort = new List<Transform>();
         
-        [SerializeField] private ASW_Settings m_aws_Settings;
+        [SerializeField] private AWS_Settings m_aws_Settings;
         private Vector3 m_chunkSize => m_aws_Settings.ChunkSize;
 
         
@@ -173,6 +173,7 @@ namespace AUTOMATIC_STREAMING_WORLD
                     transform = { position = chunkCenter }
                 };
                 
+                chunkParent.AddComponent<AWS_Chunk>().Initialize(m_chunkSize);
                 chunkParent.tag = EDITOR_ONLY_TAG;
 
                 foreach (var obj in chunk.Value)
@@ -218,7 +219,8 @@ namespace AUTOMATIC_STREAMING_WORLD
         {
             if (!m_aws_Settings.ShowChunkSquareGizmos) return;
             
-            Gizmos.color = Color.blue;
+            Color colorWire = Color.green;
+            //Color colorFilled = new Color(0, 0.5f, 1, 0.1f);
             HashSet<Vector3Int> drawnChunks = new HashSet<Vector3Int>();
 
             foreach (var obj in m_objectsToSort)
@@ -236,8 +238,11 @@ namespace AUTOMATIC_STREAMING_WORLD
                         chunkCoord.y * m_chunkSize.y + m_chunkSize.y / 2,
                         chunkCoord.z * m_chunkSize.z + m_chunkSize.z / 2
                     );
-
+                    
+                    Gizmos.color = colorWire;
                     Gizmos.DrawWireCube(chunkCenter, m_chunkSize);
+                    //Gizmos.color = colorFilled;
+                    //Gizmos.DrawCube(chunkCenter, m_chunkSize);
                 }
             }
         }
