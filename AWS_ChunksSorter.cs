@@ -158,6 +158,7 @@ namespace AUTOMATIC_WORLD_STREAMING
         {
             GameObject chunkParent = null;
             string chunkName = null;
+            string chunkNamePrefixForDelete = null;
             
             foreach (var chunk in chunks)
             {
@@ -168,6 +169,7 @@ namespace AUTOMATIC_WORLD_STREAMING
                 );
 
                 chunkName = $"{chunkPrefixName}_Chunk_{chunk.Key}";
+                chunkNamePrefixForDelete = $"{chunkPrefixName}_Chunk";
                 chunkParent = new GameObject(chunkName)
                 {
                     transform = { position = chunkCenter }
@@ -185,9 +187,18 @@ namespace AUTOMATIC_WORLD_STREAMING
                 {
                     foreach (var item in FindObjectsByType<Transform>(FindObjectsSortMode.None))
                     {
-                        if (item.CompareTag(EDITOR_ONLY_TAG) && item.name.Equals(chunkName) && item.childCount == 0) 
+                        if (item.CompareTag(EDITOR_ONLY_TAG) && item.name.Contains(chunkName) && item.childCount == 0) 
                             DestroyImmediate(item.gameObject);
                     }
+                }
+            }
+            
+            if (chunkParent)
+            {
+                foreach (var item in FindObjectsByType<Transform>(FindObjectsSortMode.None))
+                {
+                    if (item.CompareTag(EDITOR_ONLY_TAG) && item.name.Contains(chunkNamePrefixForDelete) && item.childCount == 0) 
+                        DestroyImmediate(item.gameObject);
                 }
             }
         }
@@ -220,7 +231,6 @@ namespace AUTOMATIC_WORLD_STREAMING
             if (!m_aws_Settings.ShowChunkSquareGizmos) return;
             
             Color colorWire = Color.green;
-            //Color colorFilled = new Color(0, 0.5f, 1, 0.1f);
             HashSet<Vector3Int> drawnChunks = new HashSet<Vector3Int>();
 
             foreach (var obj in m_objectsToSort)
@@ -241,8 +251,6 @@ namespace AUTOMATIC_WORLD_STREAMING
                     
                     Gizmos.color = colorWire;
                     Gizmos.DrawWireCube(chunkCenter, m_chunkSize);
-                    //Gizmos.color = colorFilled;
-                    //Gizmos.DrawCube(chunkCenter, m_chunkSize);
                 }
             }
         }
