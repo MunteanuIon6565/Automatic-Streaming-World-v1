@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace AUTOMATIC_WORLD_STREAMING
 {
+    #if UNITY_EDITOR
+    [RequireComponent(typeof(AWS_ChunksSorter))]
+    #endif
     public class AWS_WorldStreamManager : MonoBehaviour
     {
         public static AWS_WorldStreamManager Instance = null;

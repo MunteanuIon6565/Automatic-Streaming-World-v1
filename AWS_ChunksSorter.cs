@@ -9,6 +9,7 @@ using UnityEngine.Serialization;
 
 namespace AUTOMATIC_WORLD_STREAMING
 {
+    [ExecuteInEditMode]
     public class AWS_ChunksSorter : MonoBehaviour
     {
         #region CONSTANTS
@@ -24,8 +25,8 @@ namespace AUTOMATIC_WORLD_STREAMING
         #region FIELDS
 
         
-        [SerializeField] 
-        private List<Transform> m_objectsToSort = new List<Transform>();
+        [FormerlySerializedAs("m_objectsToSort")] [SerializeField] 
+        private List<Transform> m_objectsToSortDebug = new List<Transform>();
         
         [SerializeField] private AWS_Settings m_aws_Settings;
         private Vector3 m_chunkSize => m_aws_Settings.ChunkSize;
@@ -75,13 +76,13 @@ namespace AUTOMATIC_WORLD_STREAMING
 
         
         
-        private void SortToChunksByTags(string[] tagsFilters, string chunkPrefixName = "")
+        private string SortToChunksByTags(string[] tagsFilters, string chunkPrefixName = "")
         {
             var chunks = new Dictionary<Vector3Int, List<Transform>>();
 
-            m_objectsToSort = GetObjectsToSortByTags(tagsFilters);
+            m_objectsToSortDebug = GetObjectsToSortByTags(tagsFilters);
 
-            foreach (var obj in m_objectsToSort)
+            foreach (var obj in m_objectsToSortDebug)
             {
                 if (obj == null) continue;
 
@@ -93,9 +94,9 @@ namespace AUTOMATIC_WORLD_STREAMING
                 chunks[chunkCoord].Add(obj);
             }
             
-            OrganizeObjectsInChunks(chunks, chunkPrefixName);
-
             MarkCurrentSceneDirty();
+
+            return OrganizeObjectsInChunks(chunks, chunkPrefixName);
         }
 
         
@@ -170,7 +171,7 @@ namespace AUTOMATIC_WORLD_STREAMING
 
         
         
-        private void OrganizeObjectsInChunks(Dictionary<Vector3Int, List<Transform>> chunks, string chunkPrefixName = "")
+        private string OrganizeObjectsInChunks(Dictionary<Vector3Int, List<Transform>> chunks, string chunkPrefixName = "")
         {
             GameObject chunkParent = null;
             string chunkName = null;
@@ -210,6 +211,8 @@ namespace AUTOMATIC_WORLD_STREAMING
                         DestroyImmediate(item.gameObject);
                 }
             }
+
+            return chunkName;
         }
         
         
@@ -242,7 +245,7 @@ namespace AUTOMATIC_WORLD_STREAMING
             Color colorWire = Color.green;
             HashSet<Vector3Int> drawnChunks = new HashSet<Vector3Int>();
 
-            foreach (var obj in m_objectsToSort)
+            foreach (var obj in m_objectsToSortDebug)
             {
                 if (obj == null) continue;
 
