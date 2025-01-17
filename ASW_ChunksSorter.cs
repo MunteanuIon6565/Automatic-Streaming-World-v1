@@ -11,8 +11,10 @@ namespace AUTOMATIC_STREAMING_WORLD
 {
     public class ASW_ChunksSorter : MonoBehaviour
     {
-        [FormerlySerializedAs("objectsToSort")]
-        [Header("Transforms to Sort")]
+        private const string EDITOR_ONLY_TAG = "EditorOnly";
+        
+        
+        
         [SerializeField] 
         private List<Transform> m_objectsToSort = new List<Transform>();
         
@@ -126,6 +128,7 @@ namespace AUTOMATIC_STREAMING_WORLD
         private void OrganizeObjectsInChunks(Dictionary<Vector3Int, List<Transform>> chunks, string chunkPrefixName = "")
         {
             GameObject chunkParent = null;
+            string chunkName = null;
             
             foreach (var chunk in chunks)
             {
@@ -135,23 +138,27 @@ namespace AUTOMATIC_STREAMING_WORLD
                     chunk.Key.z * m_chunkSize.z + m_chunkSize.z / 2
                 );
 
-                chunkParent = new GameObject($"{chunkPrefixName}_Chunk_{chunk.Key}")
+                chunkName = $"{chunkPrefixName}_Chunk_{chunk.Key}";
+                chunkParent = new GameObject(chunkName)
                 {
                     transform = { position = chunkCenter }
                 };
                 
-                chunkParent.tag = "EditorOnly";
+                chunkParent.tag = EDITOR_ONLY_TAG;
 
                 foreach (var obj in chunk.Value)
                 {
                     obj.SetParent(chunkParent.transform);
                 }
-            }
-
-            foreach (var item in FindObjectsByType<Transform>(FindObjectsSortMode.None))
-            {
-                if (item.CompareTag("EditorOnly") && item.name.Equals(chunkParent.name)) 
-                    Destroy(item);
+                
+                if (chunkParent)
+                {
+                    foreach (var item in FindObjectsByType<Transform>(FindObjectsSortMode.None))
+                    {
+                        if (item.CompareTag(EDITOR_ONLY_TAG) && item.name.Equals(chunkName) && item.childCount == 0) 
+                            DestroyImmediate(item.gameObject);
+                    }
+                }
             }
         }
         
