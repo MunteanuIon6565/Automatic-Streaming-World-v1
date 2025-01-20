@@ -141,6 +141,10 @@ namespace AUTOMATIC_WORLD_STREAMING
 
                 sceneAssetReference = AddSceneToAddressables(targetScenePath);
             }
+            else
+            {
+                sceneAssetReference = new AssetReference(AssetDatabase.AssetPathToGUID(targetScenePath));
+            }
             
             Scene targetScene = EditorSceneManager
                 .OpenScene(
@@ -150,7 +154,21 @@ namespace AUTOMATIC_WORLD_STREAMING
 
             if (objectToMove.scene.path != targetScenePath)
             {
-                SceneManager.MoveGameObjectToScene(objectToMove, targetScene);
+                if (FindObjectsByType<AWS_Chunk>(FindObjectsSortMode.None).Length >= 2) /// search by name fix count
+                {
+                    string nameObjectToMove = objectToMove.name;
+                    objectToMove.name = "--Temporary To Move In Chunk--";
+                    
+                    
+                    
+                }
+                else
+                {
+                    
+                    SceneManager.MoveGameObjectToScene(objectToMove, targetScene);
+                }
+                
+                
                 EditorSceneManager.MarkSceneDirty(targetScene);
                 EditorSceneManager.SaveScene(targetScene);
             }
