@@ -39,7 +39,7 @@ namespace AUTOMATIC_WORLD_STREAMING
         #region FIELDS
 
         
-        [FormerlySerializedAs("m_objectsToSort")] [SerializeField] 
+        [SerializeField] 
         private List<Transform> m_objectsToSortDebug = new List<Transform>();
         
         [SerializeField] private AWS_Settings m_aws_Settings;
@@ -52,21 +52,7 @@ namespace AUTOMATIC_WORLD_STREAMING
         #region TEST METHODS
 
         
-        [ContextMenu("Sort To Chunks Small Objects")]
-        private void SortToChunksSmallObjects() => SortToChunksByTags(m_aws_Settings.UnityTagsSmallObjects, SMALL_OBJECT_NAME);
-        [ContextMenu("Sort To Chunks Medium Objects")]
-        private void SortToChunksMediumObjects() => SortToChunksByTags(m_aws_Settings.UnityTagsMediumObjects, MEDIUM_OBJECT_NAME);
-        [ContextMenu("Sort To Chunks Large Objects")]
-        private void SortToChunksLargeObjects() => SortToChunksByTags(m_aws_Settings.UnityTagsLargeObjects, LARGE_OBJECT_NAME);
         
-        [ContextMenu("Sort To Chunks In Simple Mode")]
-        private void SortToChunksSimpleMode()
-        {
-            if (!m_aws_Settings.UseStreamingBySizeObjects) 
-                SortToChunksByTags(m_aws_Settings.AllUnityTagsForSortInSimpleMode, SIMPLE_SORT_NAME);
-            else
-                Debug.LogError("Cannot sort to chunks because StreamingBySizeObjects is not disabled.");
-        }
 
         
         #endregion
@@ -93,12 +79,17 @@ namespace AUTOMATIC_WORLD_STREAMING
             }
 
             
-            if (chunkSimpleSort is { Count: > 0 })
+            MoveObjectToSortChunkMini(chunkSimpleSort);
+            MoveObjectToSortChunkMini(chunkLargeSort);
+            MoveObjectToSortChunkMini(chunkMediumSort);
+            MoveObjectToSortChunkMini(chunkSmallSort);
+
+            
+            void MoveObjectToSortChunkMini(List<GameObject> chunkSort)
             {
-                for (int i = chunkSimpleSort.Count - 1; i >= 0; i--)
-                {
-                    MoveObjectToSceneChunk(chunkSimpleSort[i]);
-                }
+                if (chunkSort is { Count: > 0 })
+                    for (int i = chunkSort.Count - 1; i >= 0; i--)
+                        MoveObjectToSceneChunk(chunkSort[i]);
             }
         }
 
@@ -147,16 +138,17 @@ namespace AUTOMATIC_WORLD_STREAMING
                 sceneAssetReference = new AssetReference(AssetDatabase.AssetPathToGUID(targetScenePath));
             }
             
+            
             Scene targetScene = EditorSceneManager
                 .OpenScene(
                     AssetDatabase.GUIDToAssetPath(sceneAssetReference.AssetGUID), 
                     OpenSceneMode.Additive
                     );
 
+            
             if (objectToMove.scene.path != targetScenePath)
             {
                 var foundAWSChunkObjects = FindObjectsByType<AWS_Chunk>(FindObjectsSortMode.None);
-                
                 foundAWSChunkObjects = foundAWSChunkObjects.Where(x => x.name.Equals(objectToMove.name)).ToArray();
                 
                 if (foundAWSChunkObjects.Length >= 2)
@@ -170,16 +162,11 @@ namespace AUTOMATIC_WORLD_STREAMING
                     foreach (var item in foundAWSChunkObjects)
                     {
                         if (item.name.Equals(nameObjectToMove))
-                        {
                             for (int i = 0; i < item.transform.childCount; i++)
-                            {
                                 item.transform.GetChild(i).SetParent(objectToMove.transform);
-                            }
-                        }
                     }
                     
                     objectToMove.name = nameObjectToMove;
-
                     RemoveCopiesOfEmptyChunkObjects();
                 }
                 else
@@ -205,14 +192,10 @@ namespace AUTOMATIC_WORLD_STREAMING
 
             AddressableAssetGroup group = settings.FindGroup(AddressableGroupName);
             if (group == null)
-            {
                 group = settings.CreateGroup(AddressableGroupName, false, false, true, null, typeof(BundledAssetGroupSchema));
-            }
 
             if (!settings.GetLabels().Contains(AddressableLabelName))
-            {
                 settings.AddLabel(AddressableLabelName);
-            }
 
             string guid = AssetDatabase.AssetPathToGUID(scenePath);
             AddressableAssetEntry entry = settings.CreateOrMoveEntry(guid, group);
@@ -397,29 +380,40 @@ namespace AUTOMATIC_WORLD_STREAMING
         /// </summary>
         private void OnDrawGizmos()
         {
-            if (!m_aws_Settings.ShowChunkSquareGizmos) return;
-            
+            if (!m_aws_Settings.ShowChunkSquareGizmosAroundSceneCamera) return;
+
             Color colorWire = Color.green;
-            HashSet<Vector3Int> drawnChunks = new HashSet<Vector3Int>();
+            Vector3Int cellsAroundCamera;
+            if (!m_aws_Settings) 
+                cellsAroundCamera = new Vector3Int(1, 1, 1);
+            else
+                cellsAroundCamera = m_aws_Settings.CellsAroundSceneCameraToShow;
+                
 
-            foreach (var obj in m_objectsToSortDebug)
+            // Obține poziția camerei din fereastra Scene
+            Camera sceneCamera = Camera.current;
+            if (sceneCamera == null) return;
+
+            Vector3 cameraPosition = sceneCamera.transform.position;
+
+            Vector3Int cameraChunk = CalculateChunkCoordinate(cameraPosition);
+
+            // Desenează cellsAroundCameraToShow celule în fiecare direcție de la chunk-ul camerei
+            for (int x = cameraChunk.x - cellsAroundCamera.x; x <= cameraChunk.x + cellsAroundCamera.x; x++)
             {
-                if (obj == null) continue;
-
-                Vector3Int chunkCoord = CalculateChunkCoordinate(obj.position);
-
-                if (!drawnChunks.Contains(chunkCoord))
+                for (int y = cameraChunk.y - cellsAroundCamera.y; y <= cameraChunk.y + cellsAroundCamera.y; y++)
                 {
-                    drawnChunks.Add(chunkCoord);
+                    for (int z = cameraChunk.z - cellsAroundCamera.z; z <= cameraChunk.z + cellsAroundCamera.z; z++)
+                    {
+                        Vector3 chunkCenter = new Vector3(
+                            x * m_chunkSize.x + m_chunkSize.x / 2,
+                            y * m_chunkSize.y + m_chunkSize.y / 2,
+                            z * m_chunkSize.z + m_chunkSize.z / 2
+                        );
 
-                    Vector3 chunkCenter = new Vector3(
-                        chunkCoord.x * m_chunkSize.x + m_chunkSize.x / 2,
-                        chunkCoord.y * m_chunkSize.y + m_chunkSize.y / 2,
-                        chunkCoord.z * m_chunkSize.z + m_chunkSize.z / 2
-                    );
-                    
-                    Gizmos.color = colorWire;
-                    Gizmos.DrawWireCube(chunkCenter, m_chunkSize);
+                        Gizmos.color = colorWire;
+                        Gizmos.DrawWireCube(chunkCenter, m_chunkSize);
+                    }
                 }
             }
         }

@@ -19,7 +19,8 @@ MonoBehaviour:
   - EditorOnly
   LoopTimeCheckDistance: 5
   LoopTimeAutomaticSortEditor: 30
-  ShowChunkSquareGizmos: 1
+  ShowChunkSquareGizmosAroundSceneCamera: 1
+  CellsAroundSceneCameraToShow: {x: 1, y: 1, z: 1}
   UnityTagsSmallObjects:
   - Untagged
   - Wheel

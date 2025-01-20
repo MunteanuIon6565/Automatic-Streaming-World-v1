@@ -6,6 +6,7 @@ using UnityEditorInternal;
 
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 
 namespace AUTOMATIC_WORLD_STREAMING
@@ -51,7 +52,8 @@ namespace AUTOMATIC_WORLD_STREAMING
         [Space(MEDIUM_SIZE_SPACE)][Header(HEADER_SEPARATOR)] 
         [Header("<color=cyan>Editor Settings")] 
         public float LoopTimeAutomaticSortEditor = 30f;
-        public bool ShowChunkSquareGizmos = true;
+        public bool ShowChunkSquareGizmosAroundSceneCamera = true;
+        public Vector3Int CellsAroundSceneCameraToShow = Vector3Int.one;
         
         [Space(LARGE_SIZE_SPACE)][Header(HEADER_SEPARATOR)] 
         [Header("<color=yellow>For use from down features tick true -> UseStreamingBySizeObjects")]
