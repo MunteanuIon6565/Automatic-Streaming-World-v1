@@ -115,10 +115,6 @@ namespace AUTOMATIC_WORLD_STREAMING
             
             
             
-            /*GameObject currentObject = this.gameObject;
-            float distance = Vector3.Distance(currentObject.transform.position, objectToMove.transform.position);
-            */
-
             string currentScenePath = EditorSceneManager.GetActiveScene().path;
             string currentSceneName = Path.GetFileNameWithoutExtension(currentScenePath);
             
@@ -201,12 +197,6 @@ namespace AUTOMATIC_WORLD_STREAMING
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
 #endif
-
-            /*// Descărca scena dacă distanța este prea mare
-            if (distance >= DistanceThreshold && targetScene.isLoaded)
-            {
-                EditorSceneManager.CloseScene(targetScene, true);
-            }*/
         }
         
         
