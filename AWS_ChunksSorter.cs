@@ -7,9 +7,12 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEditor;
 using System.IO;
+using System.Threading.Tasks;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
 using UnityEditor.AddressableAssets.Settings.GroupSchemas;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 
 namespace AUTOMATIC_WORLD_STREAMING
@@ -25,7 +28,7 @@ namespace AUTOMATIC_WORLD_STREAMING
         private const string SIMPLE_SORT_NAME = "All";
         private const string MIDDLE_PART_SORT_NAME = "_Objects_Chunk_"; // it is used for delete copies of empty objects create with chunk system
         
-        private const string PATH_CREATE_CHUNKS = "Assets/Plugins/AWS_Chunks";
+        private const string PATH_CREATE_CHUNKS = "Assets/Plugins/AWS_Chunks/";
         private const string AddressableGroupName = "AWS_Chunks_Group";
         private const string AddressableLabelName = "AWS_Chunks_Label";
         /*private const float DistanceThreshold = 500f;*/
@@ -125,24 +128,25 @@ namespace AUTOMATIC_WORLD_STREAMING
 
             string currentScenePath = EditorSceneManager.GetActiveScene().path;
             string currentSceneName = Path.GetFileNameWithoutExtension(currentScenePath);
-
-
-            string targetScenePath = Path.Combine(PATH_CREATE_CHUNKS, $"{currentSceneName}_{objectToMove.name}.unity");
+            
+            string targetScenePath = PATH_CREATE_CHUNKS + $"{currentSceneName}_{objectToMove.name}.unity";
+            AssetReference sceneAssetReference = default;
+            
+            
             if (!File.Exists(targetScenePath))
             {
-                var newScene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Additive);
-                EditorSceneManager.SaveScene(newScene, targetScenePath);
-                EditorSceneManager.CloseScene(newScene, true);
+                var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Additive);
+                EditorSceneManager.SaveScene(scene, targetScenePath);
+                EditorSceneManager.CloseScene(scene, true);
 
-                //AddSceneToAddressables(targetScenePath);
+                sceneAssetReference = AddSceneToAddressables(targetScenePath);
             }
-
-            //Scene targetScene = AssetDatabase.LoadAssetAtPath<SceneAsset>(targetScenePath);
-            Scene targetScene = EditorSceneManager.GetSceneByPath(targetScenePath);
-            if (targetScene.IsValid() && !targetScene.isLoaded/* && distance < DistanceThreshold*/)
-            {
-                EditorSceneManager.OpenScene(targetScenePath, OpenSceneMode.Additive);
-            }
+            
+            Scene targetScene = EditorSceneManager
+                .OpenScene(
+                    AssetDatabase.GUIDToAssetPath(sceneAssetReference.AssetGUID), 
+                    OpenSceneMode.Additive
+                    );
 
             if (objectToMove.scene.path != targetScenePath)
             {
@@ -157,7 +161,8 @@ namespace AUTOMATIC_WORLD_STREAMING
                 EditorSceneManager.CloseScene(targetScene, true);
             }*/
         }
-        private void AddSceneToAddressables(string scenePath)
+        
+        private AssetReference AddSceneToAddressables(string scenePath)
         {
             AddressableAssetSettings settings = AddressableAssetSettingsDefaultObject.GetSettings(true);
 
@@ -172,13 +177,18 @@ namespace AUTOMATIC_WORLD_STREAMING
                 settings.AddLabel(AddressableLabelName);
             }
 
-            AddressableAssetEntry entry = settings.CreateOrMoveEntry(AssetDatabase.AssetPathToGUID(scenePath), group);
+            string guid = AssetDatabase.AssetPathToGUID(scenePath);
+            AddressableAssetEntry entry = settings.CreateOrMoveEntry(guid, group);
             entry.SetLabel(AddressableLabelName, true);
 
             settings.SetDirty(AddressableAssetSettings.ModificationEvent.EntryMoved, entry, true);
             AssetDatabase.SaveAssets();
+
             Debug.Log($"Scena a fost adăugată la Addressables cu label-ul \"{AddressableLabelName}\" în grupul \"{AddressableGroupName}\".");
+
+            return new AssetReference(guid);
         }
+
 
 
 
