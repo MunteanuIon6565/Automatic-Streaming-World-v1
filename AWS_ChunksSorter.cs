@@ -43,6 +43,7 @@ namespace AUTOMATIC_WORLD_STREAMING
         private List<Transform> m_objectsToSortDebug = new List<Transform>();
         
         [SerializeField] private AWS_Settings m_aws_Settings;
+        [SerializeField] private AWS_AllChunksInOneWorld m_AllChunksInOneWorld;
         private Vector3 m_chunkSize => m_aws_Settings.ChunkSize;
 
         
@@ -179,12 +180,26 @@ namespace AUTOMATIC_WORLD_STREAMING
                 EditorSceneManager.SaveScene(targetScene);
             }
 
+
+//            m_AllChunksInOneWorld.ChunkContainers[0].WorldPosition = objectToMove.transform.position;   /////////////////
+          //  m_AllChunksInOneWorld.ChunkContainers[0].SceneReference = sceneAssetReference;
+            
+            
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(m_AllChunksInOneWorld);
+
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+#endif
+
             /*// Descărca scena dacă distanța este prea mare
             if (distance >= DistanceThreshold && targetScene.isLoaded)
             {
                 EditorSceneManager.CloseScene(targetScene, true);
             }*/
         }
+        
+        
         
         private AssetReference AddSceneToAddressables(string scenePath)
         {
@@ -210,9 +225,7 @@ namespace AUTOMATIC_WORLD_STREAMING
         }
 
 
-
-
-
+        
         private List<GameObject> SortToChunksByTags(string[] tagsFilters, string chunkPrefixName = "")
         {
             var chunks = new Dictionary<Vector3Int, List<Transform>>();
@@ -342,6 +355,7 @@ namespace AUTOMATIC_WORLD_STREAMING
             return chunksParentList;
         }
 
+        
         private static void RemoveCopiesOfEmptyChunkObjects()
         {
             // remove copies of empty chunk objects

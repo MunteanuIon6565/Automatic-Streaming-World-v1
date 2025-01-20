@@ -27,7 +27,7 @@ namespace AUTOMATIC_WORLD_STREAMING
         [field:  SerializeField, Header(HEADER_SEPARATOR), Header("Chunk Settings"), Tooltip("!For sort is used pivot point from objects.!")] 
         public Vector3 ChunkSize { get; private set; } = new Vector3(100, 100, 100);
         
-        [field:  SerializeField, Tooltip("For sort objects by layer data method.(Small, Medium, Large objects.)")]
+        [field:  SerializeField, /*Header("<color=yellow>Before change this, Move All chunk in main scene</color>"),*/ Tooltip("For sort objects by layer data method.(Small, Medium, Large objects.)")]
         public bool UseStreamingBySizeObjects { get; private set; } = false;
 
 #if UNITY_EDITOR

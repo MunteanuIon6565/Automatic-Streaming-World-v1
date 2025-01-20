@@ -553,6 +553,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   m_aws_Settings: {fileID: 11400000, guid: d40dbe3cc2cc67641aaa056041f393b6, type: 2}
+  m_AllChunksInOneWorld: {fileID: 11400000, guid: abc62bfe0b0027a459aefb41b16d3d10, type: 2}
 --- !u!4 &539835127
 Transform:
   m_ObjectHideFlags: 0
