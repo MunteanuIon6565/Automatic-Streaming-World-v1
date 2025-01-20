@@ -181,8 +181,18 @@ namespace AUTOMATIC_WORLD_STREAMING
             }
 
 
-//            m_AllChunksInOneWorld.ChunkContainers[0].WorldPosition = objectToMove.transform.position;   /////////////////
-          //  m_AllChunksInOneWorld.ChunkContainers[0].SceneReference = sceneAssetReference;
+            string chunkCoordinateKey = objectToMove.name;
+            if (!m_AllChunksInOneWorld.ChunkContainers.ContainsKey(chunkCoordinateKey))
+            {
+                m_AllChunksInOneWorld.ChunkContainers.Add(chunkCoordinateKey, new ChunkContainer());
+            }
+            
+
+            m_AllChunksInOneWorld.ChunkContainers[chunkCoordinateKey].WorldPosition = objectToMove.transform.position;
+            
+            m_AllChunksInOneWorld.ChunkContainers[chunkCoordinateKey].SceneReference = sceneAssetReference;
+
+            m_AllChunksInOneWorld.RebuildDictionaryToList(); 
             
             
 #if UNITY_EDITOR
@@ -334,7 +344,7 @@ namespace AUTOMATIC_WORLD_STREAMING
                     chunk.Key.z * m_chunkSize.z + m_chunkSize.z / 2
                 );
 
-                string chunkName = $"{chunkPrefixName}{MIDDLE_PART_SORT_NAME}{chunk.Key}";
+                string chunkName = $"{chunkPrefixName}{MIDDLE_PART_SORT_NAME}{chunk.Key.ToString()}";
                 chunkParent = new GameObject(chunkName)
                 {
                     transform = { position = chunkCenter }
@@ -377,6 +387,7 @@ namespace AUTOMATIC_WORLD_STREAMING
             if (activeScene.IsValid())
             {
                 EditorSceneManager.MarkSceneDirty(activeScene);
+                EditorSceneManager.SaveScene(activeScene);
                 Debug.Log($"Scene '{activeScene.name}' has been marked as dirty.");
             }
             else
