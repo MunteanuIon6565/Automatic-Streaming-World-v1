@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEditor;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
@@ -154,17 +155,35 @@ namespace AUTOMATIC_WORLD_STREAMING
 
             if (objectToMove.scene.path != targetScenePath)
             {
-                if (FindObjectsByType<AWS_Chunk>(FindObjectsSortMode.None).Length >= 2) /// search by name fix count
+                var foundAWSChunkObjects = FindObjectsByType<AWS_Chunk>(FindObjectsSortMode.None);
+                
+                foundAWSChunkObjects = foundAWSChunkObjects.Where(x => x.name.Equals(objectToMove.name)).ToArray();
+                
+                if (foundAWSChunkObjects.Length >= 2)
                 {
                     string nameObjectToMove = objectToMove.name;
+                    AWS_Chunk awsChunkMain = null;
                     objectToMove.name = "--Temporary To Move In Chunk--";
                     
+                    SceneManager.MoveGameObjectToScene(objectToMove, targetScene);
+
+                    foreach (var item in foundAWSChunkObjects)
+                    {
+                        if (item.name.Equals(nameObjectToMove))
+                        {
+                            for (int i = 0; i < item.transform.childCount; i++)
+                            {
+                                item.transform.GetChild(i).SetParent(objectToMove.transform);
+                            }
+                        }
+                    }
                     
-                    
+                    objectToMove.name = nameObjectToMove;
+
+                    RemoveCopiesOfEmptyChunkObjects();
                 }
                 else
                 {
-                    
                     SceneManager.MoveGameObjectToScene(objectToMove, targetScene);
                 }
                 
@@ -335,6 +354,13 @@ namespace AUTOMATIC_WORLD_STREAMING
                 }
             }
             
+            RemoveCopiesOfEmptyChunkObjects();
+
+            return chunksParentList;
+        }
+
+        private static void RemoveCopiesOfEmptyChunkObjects()
+        {
             // remove copies of empty chunk objects
             foreach (var item in FindObjectsByType<Transform>(FindObjectsSortMode.None))
             {
@@ -345,12 +371,9 @@ namespace AUTOMATIC_WORLD_STREAMING
                    ) 
                     DestroyImmediate(item.gameObject);
             }
-
-            return chunksParentList;
         }
-        
-        
-        
+
+
         private static void MarkCurrentSceneDirty()
         {
             Scene activeScene = SceneManager.GetActiveScene();

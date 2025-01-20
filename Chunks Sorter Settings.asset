@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Chunks Sorter Settings
   m_EditorClassIdentifier: 
   <ChunkSize>k__BackingField: {x: 50, y: 50, z: 50}
-  <UseStreamingBySizeObjects>k__BackingField: 0
+  <UseStreamingBySizeObjects>k__BackingField: 1
   defaultExcludedTagsForSortInSimpleMode:
   - MainCamera
   - EditorOnly
@@ -25,6 +25,4 @@ MonoBehaviour:
   - Wheel
   UnityTagsMediumObjects:
   - Road
-  UnityTagsLargeObjects:
-  - EnterExitPoint
-  - IgnoreDamage
+  UnityTagsLargeObjects: []
