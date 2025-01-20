@@ -384,6 +384,7 @@ namespace AUTOMATIC_WORLD_STREAMING
 
             Color colorWire = Color.green;
             Vector3Int cellsAroundCamera;
+            
             if (!m_aws_Settings) 
                 cellsAroundCamera = new Vector3Int(1, 1, 1);
             else
@@ -400,9 +401,7 @@ namespace AUTOMATIC_WORLD_STREAMING
 
             // Desenează cellsAroundCameraToShow celule în fiecare direcție de la chunk-ul camerei
             for (int x = cameraChunk.x - cellsAroundCamera.x; x <= cameraChunk.x + cellsAroundCamera.x; x++)
-            {
                 for (int y = cameraChunk.y - cellsAroundCamera.y; y <= cameraChunk.y + cellsAroundCamera.y; y++)
-                {
                     for (int z = cameraChunk.z - cellsAroundCamera.z; z <= cameraChunk.z + cellsAroundCamera.z; z++)
                     {
                         Vector3 chunkCenter = new Vector3(
@@ -414,8 +413,6 @@ namespace AUTOMATIC_WORLD_STREAMING
                         Gizmos.color = colorWire;
                         Gizmos.DrawWireCube(chunkCenter, m_chunkSize);
                     }
-                }
-            }
         }
     }
 }
