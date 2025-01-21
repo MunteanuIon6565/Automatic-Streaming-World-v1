@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace AUTOMATIC_WORLD_STREAMING
@@ -52,21 +53,46 @@ namespace AUTOMATIC_WORLD_STREAMING
             {
                 Destroy(this);
             }
+
+            m_aws_Chunks.RebuildListToDictionary();
             
             if (targetForStream) 
                 m_targetForStream = targetForStream;
         }
-        
-        
-        
+
+
+        private async void CheckStreamChunks()
+        {
+            foreach (var item in m_aws_Chunks.ChunkContainers.Values)
+            {
+                float distance = Vector3.Distance(TargetForStream.position, item.WorldPosition + OffsetOrigin);
+                
+                if (distance > m_aws_Settings.LoopTimeCheckDistance)
+                {
+                    
+                }
+            }
+        }
         
         
         #endregion
 
         
         #region UNITY METHODS
-        
-        
+
+
+        private IEnumerator Start()
+        {
+            WaitForSeconds waitForSeconds = new WaitForSeconds(m_aws_Settings.LoopTimeCheckDistance);
+
+            while (true)
+            {
+                CheckStreamChunks();
+                
+                yield return waitForSeconds;
+            }
+        }
+
         private void Awake()
         {
             if (m_autoInitializeInAwake) Initialize();

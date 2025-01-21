@@ -37,6 +37,10 @@ namespace AUTOMATIC_WORLD_STREAMING
         
         [Space(MEDIUM_SIZE_SPACE)] [Header(HEADER_SEPARATOR)] [Header("<b>Runtime Settings")] 
         public float LoopTimeCheckDistance = 5f;
+        [field: SerializeField,Tooltip("Min distance to spawn Prefab")] 
+        public float MinDistanceShow{ get; private set; } = 100;
+        [field: SerializeField,Tooltip("Max distance to delete Prefab")] 
+        public float MaxDistanceShow{ get; private set; } = 110;
 
         
         #endregion
@@ -51,7 +55,7 @@ namespace AUTOMATIC_WORLD_STREAMING
         
         [Space(MEDIUM_SIZE_SPACE)][Header(HEADER_SEPARATOR)] 
         [Header("<color=cyan>Editor Settings")] 
-        public float LoopTimeAutomaticSortEditor = 30f;
+        public float LoopTimeAutomaticSortEditor = 60f;
         public bool ShowChunkSquareGizmosAroundSceneCamera = true;
         public Vector3Int CellsAroundSceneCameraToShow = Vector3Int.one;
         
@@ -83,6 +87,21 @@ namespace AUTOMATIC_WORLD_STREAMING
 
 
         #region EDITOR ONLY METHODS
+        
+        
+        private void OnValidate()
+        {
+            if (MinDistanceShow > MaxDistanceShow) 
+                MaxDistanceShow = MinDistanceShow;
+            
+            if (0 > MaxDistanceShow) 
+                MaxDistanceShow = 0;
+            
+            if (0 > MinDistanceShow) 
+                MinDistanceShow = 0;
+        }
+        
+        
         
         
         [ContextMenu("Reset Array UnityTagsSmallObjects")]
