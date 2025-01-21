@@ -36,11 +36,9 @@ namespace AUTOMATIC_WORLD_STREAMING
         #endregion
 
 
+        
         #region FIELDS
 
-        
-        [SerializeField] 
-        private List<Transform> m_objectsToSortDebug = new List<Transform>();
         
         [SerializeField] private AWS_Settings m_aws_Settings;
         [SerializeField] private AWS_AllChunksInOneWorld m_AllChunksInOneWorld;
@@ -50,14 +48,6 @@ namespace AUTOMATIC_WORLD_STREAMING
         #endregion
 
         
-        #region TEST METHODS
-
-        
-        
-
-        
-        #endregion
-
         
         #region MAIN FUNCTIONAL
         
@@ -230,7 +220,7 @@ namespace AUTOMATIC_WORLD_STREAMING
         {
             var chunks = new Dictionary<Vector3Int, List<Transform>>();
 
-            m_objectsToSortDebug = GetObjectsToSortByTags(tagsFilters);
+            List<Transform> m_objectsToSortDebug = GetObjectsToSortByTags(tagsFilters);
 
             foreach (var obj in m_objectsToSortDebug)
             {
