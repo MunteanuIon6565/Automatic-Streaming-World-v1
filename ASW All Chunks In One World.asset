@@ -13,15 +13,6 @@ MonoBehaviour:
   m_Name: ASW All Chunks In One World
   m_EditorClassIdentifier: 
   chunkEntries:
-  - Key: Medium_Objects_Chunk_(-1, 0, 2000)
-    Value:
-      WorldPosition: {x: -25, y: 25, z: 100025}
-      SceneReference:
-        m_AssetGUID: 593034a9f05931945a5f213996c49225
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
   - Key: Medium_Objects_Chunk_(0, 0, -1)
     Value:
       WorldPosition: {x: 25, y: 25, z: -25}
@@ -40,20 +31,11 @@ MonoBehaviour:
         m_SubObjectGUID: 
         m_SubObjectType: 
         m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(0, 0, 1)
+  - Key: Small_Objects_Chunk_(0, 3, -2)
     Value:
-      WorldPosition: {x: 25, y: 25, z: 75}
+      WorldPosition: {x: 25, y: 175, z: -75}
       SceneReference:
-        m_AssetGUID: 5097d2dc24020f44d8d9390f9332d8c6
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-5, 0, 0)
-    Value:
-      WorldPosition: {x: -225, y: 25, z: 25}
-      SceneReference:
-        m_AssetGUID: 6f23e6f4c8962bc4685a09ff8501bd88
+        m_AssetGUID: 81d67b66c74db2d47b8b985a4a574063
         m_SubObjectName: 
         m_SubObjectGUID: 
         m_SubObjectType: 
@@ -76,6 +58,15 @@ MonoBehaviour:
         m_SubObjectGUID: 
         m_SubObjectType: 
         m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(0, 0, 0)
+    Value:
+      WorldPosition: {x: 25, y: 25, z: 25}
+      SceneReference:
+        m_AssetGUID: 2bf08e12e9960084780eccf0b9c7be56
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
   - Key: Small_Objects_Chunk_(0, 0, -1)
     Value:
       WorldPosition: {x: 25, y: 25, z: -25}
@@ -90,15 +81,6 @@ MonoBehaviour:
       WorldPosition: {x: -25, y: 25, z: -25}
       SceneReference:
         m_AssetGUID: f5d64cada6700264b99cde42a673e64c
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(0, 0, 0)
-    Value:
-      WorldPosition: {x: 25, y: 25, z: 25}
-      SceneReference:
-        m_AssetGUID: 2bf08e12e9960084780eccf0b9c7be56
         m_SubObjectName: 
         m_SubObjectGUID: 
         m_SubObjectType: 

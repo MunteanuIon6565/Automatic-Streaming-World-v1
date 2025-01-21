@@ -49,18 +49,14 @@ namespace AUTOMATIC_WORLD_STREAMING
         
         public void Initialize(Transform targetForStream = null)
         {
-            #if !UNITY_EDITOR
-            
-            if (Instance == null)
+            if (Application.isPlaying && Instance == null)
             {
                 Instance = this;
             }
-            else
+            else if (Application.isPlaying)
             {
                 Destroy(this);
             }
-            
-            #endif
 
             m_aws_Chunks.RebuildListToDictionary();
             
@@ -73,6 +69,7 @@ namespace AUTOMATIC_WORLD_STREAMING
         {
             Dictionary<string, ChunkContainer> ChunkContainers = Application.isPlaying ? m_aws_Chunks.ChunkContainers : m_aws_Chunks.RebuildListToDictionary();
             
+            // prioritate la large objects mai intai 
             foreach (var item in ChunkContainers.Values)
             {
                 float distance = Vector3.Distance(TargetForStream.position, item.WorldPosition + OffsetOrigin);
@@ -161,8 +158,15 @@ namespace AUTOMATIC_WORLD_STREAMING
             while (true)
             {
                 CheckStreamChunks();
-                
-                yield return waitForSeconds;
+
+                yield return
+#if UNITY_EDITOR
+                    Application.isPlaying
+                        ? waitForSeconds
+                        : new WaitForSeconds(m_aws_Settings.LoopTimeCheckDistanceEditor);
+#else
+                waitForSeconds;
+#endif
             }
         }
 

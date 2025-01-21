@@ -56,6 +56,7 @@ namespace AUTOMATIC_WORLD_STREAMING
         [Space(MEDIUM_SIZE_SPACE)][Header(HEADER_SEPARATOR)] 
         [Header("<color=cyan>Editor Settings")] 
         public float LoopTimeAutomaticSortEditor = 60f;
+        public float LoopTimeCheckDistanceEditor = 2f;
         public bool ShowChunkSquareGizmosAroundSceneCamera = true;
         public Vector3Int CellsAroundSceneCameraToShow = Vector3Int.one;
         
