@@ -29,7 +29,6 @@ namespace AUTOMATIC_WORLD_STREAMING
         private const string PATH_CREATE_CHUNKS = "Assets/Plugins/AWS_Chunks/";
         private const string AddressableGroupName = "AWS_Chunks_Group";
         private const string AddressableLabelName = "AWS_Chunks_Label";
-        /*private const float DistanceThreshold = 500f;*/
         #endregion
 
 
@@ -95,6 +94,7 @@ namespace AUTOMATIC_WORLD_STREAMING
             m_AllChunksInOneWorld.RebuildListToDictionary();
 
             EditorUtility.SetDirty(m_AllChunksInOneWorld);
+            MarkCurrentSceneDirty();
 
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
@@ -132,6 +132,8 @@ namespace AUTOMATIC_WORLD_STREAMING
                     for (int i = chunkSort.Count - 1; i >= 0; i--)
                         MoveObjectToSceneChunk(chunkSort[i]);
             }
+            
+            MarkCurrentSceneDirty();
         }
 
 

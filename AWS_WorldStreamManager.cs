@@ -84,6 +84,7 @@ namespace AUTOMATIC_WORLD_STREAMING
                 ? AwsChunks.ChunkContainers
                 : AwsChunks.RebuildListToDictionary();
 
+            // load scenes cu prioritate mai intai cele large dupa medii dupa mici
             foreach (var chunk in chunkContainers.Values)
             {
                 float distance = Vector3.Distance(TargetForStream.position, chunk.WorldPosition + OffsetOrigin);
