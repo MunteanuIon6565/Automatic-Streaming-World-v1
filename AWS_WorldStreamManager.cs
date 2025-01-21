@@ -1,11 +1,15 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace AUTOMATIC_WORLD_STREAMING
 {
     #if UNITY_EDITOR
     [RequireComponent(typeof(AWS_ChunksSorter))]
+    [ExecuteAlways]
     #endif
     public class AWS_WorldStreamManager : MonoBehaviour
     {
@@ -23,8 +27,8 @@ namespace AUTOMATIC_WORLD_STREAMING
         [SerializeField] 
         private bool m_autoInitializeInAwake = true;
         
-        private Transform m_targetForStream;
         [SerializeField, Tooltip("By default is MainCamera")] 
+        private Transform m_targetForStream;
         public Transform TargetForStream
         {
             get
@@ -45,6 +49,8 @@ namespace AUTOMATIC_WORLD_STREAMING
         
         public void Initialize(Transform targetForStream = null)
         {
+            #if !UNITY_EDITOR
+            
             if (Instance == null)
             {
                 Instance = this;
@@ -53,6 +59,8 @@ namespace AUTOMATIC_WORLD_STREAMING
             {
                 Destroy(this);
             }
+            
+            #endif
 
             m_aws_Chunks.RebuildListToDictionary();
             
@@ -63,18 +71,83 @@ namespace AUTOMATIC_WORLD_STREAMING
 
         private async void CheckStreamChunks()
         {
-            foreach (var item in m_aws_Chunks.ChunkContainers.Values)
+            Dictionary<string, ChunkContainer> ChunkContainers = Application.isPlaying ? m_aws_Chunks.ChunkContainers : m_aws_Chunks.RebuildListToDictionary();
+            
+            foreach (var item in ChunkContainers.Values)
             {
                 float distance = Vector3.Distance(TargetForStream.position, item.WorldPosition + OffsetOrigin);
-                
-                if (distance > m_aws_Settings.LoopTimeCheckDistance)
+
+                if (distance < m_aws_Settings.MinDistanceShow)
                 {
-                    
+                    // Load chunk
+                    await LoadChunk(item.SceneReference);
+                }
+                else if (distance > m_aws_Settings.MaxDistanceShow)
+                {
+                    // Unload chunk
+                    await UnloadChunk(item.SceneReference);
                 }
             }
+            
+            
+
+            async Task LoadChunk(AssetReference assetReference)
+            {
+#if UNITY_EDITOR
+                if (!Application.isPlaying)
+                {
+                    // Load scene in Editor mode
+                    var scenePath = UnityEditor.AssetDatabase.GetAssetPath(assetReference.editorAsset);
+                    var scene = UnityEditor.SceneManagement.EditorSceneManager.GetSceneByPath(scenePath);
+                    if (!scene.isLoaded)
+                    {
+                        UnityEditor.SceneManagement.EditorSceneManager.OpenScene(scenePath,
+                            UnityEditor.SceneManagement.OpenSceneMode.Additive);
+                    }
+
+                    return;
+                }
+#endif
+                // Load scene in runtime
+                if (assetReference != null && assetReference.IsValid())
+                {
+                    await assetReference.LoadSceneAsync(UnityEngine.SceneManagement.LoadSceneMode.Additive).Task;
+                }
+            }
+            
+            
+
+            async Task UnloadChunk(AssetReference assetReference)
+            {
+#if UNITY_EDITOR
+                if (!Application.isPlaying)
+                {
+                    // Unload scene in Editor mode
+                    var scenePath = UnityEditor.AssetDatabase.GetAssetPath(assetReference.editorAsset);
+                    var scene = UnityEditor.SceneManagement.EditorSceneManager.GetSceneByPath(scenePath);
+                    if (scene.isLoaded)
+                    {
+                        // Save the scene before unloading
+                        if (scene.isDirty) UnityEditor.SceneManagement.EditorSceneManager.SaveScene(scene);
+
+                        // Close the scene
+                        UnityEditor.SceneManagement.EditorSceneManager.CloseScene(scene, true);
+                    }
+
+                    return;
+                }
+#endif
+                // Unload scene in runtime
+                if (assetReference != null && assetReference.IsValid())
+                {
+                    await UnityEngine.AddressableAssets.Addressables.UnloadSceneAsync(assetReference.OperationHandle).Task;
+                }
+            }
+
         }
-        
-        
+
+
+
         #endregion
 
         
