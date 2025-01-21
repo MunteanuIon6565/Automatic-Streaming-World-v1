@@ -53,7 +53,6 @@ namespace AUTOMATIC_WORLD_STREAMING
         [Space(MEDIUM_SIZE_SPACE)][Header(HEADER_SEPARATOR)] 
         [Header("<color=cyan>Editor Settings")] 
         public float LoopTimeAutomaticSortEditor = 60f;
-        public float LoopTimeCheckDistanceEditor = 2f;
         [field: SerializeField,Tooltip("Min distance to spawn Chunk")] 
         public float MinDistanceShowEditor{ get; private set; } = 1000;
         [field: SerializeField,Tooltip("Max distance to delete Chunk")] 
@@ -62,7 +61,7 @@ namespace AUTOMATIC_WORLD_STREAMING
         public Vector3Int CellsAroundSceneCameraToShow = Vector3Int.one;
         
         [Space(LARGE_SIZE_SPACE)][Header(HEADER_SEPARATOR)] 
-        [Header("<color=yellow>For use from down features tick true -> UseStreamingBySizeObjects")]
+        //[Header("<color=yellow>For use from down features tick true -> UseStreamingBySizeObjects")]
         [Header("<color=yellow>When sort objects to chunks it will move just the last parent object from hierarchy with this settings.")]
         [Header(HEADER_SEPARATOR)] 
         [Header("Small Objects Sort Settings")]

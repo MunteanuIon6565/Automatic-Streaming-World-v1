@@ -3,7 +3,13 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 #endif
 
+using System;
+using Unity.Burst;
+using Unity.Collections;
+using Unity.Jobs;
+using Unity.Mathematics;
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -51,6 +57,10 @@ namespace AUTOMATIC_WORLD_STREAMING
                 return targetForStream;
             }
         }
+        
+        
+        /*private Dictionary<int, string> indexToStringMap = new Dictionary<int, string>();
+        private Dictionary<string, int> stringToIndexMap = new Dictionary<string, int>();*/
 
         #endregion
 
@@ -76,11 +86,14 @@ namespace AUTOMATIC_WORLD_STREAMING
             if (!TargetForStream || !AwsChunks || !AwsSettings)
             {
                 Debug.LogError("!TargetForStream || !AwsChunks || !AwsSettings is missing!");
-                
+
                 return;
             }
 
-            var chunkContainers = Application.isPlaying
+            // load scenes cu prioritate mai intai cele large dupa medii dupa mici
+            ProcessChunks();
+
+            /*var chunkContainers = Application.isPlaying
                 ? AwsChunks.ChunkContainers
                 : AwsChunks.RebuildListToDictionary();
 
@@ -97,7 +110,9 @@ namespace AUTOMATIC_WORLD_STREAMING
                 {
                     await UnloadChunk(chunk.SceneReference);
                 }
-            }
+            }*/
+
+
 
             float GetMinDistanceShow()
             {
@@ -128,12 +143,19 @@ namespace AUTOMATIC_WORLD_STREAMING
                     {
                         EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Additive);
                     }
+
                     return;
                 }
 #endif
-                if (assetReference != null && assetReference.IsValid())
+                if (assetReference != null /*&& assetReference.IsValid()*/) 
                 {
-                    await assetReference.LoadSceneAsync(UnityEngine.SceneManagement.LoadSceneMode.Additive).Task;
+                    try
+                    {
+                        await assetReference.LoadSceneAsync(UnityEngine.SceneManagement.LoadSceneMode.Additive).Task;
+                    }
+                    catch (Exception e)
+                    {
+                    }
                 }
             }
 
@@ -149,6 +171,7 @@ namespace AUTOMATIC_WORLD_STREAMING
                         if (scene.isDirty) EditorSceneManager.SaveScene(scene);
                         EditorSceneManager.CloseScene(scene, true);
                     }
+
                     return;
                 }
 #endif
@@ -157,6 +180,79 @@ namespace AUTOMATIC_WORLD_STREAMING
                     await Addressables.UnloadSceneAsync(assetReference.OperationHandle).Task;
                 }
             }
+
+
+            void ProcessChunks()
+            {
+                var chunkContainers = Application.isPlaying
+                    ? AwsChunks.ChunkContainers
+                    : AwsChunks.RebuildListToDictionary();
+
+                int chunkCount = chunkContainers.Count;
+
+                // Mapare între string și int
+                Dictionary<int, string> indexToStringMap = new Dictionary<int, string>(chunkCount);
+                Dictionary<string, int> stringToIndexMap = new Dictionary<string, int>(chunkCount);
+                int currentIndex = 0;
+
+                foreach (var key in chunkContainers.Keys)
+                {
+                    stringToIndexMap[key] = currentIndex;
+                    indexToStringMap[currentIndex] = key;
+                    currentIndex++;
+                }
+
+                NativeArray<float3> chunkPositions = new NativeArray<float3>(chunkCount, Allocator.TempJob);
+                NativeArray<int> chunkIndices = new NativeArray<int>(chunkCount, Allocator.TempJob);
+
+                // Estimăm o capacitate inițială rezonabilă pentru listele NativeList
+                NativeList<int> chunksToLoad = new NativeList<int>(chunkCount /*/ 2*/, Allocator.TempJob);
+                NativeList<int> chunksToUnload = new NativeList<int>(chunkCount /*/ 2*/, Allocator.TempJob);
+
+                float3 targetPosition = TargetForStream.position;
+                float minDistance = GetMinDistanceShow();
+                float maxDistance = GetMaxDistanceShow();
+
+                int index = 0;
+                foreach (var kvp in chunkContainers)
+                {
+                    chunkPositions[index] = (float3)kvp.Value.WorldPosition + (float3)OffsetOrigin;
+                    chunkIndices[index] = stringToIndexMap[kvp.Key];
+                    index++;
+                }
+
+                var chunkProcessingJob = new ChunkProcessingJob
+                {
+                    TargetPosition = targetPosition,
+                    MinDistance = minDistance,
+                    MaxDistance = maxDistance,
+                    ChunkPositions = chunkPositions,
+                    ChunksToLoad = chunksToLoad.AsParallelWriter(),
+                    ChunksToUnload = chunksToUnload.AsParallelWriter()
+                };
+
+                JobHandle jobHandle = chunkProcessingJob.Schedule(chunkCount, 64);
+                jobHandle.Complete();
+
+                foreach (var loadIndex in chunksToLoad)
+                {
+                    string chunkKey = indexToStringMap[loadIndex];
+                    LoadChunk(chunkContainers[chunkKey].SceneReference);
+                }
+
+                foreach (var unloadIndex in chunksToUnload)
+                {
+                    string chunkKey = indexToStringMap[unloadIndex];
+                    UnloadChunk(chunkContainers[chunkKey].SceneReference);
+                }
+
+                chunkPositions.Dispose();
+                chunkIndices.Dispose();
+                chunksToLoad.Dispose();
+                chunksToUnload.Dispose();
+            }
+
+
         }
 
         #endregion
@@ -196,5 +292,35 @@ namespace AUTOMATIC_WORLD_STREAMING
         }
 
         #endregion
+        
+        
+        
+        
+        [BurstCompile]
+        private struct ChunkProcessingJob : IJobParallelFor
+        {
+            public float3 TargetPosition;
+            public float MinDistance;
+            public float MaxDistance;
+
+            [ReadOnly] public NativeArray<float3> ChunkPositions;
+            [WriteOnly] public NativeList<int>.ParallelWriter ChunksToLoad;
+            [WriteOnly] public NativeList<int>.ParallelWriter ChunksToUnload;
+
+            public void Execute(int index)
+            {
+                float distance = math.distance(TargetPosition, ChunkPositions[index]);
+
+                if (distance < MinDistance)
+                {
+                    ChunksToLoad.AddNoResize(index);
+                }
+                else if (distance > MaxDistance)
+                {
+                    ChunksToUnload.AddNoResize(index);
+                }
+            }
+        }
+        
     }
 }

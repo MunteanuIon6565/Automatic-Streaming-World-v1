@@ -76,9 +76,6 @@ namespace AUTOMATIC_WORLD_STREAMING
                 string scenePath = scene.path;
                 if (scene.isLoaded)
                 {
-                    if (scene.isDirty)
-                        EditorSceneManager.SaveScene(scene);
-
                     EditorSceneManager.CloseScene(scene, true);
 
                     // Delete the scene asset
@@ -162,27 +159,42 @@ namespace AUTOMATIC_WORLD_STREAMING
             
             string targetScenePath = PATH_CREATE_CHUNKS + $"{currentSceneName}_{objectToMove.name}.unity";
             AssetReference sceneAssetReference = default;
+            Scene targetScene = default;
             
             
             if (!File.Exists(targetScenePath))
             {
-                var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Additive);
-                EditorSceneManager.SaveScene(scene, targetScenePath);
-                EditorSceneManager.CloseScene(scene, true);
+                targetScene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Additive);
+                EditorSceneManager.SaveScene(targetScene, targetScenePath);
+                //EditorSceneManager.CloseScene(scene, true);
 
                 sceneAssetReference = AddSceneToAddressables(targetScenePath);
             }
             else
             {
                 sceneAssetReference = new AssetReference(AssetDatabase.AssetPathToGUID(targetScenePath));
+
+                string scenePath = AssetDatabase.GetAssetPath(sceneAssetReference.editorAsset);
+                
+                /*targetScene = EditorSceneManager
+                    .OpenScene(
+                        AssetDatabase.GUIDToAssetPath(sceneAssetReference.AssetGUID), 
+                        OpenSceneMode.Additive
+                    );*/
+                
+                targetScene = EditorSceneManager.GetSceneByPath(scenePath);
+                if (!targetScene.isLoaded)
+                {
+                    targetScene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Additive);
+                }
             }
             
             
-            Scene targetScene = EditorSceneManager
+            /*Scene targetScene = EditorSceneManager
                 .OpenScene(
                     AssetDatabase.GUIDToAssetPath(sceneAssetReference.AssetGUID), 
                     OpenSceneMode.Additive
-                    );
+                    );*/
 
             
             if (objectToMove.scene.path != targetScenePath)
@@ -216,7 +228,7 @@ namespace AUTOMATIC_WORLD_STREAMING
                 
                 
                 EditorSceneManager.MarkSceneDirty(targetScene);
-                EditorSceneManager.SaveScene(targetScene);
+                //EditorSceneManager.SaveScene(targetScene);
             }
 
 
@@ -258,7 +270,7 @@ namespace AUTOMATIC_WORLD_STREAMING
             entry.SetLabel(AddressableLabelName, true);
 
             settings.SetDirty(AddressableAssetSettings.ModificationEvent.EntryMoved, entry, true);
-            AssetDatabase.SaveAssets();
+            //AssetDatabase.SaveAssets();
 
             Debug.Log($"Scena a fost adăugată la Addressables cu label-ul \"{AddressableLabelName}\" în grupul \"{AddressableGroupName}\".");
 
@@ -418,7 +430,7 @@ namespace AUTOMATIC_WORLD_STREAMING
             if (activeScene.IsValid())
             {
                 EditorSceneManager.MarkSceneDirty(activeScene);
-                EditorSceneManager.SaveScene(activeScene);
+                //EditorSceneManager.SaveScene(activeScene);
                 Debug.Log($"Scene '{activeScene.name}' has been marked as dirty.");
             }
             else
