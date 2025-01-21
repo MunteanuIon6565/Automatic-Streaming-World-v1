@@ -49,7 +49,7 @@ namespace AUTOMATIC_WORLD_STREAMING
         #region MAIN FUNCTIONAL
 
         
-        [ContextMenu("Extract Chunk Objects From Scenes And Delete Scenes")]
+        [ContextMenu("2.Extract Chunk Objects From Scenes And Delete Scenes")]
         public void ExtractChunkObjectsFromScenesAndDeleteScenes()
         {
             var chunkDictionary = m_AllChunksInOneWorld.RebuildListToDictionary();
@@ -102,25 +102,25 @@ namespace AUTOMATIC_WORLD_STREAMING
 
 
 
-        [ContextMenu("SORT TO CHUNKS")]
+        [ContextMenu("1.SORT TO CHUNKS")]
         public void SortToChunksByTags()
         {
-            List<GameObject> chunkSimpleSort = null;
+            /*List<GameObject> chunkSimpleSort = null;*/
             List<GameObject> chunkSmallSort = null;
             List<GameObject> chunkMediumSort = null;
             List<GameObject> chunkLargeSort = null;
             
-            if (!m_aws_Settings.UseStreamingBySizeObjects) 
+            /*if (!m_aws_Settings.UseStreamingBySizeObjects) 
                 chunkSimpleSort = SortToChunksByTags(m_aws_Settings.AllUnityTagsForSortInSimpleMode, SIMPLE_SORT_NAME);
             else
-            {
+            {*/
                 chunkLargeSort = SortToChunksByTags(m_aws_Settings.UnityTagsLargeObjects, LARGE_OBJECT_NAME);
                 chunkMediumSort = SortToChunksByTags(m_aws_Settings.UnityTagsMediumObjects, MEDIUM_OBJECT_NAME);
                 chunkSmallSort = SortToChunksByTags(m_aws_Settings.UnityTagsSmallObjects, SMALL_OBJECT_NAME);
-            }
+            /*}*/
 
             
-            MoveObjectToSortChunkMini(chunkSimpleSort);
+            /*MoveObjectToSortChunkMini(chunkSimpleSort);*/
             MoveObjectToSortChunkMini(chunkLargeSort);
             MoveObjectToSortChunkMini(chunkMediumSort);
             MoveObjectToSortChunkMini(chunkSmallSort);

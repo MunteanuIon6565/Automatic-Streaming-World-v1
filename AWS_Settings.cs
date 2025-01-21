@@ -27,11 +27,11 @@ namespace AUTOMATIC_WORLD_STREAMING
         [field:  SerializeField, Header(HEADER_SEPARATOR), Header("Chunk Settings"), Tooltip("!For sort is used pivot point from objects.!")] 
         public Vector3 ChunkSize { get; private set; } = new Vector3(100, 100, 100);
         
-        [field:  SerializeField, /*Header("<color=yellow>Before change this, Move All chunk in main scene</color>"),*/ Tooltip("For sort objects by layer data method.(Small, Medium, Large objects.)")]
-        public bool UseStreamingBySizeObjects { get; private set; } = false;
+        /*[field:  SerializeField, /*Header("<color=yellow>Before change this, Move All chunk in main scene</color>"),#1# Tooltip("For sort objects by layer data method.(Small, Medium, Large objects.)")]
+        public bool UseStreamingBySizeObjects { get; private set; } = false;*/
 
         [SerializeField, Tooltip("It use for sort if <b>UseStreamingBySizeObjects</b> is false.")] 
-        private string[] defaultExcludedTagsForSortInSimpleMode = { "MainCamera","EditorOnly" };
+        private string[] defaultExcludedTagsForSort = { "MainCamera","EditorOnly" };
         
         [Space(MEDIUM_SIZE_SPACE)] [Header(HEADER_SEPARATOR)] [Header("<b>Runtime Settings")] 
         public float LoopTimeCheckDistance = 5f;
@@ -78,7 +78,7 @@ namespace AUTOMATIC_WORLD_STREAMING
         
         
         public string[] AllUnityTagsForSortInSimpleMode => InternalEditorUtility.tags
-            .Where(tag => !defaultExcludedTagsForSortInSimpleMode.Contains(tag))
+            .Where(tag => !defaultExcludedTagsForSort.Contains(tag))
             .ToArray();
         
         
@@ -119,7 +119,7 @@ namespace AUTOMATIC_WORLD_STREAMING
         private void ResetArrayUnityTagsSmallObjects()
         {
             UnityTagsSmallObjects = InternalEditorUtility.tags
-                .Where(tag => !defaultExcludedTagsForSortInSimpleMode.Contains(tag))
+                .Where(tag => !defaultExcludedTagsForSort.Contains(tag))
                 .ToArray();
         }
         
@@ -127,14 +127,14 @@ namespace AUTOMATIC_WORLD_STREAMING
         private void ResetArrayUnityTagsMediumObjects()
         {
             UnityTagsMediumObjects = InternalEditorUtility.tags
-                .Where(tag => !defaultExcludedTagsForSortInSimpleMode.Contains(tag))
+                .Where(tag => !defaultExcludedTagsForSort.Contains(tag))
                 .ToArray();
         }
         [ContextMenu("Reset Array UnityTagsLargeObjects")]
         private void ResetArrayUnityTagsLargeObjects()
         {
             UnityTagsLargeObjects = InternalEditorUtility.tags
-                .Where(tag => !defaultExcludedTagsForSortInSimpleMode.Contains(tag))
+                .Where(tag => !defaultExcludedTagsForSort.Contains(tag))
                 .ToArray();
         }
 
