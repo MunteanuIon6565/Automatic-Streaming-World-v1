@@ -37,7 +37,7 @@ namespace AUTOMATIC_WORLD_STREAMING
         #region FIELDS
 
         
-        [Header("<color=yellow>Set tag -> EditorOnly on objects which don't need to sort in chunks.(Sun,Player,Camera...)</color>")]
+        [Header("<color=yellow>Set tag <color=white>EditorOnly</color> on objects which don't need to sort in chunks.\\\n(Sun,Player,Camera...) You can change these tags in AWS_Settings file.</color>")]
         [SerializeField] private AWS_Settings m_aws_Settings;
         [SerializeField] private AWS_AllChunksInOneWorld m_AllChunksInOneWorld;
         private Vector3 m_chunkSize => m_aws_Settings.ChunkSize;
@@ -48,8 +48,60 @@ namespace AUTOMATIC_WORLD_STREAMING
         
         
         #region MAIN FUNCTIONAL
+
         
-        
+        [ContextMenu("Extract Chunk Objects From Scenes And Delete Scenes")]
+        public void ExtractChunkObjectsFromScenesAndDeleteScenes()
+        {
+            var chunkDictionary = m_AllChunksInOneWorld.RebuildListToDictionary();
+
+            var openedScenes = new List<Scene>();
+
+            // Open all scenes additively
+            foreach (var item in chunkDictionary)
+            {
+                string scenePath = AssetDatabase.GUIDToAssetPath(item.Value.SceneReference.AssetGUID);
+                var scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Additive);
+                openedScenes.Add(scene);
+            }
+
+            // Move chunk objects to the current scene
+            foreach (var chunk in FindObjectsByType<AWS_Chunk>(FindObjectsSortMode.None))
+            {
+                SceneManager.MoveGameObjectToScene(chunk.gameObject, gameObject.scene);
+            }
+
+            // Delete the opened scenes after moving objects
+            foreach (var scene in openedScenes)
+            {
+                string scenePath = scene.path;
+                if (scene.isLoaded)
+                {
+                    if (scene.isDirty)
+                        EditorSceneManager.SaveScene(scene);
+
+                    EditorSceneManager.CloseScene(scene, true);
+
+                    // Delete the scene asset
+                    if (!string.IsNullOrEmpty(scenePath))
+                    {
+                        AssetDatabase.DeleteAsset(scenePath);
+                        Debug.Log($"Scena '{scenePath}' a fost ștearsă.");
+                    }
+                }
+            }
+            
+            m_AllChunksInOneWorld.chunkEntries.Clear();
+            m_AllChunksInOneWorld.RebuildListToDictionary();
+
+            EditorUtility.SetDirty(m_AllChunksInOneWorld);
+
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+        }
+
+
+
         [ContextMenu("SORT TO CHUNKS")]
         public void SortToChunksByTags()
         {
@@ -180,12 +232,10 @@ namespace AUTOMATIC_WORLD_STREAMING
             m_AllChunksInOneWorld.RebuildDictionaryToList(); 
             
             
-#if UNITY_EDITOR
             EditorUtility.SetDirty(m_AllChunksInOneWorld);
 
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
-#endif
         }
         
         

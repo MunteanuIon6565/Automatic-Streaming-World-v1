@@ -11,9 +11,10 @@ namespace AUTOMATIC_WORLD_STREAMING
         menuName = "AUTOMATIC WORLD STREAMING/ASW All Chunks In One World", order = 0)]
     public class AWS_AllChunksInOneWorld : ScriptableObject
     {
+        [Header("<color=yellow>DON'T CHANGE THIS LIST. (ONLY EXPERT USERS)</color>")]
         [SerializeField] public List<ChunkEntry> chunkEntries = new List<ChunkEntry>();
         
-        [SerializeField] public Dictionary<string, ChunkContainer> ChunkContainers = new Dictionary<string, ChunkContainer>();
+        public Dictionary<string, ChunkContainer> ChunkContainers = new Dictionary<string, ChunkContainer>();
         
         
         
