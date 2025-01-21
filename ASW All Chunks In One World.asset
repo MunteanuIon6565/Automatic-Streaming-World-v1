@@ -85,3 +85,12 @@ MonoBehaviour:
         m_SubObjectGUID: 
         m_SubObjectType: 
         m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(1, 0, -1)
+    Value:
+      WorldPosition: {x: 75, y: 25, z: -25}
+      SceneReference:
+        m_AssetGUID: 0ef8dce4831aade46990d208947ad2f4
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0

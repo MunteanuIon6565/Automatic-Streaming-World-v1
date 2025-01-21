@@ -37,6 +37,7 @@ namespace AUTOMATIC_WORLD_STREAMING
         #region FIELDS
 
         
+        [Header("<color=yellow>Set tag -> EditorOnly on objects which don't need to sort in chunks.(Sun,Player,Camera...)</color>")]
         [SerializeField] private AWS_Settings m_aws_Settings;
         [SerializeField] private AWS_AllChunksInOneWorld m_AllChunksInOneWorld;
         private Vector3 m_chunkSize => m_aws_Settings.ChunkSize;
@@ -147,7 +148,8 @@ namespace AUTOMATIC_WORLD_STREAMING
                     {
                         if (item.name.Equals(nameObjectToMove))
                             for (int i = 0; i < item.transform.childCount; i++)
-                                item.transform.GetChild(i).SetParent(objectToMove.transform);
+                                if (item.transform.parent.Equals(objectToMove.transform)) 
+                                    item.transform.GetChild(i).SetParent(objectToMove.transform);
                     }
                     
                     objectToMove.name = nameObjectToMove;

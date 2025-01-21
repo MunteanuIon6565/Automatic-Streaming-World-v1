@@ -1,214 +1,199 @@
 #if UNITY_EDITOR
-            
 using UnityEditor;
-
+using UnityEditor.SceneManagement;
 #endif
 
 using System.Collections;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-
-
 namespace AUTOMATIC_WORLD_STREAMING
 {
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
     [RequireComponent(typeof(AWS_ChunksSorter))]
     [ExecuteAlways]
-    #endif
+#endif
     public class AWS_WorldStreamManager : MonoBehaviour
     {
-        
         #region FIELDS
-        
-        
-        public static AWS_WorldStreamManager Instance = null;
-        public static Vector3 OffsetOrigin = Vector3.zero;
-        
-        [field: SerializeField] 
-        public AWS_Settings m_aws_Settings { get; private set; }
-        [field: SerializeField] 
-        public AWS_AllChunksInOneWorld m_aws_Chunks { get; private set; }
-        [SerializeField] 
-        private bool m_autoInitializeInAwake = true;
-        
-        [SerializeField, Tooltip("By default is MainCamera")] 
-        private Transform m_targetForStream;
+
+        public static AWS_WorldStreamManager Instance { get; private set; } = null;
+        public static Vector3 OffsetOrigin { get; private set; } = Vector3.zero;
+
+        [field: SerializeField]
+        public AWS_Settings AwsSettings { get; private set; }
+
+        [field: SerializeField]
+        public AWS_AllChunksInOneWorld AwsChunks { get; private set; }
+ 
+        [SerializeField]
+        private bool autoInitializeInAwake = true;
+
+        [SerializeField, Tooltip("By default is MainCamera")]
+        private Transform targetForStream;
+
         public Transform TargetForStream
         {
             get
             {
                 if (Application.isPlaying)
                 {
-                    if (!m_targetForStream) 
-                        m_targetForStream = Camera.main.transform;
+                    if (!targetForStream)
+                        targetForStream = Camera.main?.transform;
                 }
-                else if (Application.isEditor && Camera.current)
+#if UNITY_EDITOR
+                else if (!Application.isPlaying && Camera.current)
                 {
                     return Camera.current.transform;
                 }
-                
-                return m_targetForStream;
+#endif
+                return targetForStream;
             }
         }
 
         #endregion
 
-
-
         #region METHODS
-        
-        
-        public void Initialize(Transform targetForStream = null)
+
+        public void Initialize(Transform customTargetForStream = null)
         {
-            if (Application.isPlaying && Instance == null)
+            if (Instance == null)
             {
                 Instance = this;
+                AwsChunks.RebuildListToDictionary();
+                if (customTargetForStream)
+                    targetForStream = customTargetForStream;
             }
             else if (Application.isPlaying)
             {
                 Destroy(this);
             }
-
-            m_aws_Chunks.RebuildListToDictionary();
-            
-            if (targetForStream) 
-                m_targetForStream = targetForStream;
         }
-
 
         private async void CheckStreamChunks()
         {
-            if (!TargetForStream) return;
-            
-            Dictionary<string, ChunkContainer> ChunkContainers = Application.isPlaying ? m_aws_Chunks.ChunkContainers : m_aws_Chunks.RebuildListToDictionary();
-            
-            // prioritate la large objects mai intai 
-            foreach (var item in ChunkContainers.Values)
+            if (!TargetForStream || !AwsChunks || !AwsSettings)
             {
-                float distance = Vector3.Distance(TargetForStream.position, item.WorldPosition + OffsetOrigin);
+                Debug.LogError("!TargetForStream || !AwsChunks || !AwsSettings is missing!");
+                
+                return;
+            }
 
-                if (distance <
-#if UNITY_EDITOR
-                        (Application.isPlaying ? m_aws_Settings.MinDistanceShow : m_aws_Settings.MinDistanceShowEditor)
-#else
-                             m_aws_Settings.MinDistanceShow
-#endif
-                   )
+            var chunkContainers = Application.isPlaying
+                ? AwsChunks.ChunkContainers
+                : AwsChunks.RebuildListToDictionary();
+
+            foreach (var chunk in chunkContainers.Values)
+            {
+                float distance = Vector3.Distance(TargetForStream.position, chunk.WorldPosition + OffsetOrigin);
+
+                if (distance < GetMinDistanceShow())
                 {
-                    await LoadChunk(item.SceneReference);
+                    await LoadChunk(chunk.SceneReference);
                 }
-                else if (distance > 
-#if UNITY_EDITOR
-                             (Application.isPlaying ? m_aws_Settings.MaxDistanceShow : m_aws_Settings.MaxDistanceShowEditor)
-#else
-                             m_aws_Settings.MaxDistanceShow
-#endif
-                        )
+                else if (distance > GetMaxDistanceShow())
                 {
-                    await UnloadChunk(item.SceneReference);
+                    await UnloadChunk(chunk.SceneReference);
                 }
             }
 
+            float GetMinDistanceShow()
+            {
+#if UNITY_EDITOR
+                return Application.isPlaying ? AwsSettings.MinDistanceShow : AwsSettings.MinDistanceShowEditor;
+#else
+                return AwsSettings.MinDistanceShow;
+#endif
+            }
 
+            float GetMaxDistanceShow()
+            {
+#if UNITY_EDITOR
+                return Application.isPlaying ? AwsSettings.MaxDistanceShow : AwsSettings.MaxDistanceShowEditor;
+#else
+                return AwsSettings.MaxDistanceShow;
+#endif
+            }
 
             async Task LoadChunk(AssetReference assetReference)
             {
 #if UNITY_EDITOR
                 if (!Application.isPlaying)
                 {
-                    // Load scene in Editor mode
-                    var scenePath = UnityEditor.AssetDatabase.GetAssetPath(assetReference.editorAsset);
-                    var scene = UnityEditor.SceneManagement.EditorSceneManager.GetSceneByPath(scenePath);
+                    string scenePath = AssetDatabase.GetAssetPath(assetReference.editorAsset);
+                    var scene = EditorSceneManager.GetSceneByPath(scenePath);
                     if (!scene.isLoaded)
                     {
-                        UnityEditor.SceneManagement.EditorSceneManager.OpenScene(scenePath,
-                            UnityEditor.SceneManagement.OpenSceneMode.Additive);
+                        EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Additive);
                     }
-
                     return;
                 }
 #endif
-                // Load scene in runtime
                 if (assetReference != null && assetReference.IsValid())
                 {
                     await assetReference.LoadSceneAsync(UnityEngine.SceneManagement.LoadSceneMode.Additive).Task;
                 }
             }
-            
-            
 
             async Task UnloadChunk(AssetReference assetReference)
             {
 #if UNITY_EDITOR
                 if (!Application.isPlaying)
                 {
-                    // Unload scene in Editor mode
-                    var scenePath = UnityEditor.AssetDatabase.GetAssetPath(assetReference.editorAsset);
-                    var scene = UnityEditor.SceneManagement.EditorSceneManager.GetSceneByPath(scenePath);
+                    string scenePath = AssetDatabase.GetAssetPath(assetReference.editorAsset);
+                    var scene = EditorSceneManager.GetSceneByPath(scenePath);
                     if (scene.isLoaded)
                     {
-                        // Save the scene before unloading
-                        if (scene.isDirty) UnityEditor.SceneManagement.EditorSceneManager.SaveScene(scene);
-
-                        // Close the scene
-                        UnityEditor.SceneManagement.EditorSceneManager.CloseScene(scene, true);
+                        if (scene.isDirty) EditorSceneManager.SaveScene(scene);
+                        EditorSceneManager.CloseScene(scene, true);
                     }
-
                     return;
                 }
 #endif
-                // Unload scene in runtime
                 if (assetReference != null && assetReference.IsValid())
                 {
                     await Addressables.UnloadSceneAsync(assetReference.OperationHandle).Task;
                 }
             }
-
         }
-
-
 
         #endregion
 
-        
         #region UNITY METHODS
-
-
-        private IEnumerator Start()
-        {
-            WaitForSeconds waitForSeconds = new WaitForSeconds(m_aws_Settings.LoopTimeCheckDistance);
-
-            while (Application.isPlaying)
-            {
-                CheckStreamChunks();
-
-                yield return waitForSeconds;
-            }
-        }
 
         private void Awake()
         {
-            if (m_autoInitializeInAwake) Initialize();
+            if (autoInitializeInAwake)
+                Initialize();
+        }
+
+        private IEnumerator Start()
+        {
+            var waitForSeconds = new WaitForSeconds(AwsSettings.LoopTimeCheckDistance);
+            while (Application.isPlaying)
+            {
+                CheckStreamChunks();
+                yield return waitForSeconds;
+            }
         }
 
         private void OnEnable()
         {
 #if UNITY_EDITOR
-            if (!Application.isPlaying) EditorApplication.update += CheckStreamChunks;
+            if (!Application.isPlaying)
+                EditorApplication.update += CheckStreamChunks;
 #endif
         }
 
         private void OnDisable()
         {
 #if UNITY_EDITOR
-            if (!Application.isPlaying) EditorApplication.update -= CheckStreamChunks;
+            if (!Application.isPlaying)
+                EditorApplication.update -= CheckStreamChunks;
 #endif
         }
-        
-        
+
         #endregion
     }
 }
