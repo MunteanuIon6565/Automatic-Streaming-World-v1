@@ -21,8 +21,11 @@ MonoBehaviour:
   <MinDistanceShow>k__BackingField: 100
   <MaxDistanceShow>k__BackingField: 110
   LoopTimeAutomaticSortEditor: 30
+  LoopTimeCheckDistanceEditor: 2
+  <MinDistanceShowEditor>k__BackingField: 1000
+  <MaxDistanceShowEditor>k__BackingField: 1100
   ShowChunkSquareGizmosAroundSceneCamera: 1
-  CellsAroundSceneCameraToShow: {x: 1, y: 1, z: 1}
+  CellsAroundSceneCameraToShow: {x: 0, y: 0, z: 0}
   UnityTagsSmallObjects:
   - Untagged
   - Wheel

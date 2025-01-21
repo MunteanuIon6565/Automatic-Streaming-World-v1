@@ -1,9 +1,16 @@
-using System;
+#if UNITY_EDITOR
+            
+using UnityEditor;
+
+#endif
+
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+
+
 
 namespace AUTOMATIC_WORLD_STREAMING
 {
@@ -33,8 +40,15 @@ namespace AUTOMATIC_WORLD_STREAMING
         {
             get
             {
-                if (!m_targetForStream) 
-                    m_targetForStream = Camera.main.transform;
+                if (Application.isPlaying)
+                {
+                    if (!m_targetForStream) 
+                        m_targetForStream = Camera.main.transform;
+                }
+                else if (Application.isEditor && Camera.current)
+                {
+                    return Camera.current.transform;
+                }
                 
                 return m_targetForStream;
             }
@@ -67,6 +81,8 @@ namespace AUTOMATIC_WORLD_STREAMING
 
         private async void CheckStreamChunks()
         {
+            if (!TargetForStream) return;
+            
             Dictionary<string, ChunkContainer> ChunkContainers = Application.isPlaying ? m_aws_Chunks.ChunkContainers : m_aws_Chunks.RebuildListToDictionary();
             
             // prioritate la large objects mai intai 
@@ -74,19 +90,31 @@ namespace AUTOMATIC_WORLD_STREAMING
             {
                 float distance = Vector3.Distance(TargetForStream.position, item.WorldPosition + OffsetOrigin);
 
-                if (distance < m_aws_Settings.MinDistanceShow)
+                if (distance <
+#if UNITY_EDITOR
+                        (Application.isPlaying ? m_aws_Settings.MinDistanceShow : m_aws_Settings.MinDistanceShowEditor)
+#else
+                             m_aws_Settings.MinDistanceShow
+#endif
+                   )
                 {
                     // Load chunk
                     await LoadChunk(item.SceneReference);
                 }
-                else if (distance > m_aws_Settings.MaxDistanceShow)
+                else if (distance > 
+#if UNITY_EDITOR
+                             (Application.isPlaying ? m_aws_Settings.MaxDistanceShow : m_aws_Settings.MaxDistanceShowEditor)
+#else
+                             m_aws_Settings.MaxDistanceShow
+#endif
+                        )
                 {
                     // Unload chunk
                     await UnloadChunk(item.SceneReference);
                 }
             }
-            
-            
+
+
 
             async Task LoadChunk(AssetReference assetReference)
             {
@@ -137,7 +165,7 @@ namespace AUTOMATIC_WORLD_STREAMING
                 // Unload scene in runtime
                 if (assetReference != null && assetReference.IsValid())
                 {
-                    await UnityEngine.AddressableAssets.Addressables.UnloadSceneAsync(assetReference.OperationHandle).Task;
+                    await Addressables.UnloadSceneAsync(assetReference.OperationHandle).Task;
                 }
             }
 
@@ -155,24 +183,31 @@ namespace AUTOMATIC_WORLD_STREAMING
         {
             WaitForSeconds waitForSeconds = new WaitForSeconds(m_aws_Settings.LoopTimeCheckDistance);
 
-            while (true)
+            while (Application.isPlaying)
             {
                 CheckStreamChunks();
 
-                yield return
-#if UNITY_EDITOR
-                    Application.isPlaying
-                        ? waitForSeconds
-                        : new WaitForSeconds(m_aws_Settings.LoopTimeCheckDistanceEditor);
-#else
-                waitForSeconds;
-#endif
+                yield return waitForSeconds;
             }
         }
 
         private void Awake()
         {
             if (m_autoInitializeInAwake) Initialize();
+        }
+
+        private void OnEnable()
+        {
+#if UNITY_EDITOR
+            if (!Application.isPlaying) EditorApplication.update += CheckStreamChunks;
+#endif
+        }
+
+        private void OnDisable()
+        {
+#if UNITY_EDITOR
+            if (!Application.isPlaying) EditorApplication.update -= CheckStreamChunks;
+#endif
         }
         
         

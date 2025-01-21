@@ -37,9 +37,9 @@ namespace AUTOMATIC_WORLD_STREAMING
         
         [Space(MEDIUM_SIZE_SPACE)] [Header(HEADER_SEPARATOR)] [Header("<b>Runtime Settings")] 
         public float LoopTimeCheckDistance = 5f;
-        [field: SerializeField,Tooltip("Min distance to spawn Prefab")] 
+        [field: SerializeField,Tooltip("Min distance to spawn Chunk")] 
         public float MinDistanceShow{ get; private set; } = 100;
-        [field: SerializeField,Tooltip("Max distance to delete Prefab")] 
+        [field: SerializeField,Tooltip("Max distance to delete Chunk")] 
         public float MaxDistanceShow{ get; private set; } = 110;
 
         
@@ -57,6 +57,10 @@ namespace AUTOMATIC_WORLD_STREAMING
         [Header("<color=cyan>Editor Settings")] 
         public float LoopTimeAutomaticSortEditor = 60f;
         public float LoopTimeCheckDistanceEditor = 2f;
+        [field: SerializeField,Tooltip("Min distance to spawn Chunk")] 
+        public float MinDistanceShowEditor{ get; private set; } = 1000;
+        [field: SerializeField,Tooltip("Max distance to delete Chunk")] 
+        public float MaxDistanceShowEditor{ get; private set; } = 1100;
         public bool ShowChunkSquareGizmosAroundSceneCamera = true;
         public Vector3Int CellsAroundSceneCameraToShow = Vector3Int.one;
         
@@ -100,6 +104,17 @@ namespace AUTOMATIC_WORLD_STREAMING
             
             if (0 > MinDistanceShow) 
                 MinDistanceShow = 0;
+            
+            
+            // Editor
+            if (MinDistanceShowEditor > MaxDistanceShowEditor) 
+                MaxDistanceShowEditor = MinDistanceShowEditor;
+            
+            if (0 > MaxDistanceShowEditor) 
+                MaxDistanceShowEditor = 0;
+            
+            if (0 > MinDistanceShowEditor) 
+                MinDistanceShowEditor = 0;
         }
         
         
