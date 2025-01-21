@@ -30,10 +30,8 @@ namespace AUTOMATIC_WORLD_STREAMING
         [field:  SerializeField, /*Header("<color=yellow>Before change this, Move All chunk in main scene</color>"),*/ Tooltip("For sort objects by layer data method.(Small, Medium, Large objects.)")]
         public bool UseStreamingBySizeObjects { get; private set; } = false;
 
-#if UNITY_EDITOR
         [SerializeField, Tooltip("It use for sort if <b>UseStreamingBySizeObjects</b> is false.")] 
         private string[] defaultExcludedTagsForSortInSimpleMode = { "MainCamera","EditorOnly" };
-#endif
         
         [Space(MEDIUM_SIZE_SPACE)] [Header(HEADER_SEPARATOR)] [Header("<b>Runtime Settings")] 
         public float LoopTimeCheckDistance = 5f;
@@ -46,11 +44,10 @@ namespace AUTOMATIC_WORLD_STREAMING
         #endregion
         
         
-        #region EDITOR ONLY
-#if UNITY_EDITOR
+        #region EDITOR
         
         
-        #region EDITOR ONLY FIELDS
+        #region EDITOR FIELDS
         
         
         [Space(MEDIUM_SIZE_SPACE)][Header(HEADER_SEPARATOR)] 
@@ -70,17 +67,14 @@ namespace AUTOMATIC_WORLD_STREAMING
         [Header(HEADER_SEPARATOR)] 
         [Header("Small Objects Sort Settings")]
         public string[] UnityTagsSmallObjects;
-        //public LayerMask LayersSmallObjects;
         
         [Space(MEDIUM_SIZE_SPACE)][Header(HEADER_SEPARATOR)] 
         [Header("Small Objects Sort Settings")]
         public string[] UnityTagsMediumObjects;
-        //public LayerMask LayersMediumObjects;
         
         [Space(MEDIUM_SIZE_SPACE)][Header(HEADER_SEPARATOR)] 
         [Header("Small Objects Sort Settings")]
         public string[] UnityTagsLargeObjects;
-        //public LayerMask LayersLargeObjects;
         
         
         public string[] AllUnityTagsForSortInSimpleMode => InternalEditorUtility.tags
@@ -91,6 +85,7 @@ namespace AUTOMATIC_WORLD_STREAMING
         #endregion
 
 
+#if UNITY_EDITOR
         #region EDITOR ONLY METHODS
         
         

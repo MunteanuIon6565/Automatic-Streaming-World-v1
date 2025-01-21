@@ -98,7 +98,6 @@ namespace AUTOMATIC_WORLD_STREAMING
 #endif
                    )
                 {
-                    // Load chunk
                     await LoadChunk(item.SceneReference);
                 }
                 else if (distance > 
@@ -109,7 +108,6 @@ namespace AUTOMATIC_WORLD_STREAMING
 #endif
                         )
                 {
-                    // Unload chunk
                     await UnloadChunk(item.SceneReference);
                 }
             }
