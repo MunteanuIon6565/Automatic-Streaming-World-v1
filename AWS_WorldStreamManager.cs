@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.SceneManagement;
 
 namespace AUTOMATIC_WORLD_STREAMING
 {
@@ -91,26 +92,7 @@ namespace AUTOMATIC_WORLD_STREAMING
             }
 
             // load scenes cu prioritate mai intai cele large dupa medii dupa mici
-            ProcessChunks();
-
-            /*var chunkContainers = Application.isPlaying
-                ? AwsChunks.ChunkContainers
-                : AwsChunks.RebuildListToDictionary();
-
-            // load scenes cu prioritate mai intai cele large dupa medii dupa mici
-            foreach (var chunk in chunkContainers.Values)
-            {
-                float distance = Vector3.Distance(TargetForStream.position, chunk.WorldPosition + OffsetOrigin);
-
-                if (distance < GetMinDistanceShow())
-                {
-                    await LoadChunk(chunk.SceneReference);
-                }
-                else if (distance > GetMaxDistanceShow())
-                {
-                    await UnloadChunk(chunk.SceneReference);
-                }
-            }*/
+            ProcessChunksJob();
 
 
 
@@ -147,15 +129,9 @@ namespace AUTOMATIC_WORLD_STREAMING
                     return;
                 }
 #endif
-                if (assetReference != null /*&& assetReference.IsValid()*/) 
+                if (assetReference != null && !IsSceneLoaded(assetReference) /*&& assetReference.IsValid()*/) 
                 {
-                    try
-                    {
-                        await assetReference.LoadSceneAsync(UnityEngine.SceneManagement.LoadSceneMode.Additive).Task;
-                    }
-                    catch (Exception e)
-                    {
-                    }
+                    await assetReference.LoadSceneAsync(LoadSceneMode.Additive).Task;
                 }
             }
 
@@ -182,7 +158,7 @@ namespace AUTOMATIC_WORLD_STREAMING
             }
 
 
-            void ProcessChunks()
+            void ProcessChunksJob()
             {
                 var chunkContainers = Application.isPlaying
                     ? AwsChunks.ChunkContainers
@@ -205,9 +181,8 @@ namespace AUTOMATIC_WORLD_STREAMING
                 NativeArray<float3> chunkPositions = new NativeArray<float3>(chunkCount, Allocator.TempJob);
                 NativeArray<int> chunkIndices = new NativeArray<int>(chunkCount, Allocator.TempJob);
 
-                // Estimăm o capacitate inițială rezonabilă pentru listele NativeList
-                NativeList<int> chunksToLoad = new NativeList<int>(chunkCount /*/ 2*/, Allocator.TempJob);
-                NativeList<int> chunksToUnload = new NativeList<int>(chunkCount /*/ 2*/, Allocator.TempJob);
+                NativeList<int> chunksToLoad = new NativeList<int>(chunkCount, Allocator.TempJob);
+                NativeList<int> chunksToUnload = new NativeList<int>(chunkCount, Allocator.TempJob);
 
                 float3 targetPosition = TargetForStream.position;
                 float minDistance = GetMinDistanceShow();
@@ -251,9 +226,67 @@ namespace AUTOMATIC_WORLD_STREAMING
                 chunksToLoad.Dispose();
                 chunksToUnload.Dispose();
             }
+            
+            
+            bool IsSceneLoaded(AssetReference sceneReference)
+            {
+                string sceneName = GetSceneNameFromAssetReference(sceneReference);
 
+                if (string.IsNullOrEmpty(sceneName))
+                {
+                    Debug.LogWarning("Scene name could not be determined from the AssetReference.");
+                    return false;
+                }
+
+                for (int i = 0; i < SceneManager.sceneCount; i++)
+                {
+                    Scene loadedScene = SceneManager.GetSceneAt(i);
+                    if (loadedScene.name == sceneName)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            
+            string GetSceneNameFromAssetReference(AssetReference sceneRef)
+            {
+                string assetPath = sceneRef.AssetGUID;
+
+                string sceneName = System.IO.Path.GetFileNameWithoutExtension(AssetDatabase.GUIDToAssetPath(assetPath));
+                return sceneName;
+            }
 
         }
+        
+        
+        
+        
+        #if UNITY_EDITOR
+        
+        private void OnPlayModeStateChanged(PlayModeStateChange state)
+        {
+            if (state == PlayModeStateChange.ExitingEditMode)
+            {
+                UnloadUnusedScenes();
+            }
+            void UnloadUnusedScenes()
+            {
+                Scene activeScene = SceneManager.GetActiveScene();
+
+                for (int i = EditorSceneManager.sceneCount - 1; i >= 0; i--)
+                {
+                    Scene scene = EditorSceneManager.GetSceneAt(i);
+                    
+                    if (scene != activeScene && scene.isLoaded)
+                        EditorSceneManager.CloseScene(scene, true);
+                }
+            }
+        }
+        
+        #endif
+        
 
         #endregion
 
@@ -279,7 +312,10 @@ namespace AUTOMATIC_WORLD_STREAMING
         {
 #if UNITY_EDITOR
             if (!Application.isPlaying)
+            {
                 EditorApplication.update += CheckStreamChunks;
+                EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+            }
 #endif
         }
 
@@ -287,7 +323,10 @@ namespace AUTOMATIC_WORLD_STREAMING
         {
 #if UNITY_EDITOR
             if (!Application.isPlaying)
+            {
                 EditorApplication.update -= CheckStreamChunks;
+                EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+            }
 #endif
         }
 
