@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 
+using System;
 using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -164,7 +165,6 @@ namespace AUTOMATIC_WORLD_STREAMING
                 targetScene.name = chunkSceneName;
                 EditorSceneManager.SetActiveScene(currentActiveScene);
                 EditorSceneManager.SaveScene(targetScene, targetScenePath);
-                //EditorSceneManager.CloseScene(scene, true);
 
                 sceneAssetReference = AddSceneToAddressables(targetScenePath);
             }
@@ -211,9 +211,7 @@ namespace AUTOMATIC_WORLD_STREAMING
                     SceneManager.MoveGameObjectToScene(objectToMove, targetScene);
                 }
                 
-                
                 EditorSceneManager.MarkSceneDirty(targetScene);
-                //EditorSceneManager.SaveScene(targetScene);
             }
 
 
@@ -232,11 +230,61 @@ namespace AUTOMATIC_WORLD_STREAMING
             
             
             EditorUtility.SetDirty(m_AllChunksInOneWorld);
-
-            /*AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();*/
         }
         
+        
+        
+        public void BatchProcessAndSaveScenes()
+        {
+            if (Application.isPlaying)
+            {
+                Debug.LogError("Ieși din Play Mode înainte de a rula acest proces.");
+                return;
+            }
+
+            EditorUtility.DisplayProgressBar("Salvare Scene", "Pregătire pentru salvare batch...", 0.0f);
+
+            try
+            {
+                // Colectează toate scenele deschise
+                List<Scene> allOpenScenes = new List<Scene>();
+                for (int i = 0; i < EditorSceneManager.sceneCount; i++)
+                {
+                    Scene scene = EditorSceneManager.GetSceneAt(i);
+                    if (scene.IsValid() && scene.isLoaded)
+                    {
+                        allOpenScenes.Add(scene);
+                    }
+                }
+
+                // Marcare pentru modificări și salvare
+                for (int i = 0; i < allOpenScenes.Count; i++)
+                {
+                    Scene scene = allOpenScenes[i];
+                    EditorUtility.DisplayProgressBar("Salvare Scene", $"Salvez scena: {scene.name}", (float)i / allOpenScenes.Count);
+
+                    if (scene.isDirty)
+                    {
+                        EditorSceneManager.SaveScene(scene);
+                        Debug.Log($"Scena {scene.name} a fost salvată.");
+                    }
+                }
+
+                // Salvează modificările generale
+                AssetDatabase.SaveAssets();
+                AssetDatabase.Refresh();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"A apărut o eroare în timpul salvării scenelor: {ex.Message}");
+            }
+            finally
+            {
+                EditorUtility.ClearProgressBar();
+                Debug.Log("Procesul de salvare batch a fost finalizat.");
+            }
+        }
+
         
         
         private AssetReference AddSceneToAddressables(string scenePath)
@@ -255,7 +303,6 @@ namespace AUTOMATIC_WORLD_STREAMING
             entry.SetLabel(AddressableLabelName, true);
 
             settings.SetDirty(AddressableAssetSettings.ModificationEvent.EntryMoved, entry, true);
-            //AssetDatabase.SaveAssets();
 
             Debug.Log($"Scena a fost adăugată la Addressables cu label-ul \"{AddressableLabelName}\" în grupul \"{AddressableGroupName}\".");
 
