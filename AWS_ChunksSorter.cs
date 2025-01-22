@@ -102,35 +102,30 @@ namespace AUTOMATIC_WORLD_STREAMING
         [ContextMenu("1.SORT TO CHUNKS")]
         public void SortToChunksByTags()
         {
-            /*List<GameObject> chunkSimpleSort = null;*/
             List<GameObject> chunkSmallSort = null;
             List<GameObject> chunkMediumSort = null;
             List<GameObject> chunkLargeSort = null;
-            
-            /*if (!m_aws_Settings.UseStreamingBySizeObjects) 
-                chunkSimpleSort = SortToChunksByTags(m_aws_Settings.AllUnityTagsForSortInSimpleMode, SIMPLE_SORT_NAME);
-            else
-            {*/
-                chunkLargeSort = SortToChunksByTags(m_aws_Settings.UnityTagsLargeObjects, LARGE_OBJECT_NAME);
-                chunkMediumSort = SortToChunksByTags(m_aws_Settings.UnityTagsMediumObjects, MEDIUM_OBJECT_NAME);
-                chunkSmallSort = SortToChunksByTags(m_aws_Settings.UnityTagsSmallObjects, SMALL_OBJECT_NAME);
-            /*}*/
 
-            
-            /*MoveObjectToSortChunkMini(chunkSimpleSort);*/
+            chunkLargeSort = SortToChunksByTags(m_aws_Settings.UnityTagsLargeObjects, LARGE_OBJECT_NAME);
+            chunkMediumSort = SortToChunksByTags(m_aws_Settings.UnityTagsMediumObjects, MEDIUM_OBJECT_NAME);
+            chunkSmallSort = SortToChunksByTags(m_aws_Settings.UnityTagsSmallObjects, SMALL_OBJECT_NAME);
+
             MoveObjectToSortChunkMini(chunkLargeSort);
             MoveObjectToSortChunkMini(chunkMediumSort);
             MoveObjectToSortChunkMini(chunkSmallSort);
 
-            
+
             void MoveObjectToSortChunkMini(List<GameObject> chunkSort)
             {
                 if (chunkSort is { Count: > 0 })
                     for (int i = chunkSort.Count - 1; i >= 0; i--)
                         MoveObjectToSceneChunk(chunkSort[i]);
             }
-            
+
             MarkCurrentSceneDirty();
+
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
         }
 
 
@@ -154,10 +149,12 @@ namespace AUTOMATIC_WORLD_STREAMING
             
             
             
-            string currentScenePath = EditorSceneManager.GetActiveScene().path;
+            Scene currentActiveScene = EditorSceneManager.GetActiveScene();
+            string currentScenePath = currentActiveScene.path;
             string currentSceneName = Path.GetFileNameWithoutExtension(currentScenePath);
-            
-            string targetScenePath = PATH_CREATE_CHUNKS + $"{currentSceneName}_{objectToMove.name}.unity";
+
+            string chunkSceneName = $"{currentSceneName}_{objectToMove.name}.unity";
+            string targetScenePath = PATH_CREATE_CHUNKS + chunkSceneName;
             AssetReference sceneAssetReference = default;
             Scene targetScene = default;
             
@@ -165,6 +162,8 @@ namespace AUTOMATIC_WORLD_STREAMING
             if (!File.Exists(targetScenePath))
             {
                 targetScene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Additive);
+                targetScene.name = chunkSceneName;
+                EditorSceneManager.SetActiveScene(currentActiveScene);
                 EditorSceneManager.SaveScene(targetScene, targetScenePath);
                 //EditorSceneManager.CloseScene(scene, true);
 
@@ -176,25 +175,12 @@ namespace AUTOMATIC_WORLD_STREAMING
 
                 string scenePath = AssetDatabase.GetAssetPath(sceneAssetReference.editorAsset);
                 
-                /*targetScene = EditorSceneManager
-                    .OpenScene(
-                        AssetDatabase.GUIDToAssetPath(sceneAssetReference.AssetGUID), 
-                        OpenSceneMode.Additive
-                    );*/
-                
                 targetScene = EditorSceneManager.GetSceneByPath(scenePath);
                 if (!targetScene.isLoaded)
                 {
                     targetScene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Additive);
                 }
             }
-            
-            
-            /*Scene targetScene = EditorSceneManager
-                .OpenScene(
-                    AssetDatabase.GUIDToAssetPath(sceneAssetReference.AssetGUID), 
-                    OpenSceneMode.Additive
-                    );*/
 
             
             if (objectToMove.scene.path != targetScenePath)
@@ -248,8 +234,8 @@ namespace AUTOMATIC_WORLD_STREAMING
             
             EditorUtility.SetDirty(m_AllChunksInOneWorld);
 
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
+            /*AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();*/
         }
         
         

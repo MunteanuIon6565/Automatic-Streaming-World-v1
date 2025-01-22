@@ -13,245 +13,11 @@ MonoBehaviour:
   m_Name: ASW All Chunks In One World
   m_EditorClassIdentifier: 
   chunkEntries:
-  - Key: Small_Objects_Chunk_(-3, 6, -8)
-    Value:
-      WorldPosition: {x: -125, y: 325, z: -375}
-      SceneReference:
-        m_AssetGUID: 18b88fbbcf59d49419c2cc3c3966ca78
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-1, 6, -19)
-    Value:
-      WorldPosition: {x: -25, y: 325, z: -925}
-      SceneReference:
-        m_AssetGUID: bd57c5488483bc44380cd53609bbf7e4
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-5, 6, -4)
-    Value:
-      WorldPosition: {x: -225, y: 325, z: -175}
-      SceneReference:
-        m_AssetGUID: 513a432a26e5eb34593bdc211c5aa546
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-5, 6, -10)
-    Value:
-      WorldPosition: {x: -225, y: 325, z: -475}
-      SceneReference:
-        m_AssetGUID: c845f7b971238a24e8eebd72db07deed
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(2, 6, -19)
-    Value:
-      WorldPosition: {x: 125, y: 325, z: -925}
-      SceneReference:
-        m_AssetGUID: bebc1c8cfed982d4aa00640393d83cc3
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-1, 6, -23)
-    Value:
-      WorldPosition: {x: -25, y: 325, z: -1125}
-      SceneReference:
-        m_AssetGUID: 1592b64992bef2b40ba09a51d0303948
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(3, 6, -23)
-    Value:
-      WorldPosition: {x: 175, y: 325, z: -1125}
-      SceneReference:
-        m_AssetGUID: 68d8231b3b0fb9e4a9c4c713e06ab0c7
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(2, 6, -2)
-    Value:
-      WorldPosition: {x: 125, y: 325, z: -75}
-      SceneReference:
-        m_AssetGUID: cfe358b8bf3e4a9438f1512c601dd21b
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(3, 6, -19)
-    Value:
-      WorldPosition: {x: 175, y: 325, z: -925}
-      SceneReference:
-        m_AssetGUID: 43d9563a167206a4985057aff26591d5
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(2, 6, -8)
-    Value:
-      WorldPosition: {x: 125, y: 325, z: -375}
-      SceneReference:
-        m_AssetGUID: 5f23f82728c9be64c889328b7f45db81
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(4, 6, -4)
-    Value:
-      WorldPosition: {x: 225, y: 325, z: -175}
-      SceneReference:
-        m_AssetGUID: 532639fd6ae3cc74ea9ecf7ba3c95ef8
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
   - Key: Small_Objects_Chunk_(3, 6, -3)
     Value:
       WorldPosition: {x: 175, y: 325, z: -125}
       SceneReference:
-        m_AssetGUID: 3fe442a3062cda94e9a8d9ccee2ce3a9
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-4, 6, -19)
-    Value:
-      WorldPosition: {x: -175, y: 325, z: -925}
-      SceneReference:
-        m_AssetGUID: 16191f3d3b6658e48830d046236ff63e
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(2, 6, -1)
-    Value:
-      WorldPosition: {x: 125, y: 325, z: -25}
-      SceneReference:
-        m_AssetGUID: 76d335a7a01c9584fa51cd7c5f6fc5bf
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(0, 6, -19)
-    Value:
-      WorldPosition: {x: 25, y: 325, z: -925}
-      SceneReference:
-        m_AssetGUID: 534d8d00ed93bd74baae3d4fd5fd3514
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-5, 6, -2)
-    Value:
-      WorldPosition: {x: -225, y: 325, z: -75}
-      SceneReference:
-        m_AssetGUID: ee5f233980218054899e6eecf92df4e7
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(4, 6, -6)
-    Value:
-      WorldPosition: {x: 225, y: 325, z: -275}
-      SceneReference:
-        m_AssetGUID: 49803ae08eacadc458d1afccb43b285e
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-1, 6, -4)
-    Value:
-      WorldPosition: {x: -25, y: 325, z: -175}
-      SceneReference:
-        m_AssetGUID: 34aca96aa8fc992459d6c783fdaeac91
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(0, 6, -4)
-    Value:
-      WorldPosition: {x: 25, y: 325, z: -175}
-      SceneReference:
-        m_AssetGUID: d7a80b953265c3043afc7b4ab9824cf9
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(4, 6, -2)
-    Value:
-      WorldPosition: {x: 225, y: 325, z: -75}
-      SceneReference:
-        m_AssetGUID: d8ca109c3b7de3347939a28a6839e3bf
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(4, 6, -12)
-    Value:
-      WorldPosition: {x: 225, y: 325, z: -575}
-      SceneReference:
-        m_AssetGUID: 206f2d36d7bf45646866baef3cd2d98a
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-3, 6, -2)
-    Value:
-      WorldPosition: {x: -125, y: 325, z: -75}
-      SceneReference:
-        m_AssetGUID: fe921e3d00ce59143b680b4cf3ca43e6
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-2, 6, -12)
-    Value:
-      WorldPosition: {x: -75, y: 325, z: -575}
-      SceneReference:
-        m_AssetGUID: 1022976f69cfc65409c1d28a989a4bf7
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-3, 6, -1)
-    Value:
-      WorldPosition: {x: -125, y: 325, z: -25}
-      SceneReference:
-        m_AssetGUID: a15908c2f42b18948a8289fa73f7707f
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(3, 6, -2)
-    Value:
-      WorldPosition: {x: 175, y: 325, z: -75}
-      SceneReference:
-        m_AssetGUID: 21a14ad4abe872849b0d373d09b196af
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-4, 6, -3)
-    Value:
-      WorldPosition: {x: -175, y: 325, z: -125}
-      SceneReference:
-        m_AssetGUID: 26c07643c192683438e46a5ae29bf09c
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(3, 6, -6)
-    Value:
-      WorldPosition: {x: 175, y: 325, z: -275}
-      SceneReference:
-        m_AssetGUID: 00cfdf2d74257cc4f940dc47974dfca0
+        m_AssetGUID: c783fa69dae025845b4988bd4e5ba877
         m_SubObjectName: 
         m_SubObjectGUID: 
         m_SubObjectType: 
@@ -260,502 +26,7 @@ MonoBehaviour:
     Value:
       WorldPosition: {x: -75, y: 325, z: -925}
       SceneReference:
-        m_AssetGUID: ec88a66fefe33014594dacc3e09775d3
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(4, 6, -23)
-    Value:
-      WorldPosition: {x: 225, y: 325, z: -1125}
-      SceneReference:
-        m_AssetGUID: aa06975833073464abad8e4be0da370e
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-4, 6, -6)
-    Value:
-      WorldPosition: {x: -175, y: 325, z: -275}
-      SceneReference:
-        m_AssetGUID: e8caecac9c8ae7e469f65b2961604fc5
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-5, 6, -1)
-    Value:
-      WorldPosition: {x: -225, y: 325, z: -25}
-      SceneReference:
-        m_AssetGUID: 0e00db57e88cda34ba1269c68843c99b
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(4, 6, -15)
-    Value:
-      WorldPosition: {x: 225, y: 325, z: -725}
-      SceneReference:
-        m_AssetGUID: 89d779a66bbbcf24b9f80e4202a5328a
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(0, 6, -6)
-    Value:
-      WorldPosition: {x: 25, y: 325, z: -275}
-      SceneReference:
-        m_AssetGUID: f0a8a1ffaf43a9c438c6698b39ff5a3f
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-5, 6, -6)
-    Value:
-      WorldPosition: {x: -225, y: 325, z: -275}
-      SceneReference:
-        m_AssetGUID: 8657f920469095043b27690c9e02ec3e
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-3, 6, -3)
-    Value:
-      WorldPosition: {x: -125, y: 325, z: -125}
-      SceneReference:
-        m_AssetGUID: 42c4b83a0652dea4b817ba9331c2cbf6
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-1, 6, -2)
-    Value:
-      WorldPosition: {x: -25, y: 325, z: -75}
-      SceneReference:
-        m_AssetGUID: 4bdf60acf694cad419f3348c2bce53ca
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-2, 6, -15)
-    Value:
-      WorldPosition: {x: -75, y: 325, z: -725}
-      SceneReference:
-        m_AssetGUID: 603fa8fe3f517ff4abbb06908f67ba3a
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(4, 6, -3)
-    Value:
-      WorldPosition: {x: 225, y: 325, z: -125}
-      SceneReference:
-        m_AssetGUID: 03b9567674a3862418947a4dd5f3849e
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(2, 6, -12)
-    Value:
-      WorldPosition: {x: 125, y: 325, z: -575}
-      SceneReference:
-        m_AssetGUID: 80c9630eb595e8143b887bb05ffcf045
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-5, 6, -15)
-    Value:
-      WorldPosition: {x: -225, y: 325, z: -725}
-      SceneReference:
-        m_AssetGUID: a8f04afe343c85b48a6faf6cfba78a91
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-4, 6, -1)
-    Value:
-      WorldPosition: {x: -175, y: 325, z: -25}
-      SceneReference:
-        m_AssetGUID: 32d45c0ca7b8047418189736ff1bfa78
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-4, 6, -10)
-    Value:
-      WorldPosition: {x: -175, y: 325, z: -475}
-      SceneReference:
-        m_AssetGUID: a7dd9ca53737f914f910b2d7566f71cd
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-5, 6, -8)
-    Value:
-      WorldPosition: {x: -225, y: 325, z: -375}
-      SceneReference:
-        m_AssetGUID: 04d8308b8110e1945af77c2943ea6d0a
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-5, 6, -12)
-    Value:
-      WorldPosition: {x: -225, y: 325, z: -575}
-      SceneReference:
-        m_AssetGUID: f10e2fe3fa2e7764abc099099c5d4a6a
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(0, 6, -12)
-    Value:
-      WorldPosition: {x: 25, y: 325, z: -575}
-      SceneReference:
-        m_AssetGUID: c6edb7b1ed00a9948ae5f3329a6eca3b
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-3, 6, -4)
-    Value:
-      WorldPosition: {x: -125, y: 325, z: -175}
-      SceneReference:
-        m_AssetGUID: 12cbfb1f8d152ea429619dbc200b641c
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(3, 6, -10)
-    Value:
-      WorldPosition: {x: 175, y: 325, z: -475}
-      SceneReference:
-        m_AssetGUID: 1be0c500bf750694785e0a177c4b751e
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-3, 6, -15)
-    Value:
-      WorldPosition: {x: -125, y: 325, z: -725}
-      SceneReference:
-        m_AssetGUID: db15f5caa2a60884d994a13422a872b0
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(0, 6, -8)
-    Value:
-      WorldPosition: {x: 25, y: 325, z: -375}
-      SceneReference:
-        m_AssetGUID: 210db8b42d2e01c4e8c963c930353949
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(6, 6, -8)
-    Value:
-      WorldPosition: {x: 325, y: 325, z: -375}
-      SceneReference:
-        m_AssetGUID: d66e7071ecb4c2a4b817821b0e4a9809
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-2, 6, -8)
-    Value:
-      WorldPosition: {x: -75, y: 325, z: -375}
-      SceneReference:
-        m_AssetGUID: e62bb66ec6ba6834c896ab5dc8c44449
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(0, 6, -23)
-    Value:
-      WorldPosition: {x: 25, y: 325, z: -1125}
-      SceneReference:
-        m_AssetGUID: 07217c7014c0d7d4898f2a1d03724f3c
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(6, 6, -23)
-    Value:
-      WorldPosition: {x: 325, y: 325, z: -1125}
-      SceneReference:
-        m_AssetGUID: 096c3ee417adefc4ead71beff0fc0d1d
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(3, 6, -12)
-    Value:
-      WorldPosition: {x: 175, y: 325, z: -575}
-      SceneReference:
-        m_AssetGUID: b0bb50d8e88799c4cbed8a70fdc4175c
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-4, 6, -8)
-    Value:
-      WorldPosition: {x: -175, y: 325, z: -375}
-      SceneReference:
-        m_AssetGUID: 449ead7862bb8804e997e9776a022449
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-3, 6, -10)
-    Value:
-      WorldPosition: {x: -125, y: 325, z: -475}
-      SceneReference:
-        m_AssetGUID: c652bf70d3eb00e48b6e8d199965dd58
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(2, 6, -4)
-    Value:
-      WorldPosition: {x: 125, y: 325, z: -175}
-      SceneReference:
-        m_AssetGUID: 4ccae5a9e1308e0429e1cbc4e67ce226
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-3, 6, -12)
-    Value:
-      WorldPosition: {x: -125, y: 325, z: -575}
-      SceneReference:
-        m_AssetGUID: e973884dcb5839445b9bd2b56506fee9
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(6, 6, -12)
-    Value:
-      WorldPosition: {x: 325, y: 325, z: -575}
-      SceneReference:
-        m_AssetGUID: 6243d67d386f2c142b568e133990ae73
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-2, 6, -10)
-    Value:
-      WorldPosition: {x: -75, y: 325, z: -475}
-      SceneReference:
-        m_AssetGUID: 1168a83d4dc18544687ac0709cdb219e
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(2, 6, -10)
-    Value:
-      WorldPosition: {x: 125, y: 325, z: -475}
-      SceneReference:
-        m_AssetGUID: 44486ded4c2a11c418e5ff16678f0e10
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(6, 6, -4)
-    Value:
-      WorldPosition: {x: 325, y: 325, z: -175}
-      SceneReference:
-        m_AssetGUID: 80f9c25c455f68e47aebce3f2739971b
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-2, 6, -6)
-    Value:
-      WorldPosition: {x: -75, y: 325, z: -275}
-      SceneReference:
-        m_AssetGUID: 4db7637d45bc466499f4544eca0b4fad
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-5, 6, -19)
-    Value:
-      WorldPosition: {x: -225, y: 325, z: -925}
-      SceneReference:
-        m_AssetGUID: 81205a7dc67ebbc42b31ececd3c27818
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(0, 6, -3)
-    Value:
-      WorldPosition: {x: 25, y: 325, z: -125}
-      SceneReference:
-        m_AssetGUID: a6ddeda9d3751e5438b4e802b5fd7440
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(4, 6, -8)
-    Value:
-      WorldPosition: {x: 225, y: 325, z: -375}
-      SceneReference:
-        m_AssetGUID: 6174ede9c0f01c24d85789c33eaa1f9a
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(6, 6, -2)
-    Value:
-      WorldPosition: {x: 325, y: 325, z: -75}
-      SceneReference:
-        m_AssetGUID: f5ad3c65f813e354bb663b38f10512e8
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-1, 6, -3)
-    Value:
-      WorldPosition: {x: -25, y: 325, z: -125}
-      SceneReference:
-        m_AssetGUID: a898466e94e867e4b9441e49022d4b7b
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-1, 6, -8)
-    Value:
-      WorldPosition: {x: -25, y: 325, z: -375}
-      SceneReference:
-        m_AssetGUID: 33bdf270eb811084e8298d9aa2d33e87
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-4, 6, -12)
-    Value:
-      WorldPosition: {x: -175, y: 325, z: -575}
-      SceneReference:
-        m_AssetGUID: 1e034e918dce18545b3826ec17ce3d1a
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(6, 6, -10)
-    Value:
-      WorldPosition: {x: 325, y: 325, z: -475}
-      SceneReference:
-        m_AssetGUID: 3d722cb2e9faad84ea5730020db09465
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-5, 6, -23)
-    Value:
-      WorldPosition: {x: -225, y: 325, z: -1125}
-      SceneReference:
-        m_AssetGUID: 6c4e2d5eb521b064d964a443890ea125
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-4, 6, -2)
-    Value:
-      WorldPosition: {x: -175, y: 325, z: -75}
-      SceneReference:
-        m_AssetGUID: b7233c4546fe04c4193800d3c69035c3
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-3, 6, -19)
-    Value:
-      WorldPosition: {x: -125, y: 325, z: -925}
-      SceneReference:
-        m_AssetGUID: b0608a034aeaebc4dbcee2c32f659250
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-3, 6, -6)
-    Value:
-      WorldPosition: {x: -125, y: 325, z: -275}
-      SceneReference:
-        m_AssetGUID: 41b4421e9027a034186000509d30b334
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-4, 6, -4)
-    Value:
-      WorldPosition: {x: -175, y: 325, z: -175}
-      SceneReference:
-        m_AssetGUID: ac381ff724476c246bfe308d7c5eec06
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-2, 6, -2)
-    Value:
-      WorldPosition: {x: -75, y: 325, z: -75}
-      SceneReference:
-        m_AssetGUID: 0f97c0f789c4e5d45b494c0b6883b6a8
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(4, 6, -1)
-    Value:
-      WorldPosition: {x: 225, y: 325, z: -25}
-      SceneReference:
-        m_AssetGUID: 5e7387a454ff18141a8d3453e1e35760
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(0, 6, -15)
-    Value:
-      WorldPosition: {x: 25, y: 325, z: -725}
-      SceneReference:
-        m_AssetGUID: f7d460b48bf91354fbdd8e87a82c9278
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-1, 6, -15)
-    Value:
-      WorldPosition: {x: -25, y: 325, z: -725}
-      SceneReference:
-        m_AssetGUID: ad237e0a051135f478185c16db086eb7
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(2, 6, -6)
-    Value:
-      WorldPosition: {x: 125, y: 325, z: -275}
-      SceneReference:
-        m_AssetGUID: 0462ceb49a05d694db50ee98a3dee992
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(3, 6, -4)
-    Value:
-      WorldPosition: {x: 175, y: 325, z: -175}
-      SceneReference:
-        m_AssetGUID: c06c202f4e9f579439c05d58845fd4f1
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(0, 6, -10)
-    Value:
-      WorldPosition: {x: 25, y: 325, z: -475}
-      SceneReference:
-        m_AssetGUID: 89fff503c44e9b346bd2e7da99652535
+        m_AssetGUID: 77addaa6be768c54c8433c370b827e3d
         m_SubObjectName: 
         m_SubObjectGUID: 
         m_SubObjectType: 
@@ -764,214 +35,16 @@ MonoBehaviour:
     Value:
       WorldPosition: {x: 175, y: 325, z: -375}
       SceneReference:
-        m_AssetGUID: c0734714d1813354a8ea5e896cd9cdca
+        m_AssetGUID: 958e5e975d2e91947a7c89e0ef10fe64
         m_SubObjectName: 
         m_SubObjectGUID: 
         m_SubObjectType: 
         m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-1, 6, -12)
+  - Key: Small_Objects_Chunk_(2, 6, -10)
     Value:
-      WorldPosition: {x: -25, y: 325, z: -575}
+      WorldPosition: {x: 125, y: 325, z: -475}
       SceneReference:
-        m_AssetGUID: c77a3d9a7cff7c549a56c4db8ae4bce2
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(6, 6, -1)
-    Value:
-      WorldPosition: {x: 325, y: 325, z: -25}
-      SceneReference:
-        m_AssetGUID: 837d8a8d89fe1e64e8b1bc530a4e1a2d
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(2, 6, -15)
-    Value:
-      WorldPosition: {x: 125, y: 325, z: -725}
-      SceneReference:
-        m_AssetGUID: b0034abdc08df8244baef827a904355e
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-2, 6, -4)
-    Value:
-      WorldPosition: {x: -75, y: 325, z: -175}
-      SceneReference:
-        m_AssetGUID: 9a9e2823b12ddf84f955e07761d72e6d
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(6, 6, -6)
-    Value:
-      WorldPosition: {x: 325, y: 325, z: -275}
-      SceneReference:
-        m_AssetGUID: 495e697ffadf3e542b26adbc1f23604a
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-4, 6, -15)
-    Value:
-      WorldPosition: {x: -175, y: 325, z: -725}
-      SceneReference:
-        m_AssetGUID: 0e290b5b46f571e4bad67efa708ff767
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(6, 6, -3)
-    Value:
-      WorldPosition: {x: 325, y: 325, z: -125}
-      SceneReference:
-        m_AssetGUID: 6663bd0c492584144abf3ddfa6fe3961
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-3, 6, -23)
-    Value:
-      WorldPosition: {x: -125, y: 325, z: -1125}
-      SceneReference:
-        m_AssetGUID: 483e86c0354612648a35d39cc73ade8d
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-1, 6, -6)
-    Value:
-      WorldPosition: {x: -25, y: 325, z: -275}
-      SceneReference:
-        m_AssetGUID: 40f565917fb754f4caa262c73d8561dc
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-1, 6, -1)
-    Value:
-      WorldPosition: {x: -25, y: 325, z: -25}
-      SceneReference:
-        m_AssetGUID: ac8a79b340d642c44afb5a09aba10fff
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-2, 6, -3)
-    Value:
-      WorldPosition: {x: -75, y: 325, z: -125}
-      SceneReference:
-        m_AssetGUID: de9eb68d9cd01ab47b3b13be8897eb56
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(6, 6, -15)
-    Value:
-      WorldPosition: {x: 325, y: 325, z: -725}
-      SceneReference:
-        m_AssetGUID: 14090cb4209f67740bb889caeb4fff87
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(4, 6, -19)
-    Value:
-      WorldPosition: {x: 225, y: 325, z: -925}
-      SceneReference:
-        m_AssetGUID: 15a4628b908926c4b94ae22dd05865f7
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-2, 6, -1)
-    Value:
-      WorldPosition: {x: -75, y: 325, z: -25}
-      SceneReference:
-        m_AssetGUID: 0d10e530fd1189b43aa88605ef13ba72
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-2, 6, -23)
-    Value:
-      WorldPosition: {x: -75, y: 325, z: -1125}
-      SceneReference:
-        m_AssetGUID: 91db34accc2a66f41bebca7f9a39af9c
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(6, 6, -19)
-    Value:
-      WorldPosition: {x: 325, y: 325, z: -925}
-      SceneReference:
-        m_AssetGUID: 6624d79b40f8d384b90effe9c5660b8f
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-1, 6, -10)
-    Value:
-      WorldPosition: {x: -25, y: 325, z: -475}
-      SceneReference:
-        m_AssetGUID: a3e579c6217a1834ca3e2dc6f06d0fa6
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(3, 6, -1)
-    Value:
-      WorldPosition: {x: 175, y: 325, z: -25}
-      SceneReference:
-        m_AssetGUID: c96d76ba6c30e204c95d1a3cc721fc21
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(0, 6, -1)
-    Value:
-      WorldPosition: {x: 25, y: 325, z: -25}
-      SceneReference:
-        m_AssetGUID: 924ea68bdc7845e478b2eeff92a3ccb2
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-4, 6, -23)
-    Value:
-      WorldPosition: {x: -175, y: 325, z: -1125}
-      SceneReference:
-        m_AssetGUID: 2219a5dcdd53bd0438e0edb27c0be68c
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(-5, 6, -3)
-    Value:
-      WorldPosition: {x: -225, y: 325, z: -125}
-      SceneReference:
-        m_AssetGUID: f4497a6284fbf9a4d974493d5dc9ab24
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(2, 6, -23)
-    Value:
-      WorldPosition: {x: 125, y: 325, z: -1125}
-      SceneReference:
-        m_AssetGUID: a1f18db4cfe90094fb38c8077335686e
-        m_SubObjectName: 
-        m_SubObjectGUID: 
-        m_SubObjectType: 
-        m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(2, 6, -3)
-    Value:
-      WorldPosition: {x: 125, y: 325, z: -125}
-      SceneReference:
-        m_AssetGUID: 3df3419892b52af4b940331fd627d726
+        m_AssetGUID: 20b26d2bb4f3cae4d899af9d55b75ec7
         m_SubObjectName: 
         m_SubObjectGUID: 
         m_SubObjectType: 
@@ -980,16 +53,25 @@ MonoBehaviour:
     Value:
       WorldPosition: {x: 225, y: 325, z: -475}
       SceneReference:
-        m_AssetGUID: e999656f6e2869a4e871cc3393454a1f
+        m_AssetGUID: 571642c911e8f2c4c841519a13da6c40
         m_SubObjectName: 
         m_SubObjectGUID: 
         m_SubObjectType: 
         m_EditorAssetChanged: 0
-  - Key: Small_Objects_Chunk_(0, 6, -2)
+  - Key: Small_Objects_Chunk_(3, 6, -10)
     Value:
-      WorldPosition: {x: 25, y: 325, z: -75}
+      WorldPosition: {x: 175, y: 325, z: -475}
       SceneReference:
-        m_AssetGUID: df4f9c8ae23b0d24eaa7d932c26d1644
+        m_AssetGUID: 5f50010961b224b40a1a2ed39e807ad4
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(2, 6, -12)
+    Value:
+      WorldPosition: {x: 125, y: 325, z: -575}
+      SceneReference:
+        m_AssetGUID: 7ecca844e09b40943a746fd9e2528a1c
         m_SubObjectName: 
         m_SubObjectGUID: 
         m_SubObjectType: 
@@ -998,7 +80,682 @@ MonoBehaviour:
     Value:
       WorldPosition: {x: 175, y: 325, z: -725}
       SceneReference:
-        m_AssetGUID: 5958ead2f65dce242a09e70022a4d5f9
+        m_AssetGUID: 09c96bc8c14c1fd4a8d70415ddead945
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(0, 6, -8)
+    Value:
+      WorldPosition: {x: 25, y: 325, z: -375}
+      SceneReference:
+        m_AssetGUID: 1e93f36e9fadd6644b5d34f3a79dff64
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-4, 6, -2)
+    Value:
+      WorldPosition: {x: -175, y: 325, z: -75}
+      SceneReference:
+        m_AssetGUID: 4a0ae472bb457e944a616305ff4bafeb
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-1, 6, -1)
+    Value:
+      WorldPosition: {x: -25, y: 325, z: -25}
+      SceneReference:
+        m_AssetGUID: 16e7c0df6c2cfac409441fe71cc32cf2
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(2, 6, -19)
+    Value:
+      WorldPosition: {x: 125, y: 325, z: -925}
+      SceneReference:
+        m_AssetGUID: f2be6c566fd189445b7f7fd08abe88fc
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(2, 6, -3)
+    Value:
+      WorldPosition: {x: 125, y: 325, z: -125}
+      SceneReference:
+        m_AssetGUID: 809fef132ec557341af643b7526fb6b4
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(4, 6, -15)
+    Value:
+      WorldPosition: {x: 225, y: 325, z: -725}
+      SceneReference:
+        m_AssetGUID: ea6b74e0b87b6784ebfc5cfa21b49e65
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-3, 6, -2)
+    Value:
+      WorldPosition: {x: -125, y: 325, z: -75}
+      SceneReference:
+        m_AssetGUID: 0979e1840cd04c64eb3efb30469ffafa
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(3, 6, -1)
+    Value:
+      WorldPosition: {x: 175, y: 325, z: -25}
+      SceneReference:
+        m_AssetGUID: c537996500631ab459dc3e419cf08df8
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(0, 6, -10)
+    Value:
+      WorldPosition: {x: 25, y: 325, z: -475}
+      SceneReference:
+        m_AssetGUID: 6b60c5a6c13f8994382bf2075050a903
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(2, 6, -8)
+    Value:
+      WorldPosition: {x: 125, y: 325, z: -375}
+      SceneReference:
+        m_AssetGUID: 7b9d7310f8c9e874095c6d5c5dd8d699
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-4, 6, -4)
+    Value:
+      WorldPosition: {x: -175, y: 325, z: -175}
+      SceneReference:
+        m_AssetGUID: dc69fadd16a9d0448b1477b415256dc4
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-3, 6, -23)
+    Value:
+      WorldPosition: {x: -125, y: 325, z: -1125}
+      SceneReference:
+        m_AssetGUID: f4bd79050f5c37043a396dc6a9ae8679
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(0, 6, -15)
+    Value:
+      WorldPosition: {x: 25, y: 325, z: -725}
+      SceneReference:
+        m_AssetGUID: 000d132c1d8ae614ab1ad39ec5001e36
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-2, 6, -6)
+    Value:
+      WorldPosition: {x: -75, y: 325, z: -275}
+      SceneReference:
+        m_AssetGUID: f02deeded1241e643a79a860eadcd313
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-3, 6, -8)
+    Value:
+      WorldPosition: {x: -125, y: 325, z: -375}
+      SceneReference:
+        m_AssetGUID: 51d3445503c29564fa1f70cb3257b6a7
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-4, 6, -19)
+    Value:
+      WorldPosition: {x: -175, y: 325, z: -925}
+      SceneReference:
+        m_AssetGUID: 13d9eb381fd0ad745acfefd2e32729bf
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(0, 6, -12)
+    Value:
+      WorldPosition: {x: 25, y: 325, z: -575}
+      SceneReference:
+        m_AssetGUID: fda08c7621f262444a1ad60d9bf9232a
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-4, 6, -8)
+    Value:
+      WorldPosition: {x: -175, y: 325, z: -375}
+      SceneReference:
+        m_AssetGUID: 3c3ebbbd014938a42bde284a0fcce6c5
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-1, 6, -10)
+    Value:
+      WorldPosition: {x: -25, y: 325, z: -475}
+      SceneReference:
+        m_AssetGUID: 2232e35b56b27ef4b95a6373046f5e0c
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-1, 6, -2)
+    Value:
+      WorldPosition: {x: -25, y: 325, z: -75}
+      SceneReference:
+        m_AssetGUID: 7eec2c55f18ccf94fa7a66b7bef47af3
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(2, 6, -23)
+    Value:
+      WorldPosition: {x: 125, y: 325, z: -1125}
+      SceneReference:
+        m_AssetGUID: c040bdfb26cd3c14b90e272dab2a1c0e
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-3, 6, -4)
+    Value:
+      WorldPosition: {x: -125, y: 325, z: -175}
+      SceneReference:
+        m_AssetGUID: d254d5815eb04f547a85d0344fda529d
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-4, 6, -1)
+    Value:
+      WorldPosition: {x: -175, y: 325, z: -25}
+      SceneReference:
+        m_AssetGUID: b695e57fc8897b94c8bf7efd813cbfb7
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-3, 6, -3)
+    Value:
+      WorldPosition: {x: -125, y: 325, z: -125}
+      SceneReference:
+        m_AssetGUID: ca1ec1457bb566d43952e005e8977397
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-3, 6, -1)
+    Value:
+      WorldPosition: {x: -125, y: 325, z: -25}
+      SceneReference:
+        m_AssetGUID: 727dd2dc1d99b2648a3583a38ca9b4ca
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-2, 6, -8)
+    Value:
+      WorldPosition: {x: -75, y: 325, z: -375}
+      SceneReference:
+        m_AssetGUID: 4995a80c03961b8469aab7b83c673272
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(0, 6, -1)
+    Value:
+      WorldPosition: {x: 25, y: 325, z: -25}
+      SceneReference:
+        m_AssetGUID: 9daffa6dfe4cc374494fd98658f6786f
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(3, 6, -19)
+    Value:
+      WorldPosition: {x: 175, y: 325, z: -925}
+      SceneReference:
+        m_AssetGUID: edaf726525d3d8248899643e25fcda51
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-1, 6, -15)
+    Value:
+      WorldPosition: {x: -25, y: 325, z: -725}
+      SceneReference:
+        m_AssetGUID: a57b0033edf2bba46ad99875fc4fb744
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-5, 6, -3)
+    Value:
+      WorldPosition: {x: -225, y: 325, z: -125}
+      SceneReference:
+        m_AssetGUID: 1054be378f1b5f94897035eb5528feac
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-4, 6, -12)
+    Value:
+      WorldPosition: {x: -175, y: 325, z: -575}
+      SceneReference:
+        m_AssetGUID: f28461cdff0a4b549a720b5661cdf751
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-4, 6, -6)
+    Value:
+      WorldPosition: {x: -175, y: 325, z: -275}
+      SceneReference:
+        m_AssetGUID: 3a5d08e0fc215c84cb7ef3e3ffc916da
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-5, 6, -6)
+    Value:
+      WorldPosition: {x: -225, y: 325, z: -275}
+      SceneReference:
+        m_AssetGUID: f51c7e16ce7ee1a47bf2d8e2e83d8c58
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-1, 6, -23)
+    Value:
+      WorldPosition: {x: -25, y: 325, z: -1125}
+      SceneReference:
+        m_AssetGUID: 88fc175c5ef49ab4ebf1bb8caa2cf89a
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-4, 6, -10)
+    Value:
+      WorldPosition: {x: -175, y: 325, z: -475}
+      SceneReference:
+        m_AssetGUID: e08a2bfcca56ca34fae391e210b30eb3
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(6, 6, -23)
+    Value:
+      WorldPosition: {x: 325, y: 325, z: -1125}
+      SceneReference:
+        m_AssetGUID: c9c24a2de9320c44080c7c166f9d14bd
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-2, 6, -10)
+    Value:
+      WorldPosition: {x: -75, y: 325, z: -475}
+      SceneReference:
+        m_AssetGUID: eb5e9b96158d6b742b5def9fc85c006f
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-2, 6, -23)
+    Value:
+      WorldPosition: {x: -75, y: 325, z: -1125}
+      SceneReference:
+        m_AssetGUID: 434b7601b3d764b4da821f33c75eb055
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-1, 6, -19)
+    Value:
+      WorldPosition: {x: -25, y: 325, z: -925}
+      SceneReference:
+        m_AssetGUID: ce5215d72d2b5ad4cb347d6daf24ffd2
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-2, 6, -2)
+    Value:
+      WorldPosition: {x: -75, y: 325, z: -75}
+      SceneReference:
+        m_AssetGUID: 9cae0ae3c2d338845b7fb971aa10fcba
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(4, 6, -19)
+    Value:
+      WorldPosition: {x: 225, y: 325, z: -925}
+      SceneReference:
+        m_AssetGUID: a87183e77d9984144b2116ad3fd3e793
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(6, 6, -19)
+    Value:
+      WorldPosition: {x: 325, y: 325, z: -925}
+      SceneReference:
+        m_AssetGUID: 80f758a6971739c4e9e77a31c40af753
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-3, 6, -19)
+    Value:
+      WorldPosition: {x: -125, y: 325, z: -925}
+      SceneReference:
+        m_AssetGUID: 2613e4096a19284429717229bbc8b82e
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-5, 6, -2)
+    Value:
+      WorldPosition: {x: -225, y: 325, z: -75}
+      SceneReference:
+        m_AssetGUID: 8ed640609a01ea0468a33d61a1d52c76
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(3, 6, -6)
+    Value:
+      WorldPosition: {x: 175, y: 325, z: -275}
+      SceneReference:
+        m_AssetGUID: 2b5933285098d5e40b45234935e6ca2f
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-3, 6, -10)
+    Value:
+      WorldPosition: {x: -125, y: 325, z: -475}
+      SceneReference:
+        m_AssetGUID: 545c990c4a83abb4a97cd83f7bcba929
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-1, 6, -4)
+    Value:
+      WorldPosition: {x: -25, y: 325, z: -175}
+      SceneReference:
+        m_AssetGUID: a2a96c043df08b2459c0b45cdb7ea6a1
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-2, 6, -1)
+    Value:
+      WorldPosition: {x: -75, y: 325, z: -25}
+      SceneReference:
+        m_AssetGUID: 3198ae7b307af624795cce80c6109102
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(6, 6, -6)
+    Value:
+      WorldPosition: {x: 325, y: 325, z: -275}
+      SceneReference:
+        m_AssetGUID: 1e1c646d18e24a74f8689e8be82cb0d6
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(4, 6, -3)
+    Value:
+      WorldPosition: {x: 225, y: 325, z: -125}
+      SceneReference:
+        m_AssetGUID: 5384a75fdb47c5f418ba955ca9e8d8e4
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-4, 6, -23)
+    Value:
+      WorldPosition: {x: -175, y: 325, z: -1125}
+      SceneReference:
+        m_AssetGUID: 99d2190a4ae6aef40b33d4c32285ca1e
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-5, 6, -10)
+    Value:
+      WorldPosition: {x: -225, y: 325, z: -475}
+      SceneReference:
+        m_AssetGUID: f33a0698c770fdd44bbfa3abafa46737
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(6, 6, -12)
+    Value:
+      WorldPosition: {x: 325, y: 325, z: -575}
+      SceneReference:
+        m_AssetGUID: a98bbc6c216792c4e8b100b1e2d1fbc4
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(2, 6, -2)
+    Value:
+      WorldPosition: {x: 125, y: 325, z: -75}
+      SceneReference:
+        m_AssetGUID: d49895338add93147862f3c16df54384
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-5, 6, -15)
+    Value:
+      WorldPosition: {x: -225, y: 325, z: -725}
+      SceneReference:
+        m_AssetGUID: 28a465ffef956764a826c00bedacc551
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(3, 6, -2)
+    Value:
+      WorldPosition: {x: 175, y: 325, z: -75}
+      SceneReference:
+        m_AssetGUID: 72d89174053e24d4584df6d9d1d8e1fa
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(4, 6, -23)
+    Value:
+      WorldPosition: {x: 225, y: 325, z: -1125}
+      SceneReference:
+        m_AssetGUID: 528d99d9c9b366b479a695795e0ce8b6
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-1, 6, -12)
+    Value:
+      WorldPosition: {x: -25, y: 325, z: -575}
+      SceneReference:
+        m_AssetGUID: dad2dad6d7a2f9a4282c3be065a030fa
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-2, 6, -4)
+    Value:
+      WorldPosition: {x: -75, y: 325, z: -175}
+      SceneReference:
+        m_AssetGUID: fd07b7ec3d076634f95a80ff754bd199
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-2, 6, -3)
+    Value:
+      WorldPosition: {x: -75, y: 325, z: -125}
+      SceneReference:
+        m_AssetGUID: ba682ca7268b2884f82bd1c9bc39aa7c
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(4, 6, -8)
+    Value:
+      WorldPosition: {x: 225, y: 325, z: -375}
+      SceneReference:
+        m_AssetGUID: e7ad0b3ddbd40264e952222fc51599f1
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-3, 6, -6)
+    Value:
+      WorldPosition: {x: -125, y: 325, z: -275}
+      SceneReference:
+        m_AssetGUID: 7479e352bd2cf7045b1d3b28f6aef2dc
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(2, 6, -6)
+    Value:
+      WorldPosition: {x: 125, y: 325, z: -275}
+      SceneReference:
+        m_AssetGUID: c0ec0b0a081aaf840ab810c4abf648f1
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-4, 6, -15)
+    Value:
+      WorldPosition: {x: -175, y: 325, z: -725}
+      SceneReference:
+        m_AssetGUID: 41bef25c3ce9e9d48b997cf6b376b6f5
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(4, 6, -4)
+    Value:
+      WorldPosition: {x: 225, y: 325, z: -175}
+      SceneReference:
+        m_AssetGUID: bed0537e92d1a2d4aa0b92fd57643c02
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(0, 6, -2)
+    Value:
+      WorldPosition: {x: 25, y: 325, z: -75}
+      SceneReference:
+        m_AssetGUID: 35712353213f7b34091307af0e9e4167
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(6, 6, -2)
+    Value:
+      WorldPosition: {x: 325, y: 325, z: -75}
+      SceneReference:
+        m_AssetGUID: 367e9228410df2e46af58906afe55ec3
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-1, 6, -6)
+    Value:
+      WorldPosition: {x: -25, y: 325, z: -275}
+      SceneReference:
+        m_AssetGUID: b055542ce3d963a42ad8578186fb0e4c
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-3, 6, -12)
+    Value:
+      WorldPosition: {x: -125, y: 325, z: -575}
+      SceneReference:
+        m_AssetGUID: 6aed327a380d6204faeac6ffb903f17e
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-1, 6, -8)
+    Value:
+      WorldPosition: {x: -25, y: 325, z: -375}
+      SceneReference:
+        m_AssetGUID: fecd7387b5fa6e74b8819504c42feffb
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(3, 6, -23)
+    Value:
+      WorldPosition: {x: 175, y: 325, z: -1125}
+      SceneReference:
+        m_AssetGUID: 0953386d12743994284d183833210ebb
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-5, 6, -4)
+    Value:
+      WorldPosition: {x: -225, y: 325, z: -175}
+      SceneReference:
+        m_AssetGUID: b9e282c2b158bc14c8db8256128954c2
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(2, 6, -15)
+    Value:
+      WorldPosition: {x: 125, y: 325, z: -725}
+      SceneReference:
+        m_AssetGUID: b6e49c2dd7d35194197c39257d6f0074
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-5, 6, -12)
+    Value:
+      WorldPosition: {x: -225, y: 325, z: -575}
+      SceneReference:
+        m_AssetGUID: 83bdd7af6f4fefb449c70527708ffb11
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(2, 6, -4)
+    Value:
+      WorldPosition: {x: 125, y: 325, z: -175}
+      SceneReference:
+        m_AssetGUID: 3e48975b5704ae540b391e9d61bf2979
         m_SubObjectName: 
         m_SubObjectGUID: 
         m_SubObjectType: 

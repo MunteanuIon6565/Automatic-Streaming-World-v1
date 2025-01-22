@@ -27,6 +27,5 @@ MonoBehaviour:
   UnityTagsSmallObjects:
   - Untagged
   - Wheel
-  UnityTagsMediumObjects:
-  - Road
+  UnityTagsMediumObjects: []
   UnityTagsLargeObjects: []
