@@ -93,8 +93,7 @@ namespace AUTOMATIC_WORLD_STREAMING
 
             // load scenes cu prioritate mai intai cele large dupa medii dupa mici
             ProcessChunksJob();
-
-
+            
 
             float GetMinDistanceShow()
             {
@@ -105,6 +104,7 @@ namespace AUTOMATIC_WORLD_STREAMING
 #endif
             }
 
+            
             float GetMaxDistanceShow()
             {
 #if UNITY_EDITOR
@@ -114,6 +114,7 @@ namespace AUTOMATIC_WORLD_STREAMING
 #endif
             }
 
+            
             async Task LoadChunk(AssetReference assetReference)
             {
 #if UNITY_EDITOR
@@ -135,6 +136,7 @@ namespace AUTOMATIC_WORLD_STREAMING
                 }
             }
 
+            
             async Task UnloadChunk(AssetReference assetReference)
             {
 #if UNITY_EDITOR
@@ -144,7 +146,21 @@ namespace AUTOMATIC_WORLD_STREAMING
                     var scene = EditorSceneManager.GetSceneByPath(scenePath);
                     if (scene.isLoaded)
                     {
-                        if (scene.isDirty) EditorSceneManager.SaveScene(scene);
+                        if (scene.isDirty)
+                        {
+                            List<Scene> scenesToUnload = new List<Scene>();
+                            
+                            for (int i = 0; i < SceneManager.sceneCount; i++)
+                            {
+                                Scene loadedScene = SceneManager.GetSceneAt(i);
+                                if (loadedScene.name != gameObject.scene.name && loadedScene.isDirty)
+                                {
+                                    scenesToUnload.Add(loadedScene);
+                                }
+                            }
+                            EditorSceneManager.SaveScenes(scenesToUnload.ToArray());
+                        }
+
                         EditorSceneManager.CloseScene(scene, true);
                     }
 
