@@ -325,8 +325,8 @@ namespace AUTOMATIC_WORLD_STREAMING
             if (!Application.isPlaying)
             {
                 EditorApplication.update -= CheckStreamChunks;
-                EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
             }
+            EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
 #endif
         }
 
