@@ -23,7 +23,6 @@ namespace AUTOMATIC_WORLD_STREAMING
         private const string SMALL_OBJECT_NAME = "Small";
         private const string MEDIUM_OBJECT_NAME = "Medium";
         private const string LARGE_OBJECT_NAME = "Large";
-        private const string SIMPLE_SORT_NAME = "All";
         private const string MIDDLE_PART_SORT_NAME = "_Objects_Chunk_"; // it is used for delete copies of empty objects create with chunk system
         
         private const string PATH_CREATE_CHUNKS = "Assets/Plugins/AWS_Chunks/";
