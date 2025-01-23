@@ -84,6 +84,11 @@ namespace AUTOMATIC_WORLD_STREAMING
         private async void CheckStreamChunks()
         {
             #if UNITY_EDITOR
+
+            int countFrames = 0;
+            count
+            
+            
             if (EditorSceneManager.GetActiveScene().name.Equals(gameObject.scene)) 
                 EditorSceneManager.SetActiveScene(gameObject.scene);
             #endif
