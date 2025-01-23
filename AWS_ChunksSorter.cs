@@ -150,15 +150,24 @@ namespace AUTOMATIC_WORLD_STREAMING
             List<GameObject> chunkSmallSort = null;
             List<GameObject> chunkMediumSort = null;
             List<GameObject> chunkLargeSort = null;
+            
+            if (!AssetDatabase.IsValidFolder(PATH_CREATE_CHUNKS))
+            {
+                Directory.CreateDirectory(PATH_CREATE_CHUNKS);
+                AssetDatabase.Refresh();
+            }
 
             chunkLargeSort = SortToChunksByTags(m_aws_Settings.UnityTagsLargeObjects, LARGE_OBJECT_NAME);
             chunkMediumSort = SortToChunksByTags(m_aws_Settings.UnityTagsMediumObjects, MEDIUM_OBJECT_NAME);
             chunkSmallSort = SortToChunksByTags(m_aws_Settings.UnityTagsSmallObjects, SMALL_OBJECT_NAME);
 
+            GenerateEmptyChunkScenes(chunkLargeSort);
+            GenerateEmptyChunkScenes(chunkMediumSort);
+            GenerateEmptyChunkScenes(chunkSmallSort);
+
             MoveObjectToSortChunkMini(chunkLargeSort);
             MoveObjectToSortChunkMini(chunkMediumSort);
             MoveObjectToSortChunkMini(chunkSmallSort);
-
 
             void MoveObjectToSortChunkMini(List<GameObject> chunkSort)
             {
@@ -172,16 +181,15 @@ namespace AUTOMATIC_WORLD_STREAMING
 
                 try
                 {
-                    // TODO
-                    //AssetDatabase.assets;   de creat empty scenele mai intaiii cu numele corect poate e mai rapid
-                    
-                    
                     if (chunkSort is { Count: > 0 })
                         for (int i = chunkSort.Count - 1; i >= 0; i--)
                         {
-                            EditorUtility.DisplayProgressBar("Save Chunk Scenes", $"Save scene for chunk: {chunkSort[i].name}",
-                                -(float)i / chunkSort.Count + 1 );
-                            
+                            EditorUtility.DisplayProgressBar(
+                                "Save Chunk Scenes",
+                                $"Save scene for chunk: {chunkSort[i].name}",
+                                -(float)i / chunkSort.Count + 1
+                            );
+
                             MoveObjectToSceneChunk(chunkSort[i]);
                         }
                 }
@@ -192,7 +200,6 @@ namespace AUTOMATIC_WORLD_STREAMING
                 finally
                 {
                     EditorUtility.ClearProgressBar();
-                    Debug.Log("SORT TO CHUNKS Finished.");
                 }
             }
 
@@ -200,7 +207,40 @@ namespace AUTOMATIC_WORLD_STREAMING
 
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
+            
+            Debug.Log("SORT TO CHUNKS Finished.");
         }
+
+        
+        
+        private void GenerateEmptyChunkScenes(List<GameObject> chunkSort)
+        {
+            if (chunkSort == null || chunkSort.Count == 0) return;
+
+            string templateScenePath = $"{PATH_CREATE_CHUNKS}__TemplateChunkScene.unity";
+            if (!File.Exists(templateScenePath))
+            {
+                Scene templateScene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Additive);
+                EditorSceneManager.SaveScene(templateScene, templateScenePath);
+                Debug.Log($"Template scene created: {templateScenePath}");
+                EditorSceneManager.CloseScene(templateScene, true);
+            }
+
+            for (int i = 0; i < chunkSort.Count; i++)
+            {
+                string chunkSceneName = $"{chunkSort[i].scene.name}_{chunkSort[i].name}.unity";
+                string chunkScenePath = PATH_CREATE_CHUNKS + chunkSceneName;
+
+                if (!File.Exists(chunkScenePath))
+                {
+                    File.Copy(templateScenePath, chunkScenePath);
+                    Debug.Log($"Chunk scene created: {chunkScenePath}");
+                }
+            }
+
+            AssetDatabase.Refresh();
+        }
+
 
 
 
@@ -214,13 +254,6 @@ namespace AUTOMATIC_WORLD_STREAMING
                 Debug.LogError("Referința la obiectul de mutat este null.");
                 return;
             }
-
-            if (!AssetDatabase.IsValidFolder(PATH_CREATE_CHUNKS))
-            {
-                Directory.CreateDirectory(PATH_CREATE_CHUNKS);
-                AssetDatabase.Refresh();
-            }
-            
             
             
             Scene currentActiveScene = EditorSceneManager.GetActiveScene();

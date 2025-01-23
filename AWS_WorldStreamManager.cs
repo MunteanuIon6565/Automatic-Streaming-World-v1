@@ -3,7 +3,6 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 #endif
 
-using System;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
@@ -84,6 +83,11 @@ namespace AUTOMATIC_WORLD_STREAMING
 
         private async void CheckStreamChunks()
         {
+            #if UNITY_EDITOR
+            if (EditorSceneManager.GetActiveScene().name.Equals(gameObject.scene)) 
+                EditorSceneManager.SetActiveScene(gameObject.scene);
+            #endif
+            
             if (!TargetForStream || !AwsChunks || !AwsSettings)
             {
                 Debug.LogError("!TargetForStream || !AwsChunks || !AwsSettings is missing!");
