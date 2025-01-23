@@ -52,16 +52,39 @@ namespace AUTOMATIC_WORLD_STREAMING
         [ContextMenu("2.Extract Chunk Objects From Scenes And Delete Scenes")]
         public void ExtractChunkObjectsFromScenesAndDeleteScenes()
         {
+            if (Application.isPlaying)
+            {
+                Debug.LogError("Exit from Play Mode before execute this.");
+                return;
+            }
+            
+            
             var chunkDictionary = m_AllChunksInOneWorld.RebuildListToDictionary();
-
             var openedScenes = new List<Scene>();
 
-            // Open all scenes additively
-            foreach (var item in chunkDictionary)
+            try
             {
-                string scenePath = AssetDatabase.GUIDToAssetPath(item.Value.SceneReference.AssetGUID);
-                var scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Additive);
-                openedScenes.Add(scene);
+                EditorUtility.DisplayProgressBar("Extract chunk objects", "Prepare for extract...", 0.0f);
+
+                int i = 0;
+                foreach (var item in chunkDictionary)
+                {
+                    EditorUtility.DisplayProgressBar("Extract chunk objects", $"Extract chunk: {item.Key}", 
+                        (float)i / chunkDictionary.Count);
+                    string scenePath = AssetDatabase.GUIDToAssetPath(item.Value.SceneReference.AssetGUID);
+                    var scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Additive);
+                    openedScenes.Add(scene);
+
+                    i++;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Error: {ex.Message}");
+            }
+            finally
+            {
+                EditorUtility.ClearProgressBar();
             }
 
             // Move chunk objects to the current scene
@@ -70,21 +93,43 @@ namespace AUTOMATIC_WORLD_STREAMING
                 SceneManager.MoveGameObjectToScene(chunk.gameObject, gameObject.scene);
             }
 
-            // Delete the opened scenes after moving objects
-            foreach (var scene in openedScenes)
+            
+            try
             {
-                string scenePath = scene.path;
-                if (scene.isLoaded)
-                {
-                    EditorSceneManager.CloseScene(scene, true);
+                EditorUtility.DisplayProgressBar("Delete old chunk scenes", "Prepare for delete...", 0.0f);
 
-                    // Delete the scene asset
-                    if (!string.IsNullOrEmpty(scenePath))
+                int i = 0;
+                List<string> pathsList = new List<string>();
+                List<string> failedPathsList = new List<string>();
+                
+                // Delete the opened scenes after moving objects
+                foreach (var scene in openedScenes)
+                {
+                    string scenePath = scene.path;
+                    if (scene.isLoaded)
                     {
-                        AssetDatabase.DeleteAsset(scenePath);
-                        Debug.Log($"Scena '{scenePath}' a fost ștearsă.");
+                        EditorUtility.DisplayProgressBar("Delete old chunk scenes", $"Delete chunk scene: {scene.name}", 
+                            (float)i / openedScenes.Count);
+                        
+                        EditorSceneManager.CloseScene(scene, true);
+
+                        if (!string.IsNullOrEmpty(scenePath))
+                        {
+                            pathsList.Add(scenePath);
+                        }
                     }
+                    i++;
                 }
+                
+                AssetDatabase.DeleteAssets(pathsList.ToArray(), failedPathsList);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Error: {ex.Message}");
+            }
+            finally
+            {
+                EditorUtility.ClearProgressBar();
             }
             
             m_AllChunksInOneWorld.chunkEntries.Clear();
@@ -117,9 +162,37 @@ namespace AUTOMATIC_WORLD_STREAMING
 
             void MoveObjectToSortChunkMini(List<GameObject> chunkSort)
             {
-                if (chunkSort is { Count: > 0 })
-                    for (int i = chunkSort.Count - 1; i >= 0; i--)
-                        MoveObjectToSceneChunk(chunkSort[i]);
+                if (Application.isPlaying)
+                {
+                    Debug.LogError("Exit from Play Mode before execute this.");
+                    return;
+                }
+
+                EditorUtility.DisplayProgressBar("Save Chunk Scenes", "Prepare for save...", 0.0f);
+
+                try
+                {
+                    //AssetDatabase.assets;   de creat empty scenele mai intaiii cu numele corect poate e mai rapid
+                    
+                    
+                    if (chunkSort is { Count: > 0 })
+                        for (int i = chunkSort.Count - 1; i >= 0; i--)
+                        {
+                            EditorUtility.DisplayProgressBar("Save Chunk Scenes", $"Save scene for chunk: {chunkSort[i].name}",
+                                -(float)i / chunkSort.Count + 1 );
+                            
+                            MoveObjectToSceneChunk(chunkSort[i]);
+                        }
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError($"Error: {ex.Message}");
+                }
+                finally
+                {
+                    EditorUtility.ClearProgressBar();
+                    Debug.Log("SORT TO CHUNKS Finished.");
+                }
             }
 
             MarkCurrentSceneDirty();
@@ -230,59 +303,6 @@ namespace AUTOMATIC_WORLD_STREAMING
             
             
             EditorUtility.SetDirty(m_AllChunksInOneWorld);
-        }
-        
-        
-        
-        public void BatchProcessAndSaveScenes()
-        {
-            if (Application.isPlaying)
-            {
-                Debug.LogError("Ieși din Play Mode înainte de a rula acest proces.");
-                return;
-            }
-
-            EditorUtility.DisplayProgressBar("Salvare Scene", "Pregătire pentru salvare batch...", 0.0f);
-
-            try
-            {
-                // Colectează toate scenele deschise
-                List<Scene> allOpenScenes = new List<Scene>();
-                for (int i = 0; i < EditorSceneManager.sceneCount; i++)
-                {
-                    Scene scene = EditorSceneManager.GetSceneAt(i);
-                    if (scene.IsValid() && scene.isLoaded)
-                    {
-                        allOpenScenes.Add(scene);
-                    }
-                }
-
-                // Marcare pentru modificări și salvare
-                for (int i = 0; i < allOpenScenes.Count; i++)
-                {
-                    Scene scene = allOpenScenes[i];
-                    EditorUtility.DisplayProgressBar("Salvare Scene", $"Salvez scena: {scene.name}", (float)i / allOpenScenes.Count);
-
-                    if (scene.isDirty)
-                    {
-                        EditorSceneManager.SaveScene(scene);
-                        Debug.Log($"Scena {scene.name} a fost salvată.");
-                    }
-                }
-
-                // Salvează modificările generale
-                AssetDatabase.SaveAssets();
-                AssetDatabase.Refresh();
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError($"A apărut o eroare în timpul salvării scenelor: {ex.Message}");
-            }
-            finally
-            {
-                EditorUtility.ClearProgressBar();
-                Debug.Log("Procesul de salvare batch a fost finalizat.");
-            }
         }
 
         

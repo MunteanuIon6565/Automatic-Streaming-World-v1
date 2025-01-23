@@ -183,8 +183,9 @@ namespace AUTOMATIC_WORLD_STREAMING
                 int chunkCount = chunkContainers.Count;
 
                 // Mapare între string și int
-                Dictionary<int, string> indexToStringMap = new Dictionary<int, string>(chunkCount);
-                Dictionary<string, int> stringToIndexMap = new Dictionary<string, int>(chunkCount);
+                Dictionary<int, string> indexToStringMap = new Dictionary<int, string>(chunkCount); // TODO 
+                Dictionary<string, int> stringToIndexMap = new Dictionary<string, int>(chunkCount); // TODO 
+                
                 int currentIndex = 0;
 
                 foreach (var key in chunkContainers.Keys)

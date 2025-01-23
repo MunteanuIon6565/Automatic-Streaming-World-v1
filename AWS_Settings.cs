@@ -68,11 +68,11 @@ namespace AUTOMATIC_WORLD_STREAMING
         public string[] UnityTagsSmallObjects;
         
         [Space(MEDIUM_SIZE_SPACE)][Header(HEADER_SEPARATOR)] 
-        [Header("Small Objects Sort Settings")]
+        [Header("Medium Objects Sort Settings")]
         public string[] UnityTagsMediumObjects;
         
         [Space(MEDIUM_SIZE_SPACE)][Header(HEADER_SEPARATOR)] 
-        [Header("Small Objects Sort Settings")]
+        [Header("Large Objects Sort Settings")]
         public string[] UnityTagsLargeObjects;
         
         
