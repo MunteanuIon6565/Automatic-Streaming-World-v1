@@ -1,4 +1,9 @@
+#if UNITY_EDITOR
+using UnityEditor;
 using UnityEditor.SceneManagement;
+#endif
+
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,9 +23,12 @@ namespace AUTOMATIC_WORLD_STREAMING
 
                     if (IsOutFromChunkPos(child.position))
                     {
+                        EditorSceneManager.MarkSceneDirty(child.gameObject.scene);
+                        child.SetParent(null);
                         SceneManager.MoveGameObjectToScene(child.gameObject, EditorSceneManager.GetActiveScene());
                     }
                 }
+                SaveDirtyChunkScenes();
             }
 #endif
             
@@ -34,6 +42,21 @@ namespace AUTOMATIC_WORLD_STREAMING
         public void Initialize(Vector3 chunkSize)
         {
             m_chunkSize = chunkSize;
+        }
+
+        private void SaveDirtyChunkScenes()
+        {
+            List<Scene> scenesToUnload = new List<Scene>();
+                            
+            for (int i = 0; i < SceneManager.sceneCount; i++)
+            {
+                Scene loadedScene = SceneManager.GetSceneAt(i);
+                if (loadedScene.name != gameObject.scene.name && loadedScene.isDirty)
+                {
+                    scenesToUnload.Add(loadedScene);
+                }
+            }
+            EditorSceneManager.SaveScenes(scenesToUnload.ToArray());
         }
 
         private bool IsOutFromChunkPos(Vector3 chunkPos)
@@ -62,7 +85,7 @@ namespace AUTOMATIC_WORLD_STREAMING
 
             bool IsChunkPositionOut(float posObject, float minPosObject, float maxPosObject)
             {
-                if (posObject > minPosObject && posObject < maxPosObject)
+                if (posObject >= minPosObject && posObject <= maxPosObject)
                     return false;
                 
                 return true;

@@ -688,3 +688,21 @@ MonoBehaviour:
         m_SubObjectGUID: 
         m_SubObjectType: 
         m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(-1, 0, 1)
+    Value:
+      WorldPosition: {x: -25, y: 25, z: 75}
+      SceneReference:
+        m_AssetGUID: 5d862edb1e60dd443a027835692c1198
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
+  - Key: Small_Objects_Chunk_(0, 0, 1)
+    Value:
+      WorldPosition: {x: 25, y: 25, z: 75}
+      SceneReference:
+        m_AssetGUID: 5b96ed4bcafdd12448321679344ff4f1
+        m_SubObjectName: 
+        m_SubObjectGUID: 
+        m_SubObjectType: 
+        m_EditorAssetChanged: 0
