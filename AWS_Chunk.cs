@@ -14,7 +14,7 @@ namespace AUTOMATIC_WORLD_STREAMING
     {
         private void OnDestroy()
         {
-#if UNITY_EDITOR
+/*#if UNITY_EDITOR
             if (!Application.isPlaying)
             {
                 for (int i = 0; i < transform.childCount; i++)
@@ -30,7 +30,7 @@ namespace AUTOMATIC_WORLD_STREAMING
                 }
                 SaveDirtyChunkScenes();
             }
-#endif
+#endif*/
             
         }
 
