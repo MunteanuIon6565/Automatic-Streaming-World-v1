@@ -172,6 +172,7 @@ namespace AUTOMATIC_WORLD_STREAMING
 
                 try
                 {
+                    // TODO
                     //AssetDatabase.assets;   de creat empty scenele mai intaiii cu numele corect poate e mai rapid
                     
                     
