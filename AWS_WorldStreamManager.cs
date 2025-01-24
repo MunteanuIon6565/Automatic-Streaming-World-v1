@@ -76,7 +76,7 @@ namespace AUTOMATIC_WORLD_STREAMING
 
         #if UNITY_EDITOR
         
-        private List<int> _chunksRemainToUnload = new List<int>();
+        private Dictionary<int,int> _chunksRemainToUnload = new Dictionary<int,int>();
         private Dictionary<string, string> _assetPathsCache = new Dictionary<string, string>();
         private Dictionary<string, Scene> _opennedScenesCache = new Dictionary<string, Scene>();
 
@@ -123,7 +123,7 @@ namespace AUTOMATIC_WORLD_STREAMING
 
             countFrames++;
             if (countFrames > 1000000) countFrames = 0;
-            if (countFrames % 30 == 0) return;
+            if (countFrames % 120 == 0) return;
             
             if (EditorSceneManager.GetActiveScene().name.Equals(gameObject.scene)) 
                 EditorSceneManager.SetActiveScene(gameObject.scene);
@@ -177,13 +177,20 @@ namespace AUTOMATIC_WORLD_STREAMING
                 foreach (var openedScene in _opennedScenesCache)
                 {
                     string chunkKey = openedScene.Value.name.Replace(sceneNameChunkManager,"");
-                    _chunksRemainToUnload.Add( _stringToIndexMap[chunkKey]);
+                    int indexChunk = _stringToIndexMap[chunkKey];
+                    _chunksRemainToUnload.Add( indexChunk, indexChunk);
                 }
 
-                foreach (var chunkIndex in _chunksRemainToUnload)
+                foreach (var unloadIndex in _chunksToUnload)
                 {
-                    UnloadChunk(_chunkContainers[_indexToStringMap[chunkIndex]].SceneReference);
+                    if (_chunksRemainToUnload.TryGetValue(unloadIndex, out _))
+                    {
+                        string chunkKey = _indexToStringMap[unloadIndex];
+                        UnloadChunk(_chunkContainers[chunkKey].SceneReference);
+                    }
                 }
+                
+                _chunksRemainToUnload.Clear();
             }
             else
             {
