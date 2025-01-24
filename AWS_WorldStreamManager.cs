@@ -9,7 +9,7 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
@@ -57,11 +57,44 @@ namespace AUTOMATIC_WORLD_STREAMING
                 return targetForStream;
             }
         }
-        
-        
-        /*private Dictionary<int, string> indexToStringMap = new Dictionary<int, string>();
-        private Dictionary<string, int> stringToIndexMap = new Dictionary<string, int>();*/
 
+        
+        #region Check Distance Job Fileds
+
+        private Dictionary<int, string> _indexToStringMap = new Dictionary<int, string>();
+        private Dictionary<string, int> _stringToIndexMap = new Dictionary<string, int>();
+        
+        private NativeArray<float3> _chunkPositions;
+        private NativeArray<int> _chunkIndices;
+
+        private NativeList<int> _chunksToLoad;
+        private NativeList<int> _chunksToUnload;
+        
+        private Dictionary<string,ChunkContainer> _chunkContainers => AwsChunks.ChunkContainers;
+
+        #endregion
+
+        #if UNITY_EDITOR
+        
+        private List<int> _chunksRemainToUnload = new List<int>();
+        private Dictionary<string, string> _assetPathsCache = new Dictionary<string, string>();
+        private Dictionary<string, Scene> _opennedScenesCache = new Dictionary<string, Scene>();
+
+        public string GetAssetPath(AssetReference assetReference)
+        {
+            string guid = assetReference.AssetGUID;
+
+            if (!_assetPathsCache.TryGetValue(guid, out string path))
+            {
+                path = AssetDatabase.GUIDToAssetPath(guid);
+                _assetPathsCache[guid] = path;
+            }
+
+            return path;
+        }
+        
+        #endif
+        
         #endregion
 
         #region METHODS
@@ -74,20 +107,23 @@ namespace AUTOMATIC_WORLD_STREAMING
                 AwsChunks.RebuildListToDictionary();
                 if (customTargetForStream)
                     targetForStream = customTargetForStream;
+                
+                ChunkContainers();
             }
             else if (Application.isPlaying)
             {
                 Destroy(this);
             }
         }
-
-        private async void CheckStreamChunks()
+        
+        private int countFrames = 0;
+        private void CheckStreamChunks()
         {
             #if UNITY_EDITOR
 
-            int countFrames = 0;
-            count
-            
+            countFrames++;
+            if (countFrames > 1000000) countFrames = 0;
+            if (countFrames % 30 == 0) return;
             
             if (EditorSceneManager.GetActiveScene().name.Equals(gameObject.scene)) 
                 EditorSceneManager.SetActiveScene(gameObject.scene);
@@ -102,194 +138,216 @@ namespace AUTOMATIC_WORLD_STREAMING
 
             // load scenes cu prioritate mai intai cele large dupa medii dupa mici
             ProcessChunksJob();
+        }
+        
+
+
+        
+        private void ProcessChunksJob()
+        {
+            _chunksToLoad = new NativeList<int>(_chunkContainers.Count, Allocator.TempJob);
+            _chunksToUnload = new NativeList<int>(_chunkContainers.Count, Allocator.TempJob);
             
-
-            float GetMinDistanceShow()
+            var chunkProcessingJob = new ChunkProcessingJob
             {
-#if UNITY_EDITOR
-                return Application.isPlaying ? AwsSettings.MinDistanceShow : AwsSettings.MinDistanceShowEditor;
-#else
-                return AwsSettings.MinDistanceShow;
-#endif
-            }
+                TargetPosition = TargetForStream.position,
+                MinDistance = GetMinDistanceShow(),
+                MaxDistance = GetMaxDistanceShow(),
+                ChunkPositions = _chunkPositions,
+                ChunksToLoad = _chunksToLoad.AsParallelWriter(),
+                ChunksToUnload = _chunksToUnload.AsParallelWriter()
+            };
 
+            JobHandle jobHandle = chunkProcessingJob.Schedule(_chunkContainers.Count, 64);
+            jobHandle.Complete();
+
+            foreach (var loadIndex in _chunksToLoad)
+            {
+                string chunkKey = _indexToStringMap[loadIndex];
+                LoadChunk(_chunkContainers[chunkKey].SceneReference);
+            }
             
-            float GetMaxDistanceShow()
+            #if UNITY_EDITOR
+
+            if (!Application.isPlaying)
             {
-#if UNITY_EDITOR
-                return Application.isPlaying ? AwsSettings.MaxDistanceShow : AwsSettings.MaxDistanceShowEditor;
-#else
-                return AwsSettings.MaxDistanceShow;
-#endif
-            }
-
-            
-            async Task LoadChunk(AssetReference assetReference)
-            {
-#if UNITY_EDITOR
-                if (!Application.isPlaying)
-                {
-                    string scenePath = AssetDatabase.GetAssetPath(assetReference.editorAsset);
-                    var scene = EditorSceneManager.GetSceneByPath(scenePath);
-                    if (!scene.isLoaded)
-                    {
-                        EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Additive);
-                    }
-
-                    return;
-                }
-#endif
-                if (assetReference != null && !IsSceneLoaded(assetReference) /*&& assetReference.IsValid()*/) 
-                {
-                    await assetReference.LoadSceneAsync(LoadSceneMode.Additive).Task;
-                }
-            }
-
-            
-            async Task UnloadChunk(AssetReference assetReference)
-            {
-#if UNITY_EDITOR
-                if (!Application.isPlaying)
-                {
-                    string scenePath = AssetDatabase.GetAssetPath(assetReference.editorAsset);
-                    var scene = EditorSceneManager.GetSceneByPath(scenePath);
-                    if (scene.isLoaded)
-                    {
-                        if (scene.isDirty)
-                        {
-                            List<Scene> scenesToUnload = new List<Scene>();
-                            
-                            for (int i = 0; i < SceneManager.sceneCount; i++)
-                            {
-                                Scene loadedScene = SceneManager.GetSceneAt(i);
-                                if (loadedScene.name != gameObject.scene.name && loadedScene.isDirty)
-                                {
-                                    scenesToUnload.Add(loadedScene);
-                                }
-                            }
-                            EditorSceneManager.SaveScenes(scenesToUnload.ToArray());
-                        }
-
-                        EditorSceneManager.CloseScene(scene, true);
-                    }
-
-                    return;
-                }
-#endif
-                if (assetReference != null && assetReference.IsValid())
-                {
-                    await Addressables.UnloadSceneAsync(assetReference.OperationHandle).Task;
-                }
-            }
-
-
-            void ProcessChunksJob()
-            {
-                var chunkContainers = Application.isPlaying
-                    ? AwsChunks.ChunkContainers
-                    : AwsChunks.RebuildListToDictionary();
-
-                int chunkCount = chunkContainers.Count;
-
-                // Mapare între string și int
-                Dictionary<int, string> indexToStringMap = new Dictionary<int, string>(chunkCount); // TODO 
-                Dictionary<string, int> stringToIndexMap = new Dictionary<string, int>(chunkCount); // TODO 
+                string sceneNameChunkManager = $"{gameObject.scene.name}_";
+                _chunksRemainToUnload.Clear();
                 
-                int currentIndex = 0;
-
-                foreach (var key in chunkContainers.Keys)
+                foreach (var openedScene in _opennedScenesCache)
                 {
-                    stringToIndexMap[key] = currentIndex;
-                    indexToStringMap[currentIndex] = key;
-                    currentIndex++;
+                    string chunkKey = openedScene.Value.name.Replace(sceneNameChunkManager,"");
+                    _chunksRemainToUnload.Add( _stringToIndexMap[chunkKey]);
                 }
 
-                NativeArray<float3> chunkPositions = new NativeArray<float3>(chunkCount, Allocator.TempJob);
-                NativeArray<int> chunkIndices = new NativeArray<int>(chunkCount, Allocator.TempJob);
-
-                NativeList<int> chunksToLoad = new NativeList<int>(chunkCount, Allocator.TempJob);
-                NativeList<int> chunksToUnload = new NativeList<int>(chunkCount, Allocator.TempJob);
-
-                float3 targetPosition = TargetForStream.position;
-                float minDistance = GetMinDistanceShow();
-                float maxDistance = GetMaxDistanceShow();
-
-                int index = 0;
-                foreach (var kvp in chunkContainers)
+                foreach (var chunkIndex in _chunksRemainToUnload)
                 {
-                    chunkPositions[index] = (float3)kvp.Value.WorldPosition + (float3)OffsetOrigin;
-                    chunkIndices[index] = stringToIndexMap[kvp.Key];
-                    index++;
+                    UnloadChunk(_chunkContainers[_indexToStringMap[chunkIndex]].SceneReference);
                 }
-
-                var chunkProcessingJob = new ChunkProcessingJob
+            }
+            else
+            {
+                foreach (var unloadIndex in _chunksToUnload)
                 {
-                    TargetPosition = targetPosition,
-                    MinDistance = minDistance,
-                    MaxDistance = maxDistance,
-                    ChunkPositions = chunkPositions,
-                    ChunksToLoad = chunksToLoad.AsParallelWriter(),
-                    ChunksToUnload = chunksToUnload.AsParallelWriter()
-                };
-
-                JobHandle jobHandle = chunkProcessingJob.Schedule(chunkCount, 64);
-                jobHandle.Complete();
-
-                foreach (var loadIndex in chunksToLoad)
-                {
-                    string chunkKey = indexToStringMap[loadIndex];
-                    LoadChunk(chunkContainers[chunkKey].SceneReference);
+                    string chunkKey = _indexToStringMap[unloadIndex];
+                    UnloadChunk(_chunkContainers[chunkKey].SceneReference);
                 }
-
-                foreach (var unloadIndex in chunksToUnload)
-                {
-                    string chunkKey = indexToStringMap[unloadIndex];
-                    UnloadChunk(chunkContainers[chunkKey].SceneReference);
-                }
-
-                chunkPositions.Dispose();
-                chunkIndices.Dispose();
-                chunksToLoad.Dispose();
-                chunksToUnload.Dispose();
             }
             
+            #else
             
-            bool IsSceneLoaded(AssetReference sceneReference)
+            foreach (var unloadIndex in _chunksToUnload)
             {
-                string sceneName = GetSceneNameFromAssetReference(sceneReference);
+                string chunkKey = _indexToStringMap[unloadIndex];
+                UnloadChunk(_chunkContainers[chunkKey].SceneReference);
+            }
+            
+            #endif
 
-                if (string.IsNullOrEmpty(sceneName))
-                {
-                    Debug.LogWarning("Scene name could not be determined from the AssetReference.");
-                    return false;
-                }
 
-                for (int i = 0; i < SceneManager.sceneCount; i++)
-                {
-                    Scene loadedScene = SceneManager.GetSceneAt(i);
-                    if (loadedScene.name == sceneName)
-                    {
-                        return true;
-                    }
-                }
+            /*_chunkPositions.Dispose();
+            _chunkIndices.Dispose();*/
+            _chunksToLoad.Dispose();
+            _chunksToUnload.Dispose();
+        }
+
+        private void ChunkContainers()
+        {
+            int chunkCount = _chunkContainers.Count;
+            int currentIndex = 0;
+
+            foreach (var key in _chunkContainers.Keys)
+            {
+                _stringToIndexMap[key] = currentIndex;
+                _indexToStringMap[currentIndex] = key;
+                currentIndex++;
+            }
+
+            if (_chunkPositions.IsCreated) _chunkPositions.Dispose();
+            if (_chunkIndices.IsCreated) _chunkIndices.Dispose();
+            
+            _chunkPositions = new NativeArray<float3>(chunkCount, Allocator.Persistent);
+            _chunkIndices = new NativeArray<int>(chunkCount, Allocator.Persistent);
+
+            int index = 0;
+            foreach (var kvp in _chunkContainers)
+            {
+                _chunkPositions[index] = (float3)kvp.Value.WorldPosition + (float3)OffsetOrigin;
+                _chunkIndices[index] = _stringToIndexMap[kvp.Key];
+                index++;
+            }
+        }
+
+
+        private float GetMinDistanceShow()
+        {
+#if UNITY_EDITOR
+            return Application.isPlaying ? AwsSettings.MinDistanceShow : AwsSettings.MinDistanceShowEditor;
+#else
+            return AwsSettings.MinDistanceShow;
+#endif
+        }
+
+        
+        private float GetMaxDistanceShow()
+        {
+#if UNITY_EDITOR
+            return Application.isPlaying ? AwsSettings.MaxDistanceShow : AwsSettings.MaxDistanceShowEditor;
+#else
+            return AwsSettings.MaxDistanceShow;
+#endif
+        }
+
+        
+        private bool IsSceneLoaded(AssetReference sceneReference)
+        {
+            string sceneName = sceneReference.editorAsset.name/* GetSceneNameFromAssetReference(sceneReference)*/;
+
+            if (string.IsNullOrEmpty(sceneName))
+            {
+                Debug.LogWarning("Scene name could not be determined from the AssetReference.");
                 return false;
             }
 
+            for (int i = 0; i < SceneManager.sceneCount; i++)
+            {
+                Scene loadedScene = SceneManager.GetSceneAt(i);
+                if (loadedScene.name == sceneName)
+                {
+                    return true;
+                }
+            }
+
+            return false;
             
-            string GetSceneNameFromAssetReference(AssetReference sceneRef)
+            /*string GetSceneNameFromAssetReference(AssetReference sceneRef)
             {
                 string assetPath = sceneRef.AssetGUID;
 
                 string sceneName = System.IO.Path.GetFileNameWithoutExtension(AssetDatabase.GUIDToAssetPath(assetPath));
                 return sceneName;
-            }
+            }*/
+        }
 
+        
+        private void UnloadChunk(AssetReference assetReference)
+        {
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+            {
+                if (_opennedScenesCache.TryGetValue(assetReference.editorAsset.name, out var scene))
+                {
+                    if (scene.isLoaded)
+                    {
+                        if (scene.isDirty)
+                        {
+                            List<Scene> scenesToUnload = new List<Scene>();
+
+                            for (int i = 0; i < SceneManager.sceneCount; i++)
+                            {
+                                Scene loadedScene = SceneManager.GetSceneAt(i);
+                                if (loadedScene.name != gameObject.scene.name && loadedScene.isDirty)
+                                    scenesToUnload.Add(loadedScene);
+                            }
+                            EditorSceneManager.SaveScenes(scenesToUnload.ToArray());
+                        }
+
+                        _opennedScenesCache.Remove(scene.name);
+                        EditorSceneManager.CloseScene(scene, true);
+                    }
+                }
+                return;
+            }
+#endif
+            if (assetReference != null && assetReference.IsValid())
+                Addressables.UnloadSceneAsync(assetReference.OperationHandle);
         }
         
-        
-        
-        
-        #if UNITY_EDITOR
+
+        private void LoadChunk(AssetReference assetReference)
+        {
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+            {
+                if (!_opennedScenesCache.TryGetValue(assetReference.editorAsset.name, out var _))
+                {
+                    Scene scene = EditorSceneManager.OpenScene(GetAssetPath(assetReference), OpenSceneMode.Additive);
+                    _opennedScenesCache.TryAdd( scene.name, scene);
+                }
+
+                return;
+            }
+#endif
+            if (assetReference != null && !IsSceneLoaded(assetReference) /*&& assetReference.IsValid()*/)
+            {
+                assetReference.ReleaseAsset();
+                assetReference.LoadSceneAsync(LoadSceneMode.Additive);
+            }
+        }
+
+
+
+#if UNITY_EDITOR
         
         private void OnPlayModeStateChanged(PlayModeStateChange state)
         {
@@ -339,6 +397,8 @@ namespace AUTOMATIC_WORLD_STREAMING
 #if UNITY_EDITOR
             if (!Application.isPlaying)
             {
+                AwsChunks.RebuildListToDictionary();
+                ChunkContainers();
                 EditorApplication.update += CheckStreamChunks;
                 EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
             }
@@ -353,7 +413,10 @@ namespace AUTOMATIC_WORLD_STREAMING
                 EditorApplication.update -= CheckStreamChunks;
             }
             EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+            _opennedScenesCache.Clear();
 #endif
+            if (_chunkPositions.IsCreated) _chunkPositions.Dispose();
+            if (_chunkIndices.IsCreated) _chunkIndices.Dispose();
         }
 
         #endregion

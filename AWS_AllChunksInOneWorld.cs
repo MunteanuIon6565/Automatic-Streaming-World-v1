@@ -7,6 +7,7 @@ using UnityEngine.AddressableAssets;
 
 namespace AUTOMATIC_WORLD_STREAMING
 {
+    [ExecuteInEditMode]
     [CreateAssetMenu(fileName = "ASW All Chunks In One World",
         menuName = "AUTOMATIC WORLD STREAMING/ASW All Chunks In One World", order = 0)]
     public class AWS_AllChunksInOneWorld : ScriptableObject
