@@ -353,7 +353,9 @@ namespace AUTOMATIC_WORLD_STREAMING
 #endif
             if (assetReference != null && !IsSceneLoaded(assetReference) /*&& assetReference.IsValid()*/)
             {
-                assetReference.ReleaseAsset();
+                if (assetReference.IsValid()) 
+                    assetReference.ReleaseAsset();
+                
                 assetReference.LoadSceneAsync(LoadSceneMode.Additive);
             }
         }
