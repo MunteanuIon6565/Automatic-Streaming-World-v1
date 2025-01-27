@@ -333,7 +333,10 @@ namespace AUTOMATIC_WORLD_STREAMING
             }
 #endif
             if (assetReference != null && assetReference.IsValid())
+            {
                 Addressables.UnloadSceneAsync(assetReference.OperationHandle);
+                assetReference.LoadSceneAsync(LoadSceneMode.Additive);
+            }
         }
         
 
