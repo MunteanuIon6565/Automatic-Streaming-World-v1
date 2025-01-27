@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 728627ee28136a649bc944e72efc014f, type: 3}
-  m_Name: Chunks Sorter Settings
+  m_Name: AWS Chunks Sorter Settings
   m_EditorClassIdentifier: 
   <ChunkSize>k__BackingField: {x: 200, y: 500, z: 200}
   defaultExcludedTagsForSort:
