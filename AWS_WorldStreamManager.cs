@@ -176,6 +176,12 @@ namespace AUTOMATIC_WORLD_STREAMING
                 
                 foreach (var openedScene in _opennedScenesCache)
                 {
+                    if (!openedScene.Value.IsValid())
+                    {
+                        _opennedScenesCache.Clear();
+                        continue;
+                    }
+                    
                     string chunkKey = openedScene.Value.name.Replace(sceneNameChunkManager,"");
                     int indexChunk = _stringToIndexMap[chunkKey];
                     _chunksRemainToUnload.Add( indexChunk, indexChunk);
