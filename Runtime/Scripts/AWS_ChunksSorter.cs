@@ -277,6 +277,8 @@ namespace AUTOMATIC_WORLD_STREAMING
             }
             else
             {
+                sceneAssetReference = AddSceneToAddressables(targetScenePath);
+                
                 sceneAssetReference = new AssetReference(AssetDatabase.AssetPathToGUID(targetScenePath));
 
                 string scenePath = AssetDatabase.GetAssetPath(sceneAssetReference.editorAsset);
