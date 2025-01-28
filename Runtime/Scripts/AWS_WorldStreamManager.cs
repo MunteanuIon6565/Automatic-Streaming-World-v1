@@ -280,7 +280,7 @@ namespace AUTOMATIC_WORLD_STREAMING
         
         private bool IsSceneLoaded(AssetReference sceneReference)
         {
-            string sceneName = sceneReference.editorAsset.name/* GetSceneNameFromAssetReference(sceneReference)*/;
+            string sceneName = /*sceneReference.editorAsset.name*/ GetSceneNameFromAssetReference(sceneReference);
 
             if (string.IsNullOrEmpty(sceneName))
             {
@@ -299,13 +299,13 @@ namespace AUTOMATIC_WORLD_STREAMING
 
             return false;
             
-            /*string GetSceneNameFromAssetReference(AssetReference sceneRef)
+            string GetSceneNameFromAssetReference(AssetReference sceneRef)
             {
                 string assetPath = sceneRef.AssetGUID;
 
                 string sceneName = System.IO.Path.GetFileNameWithoutExtension(AssetDatabase.GUIDToAssetPath(assetPath));
                 return sceneName;
-            }*/
+            }
         }
 
         
