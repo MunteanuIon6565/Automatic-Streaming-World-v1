@@ -74,11 +74,13 @@ namespace AUTOMATIC_WORLD_STREAMING
         [Space(MEDIUM_SIZE_SPACE)][Header(HEADER_SEPARATOR)] 
         [Header("Large Objects Sort Settings")]
         public string[] UnityTagsLargeObjects;
-        
-        
+
+
+#if UNITY_EDITOR
         public string[] AllUnityTagsForSortInSimpleMode => InternalEditorUtility.tags
             .Where(tag => !defaultExcludedTagsForSort.Contains(tag))
             .ToArray();
+#endif
         
         
         #endregion
