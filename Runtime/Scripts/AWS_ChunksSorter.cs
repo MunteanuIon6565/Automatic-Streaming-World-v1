@@ -49,7 +49,7 @@ namespace AUTOMATIC_WORLD_STREAMING
         #region MAIN FUNCTIONAL
 
         
-        [ContextMenu("2.Extract Chunk Objects From Scenes And Delete Scenes")]
+        [ContextMenu("2.EXTRACT Chunk Objects From Scenes And Delete Scenes")]
         public void ExtractChunkObjectsFromScenesAndDeleteScenes()
         {
             if (Application.isPlaying)
