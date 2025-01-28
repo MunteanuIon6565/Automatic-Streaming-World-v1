@@ -11,7 +11,9 @@ using System.Linq;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
 using UnityEditor.AddressableAssets.Settings.GroupSchemas;
+using UnityEditor.VersionControl;
 using UnityEngine.AddressableAssets;
+using Task = System.Threading.Tasks.Task;
 
 
 namespace AUTOMATIC_WORLD_STREAMING
@@ -145,9 +147,10 @@ namespace AUTOMATIC_WORLD_STREAMING
 
 
         [ContextMenu("1.SORT TO CHUNKS")]
-        public void SortToChunksByTagsContextMenu()
+        public async void SortToChunksByTagsContextMenu()
         {
             SortToChunksByTags();
+            await Task.Delay(1000);
             EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene());
             EditorSceneManager.OpenScene(EditorSceneManager.GetActiveScene().path, OpenSceneMode.Single);
         }
