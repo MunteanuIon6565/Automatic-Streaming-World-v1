@@ -278,9 +278,9 @@ namespace AUTOMATIC_WORLD_STREAMING
         }
 
         
-        private bool IsSceneLoaded(AssetReference sceneReference)
+        /*private bool IsSceneLoaded(AssetReference sceneReference)
         {
-            string sceneName = AssetDatabase.GUIDToAssetPath(sceneReference.AssetGUID);///*sceneReference.editorAsset.name*/ GetSceneNameFromAssetReference(sceneReference);
+            string sceneName = AssetDatabase.GUIDToAssetPath(sceneReference.AssetGUID);///*sceneReference.editorAsset.name#1# GetSceneNameFromAssetReference(sceneReference);
 
             if (string.IsNullOrEmpty(sceneName))
             {
@@ -305,8 +305,8 @@ namespace AUTOMATIC_WORLD_STREAMING
 
                 string sceneName = System.IO.Path.GetFileNameWithoutExtension(AssetDatabase.GUIDToAssetPath(assetPath));
                 return sceneName;
-            }*/
-        }
+            }#1#
+        }*/
 
         
         private void UnloadChunk(AssetReference assetReference)
@@ -360,7 +360,7 @@ namespace AUTOMATIC_WORLD_STREAMING
                 return;
             }
 #endif
-            if (assetReference != null && !IsSceneLoaded(assetReference) /*&& assetReference.IsValid()*/)
+            if (assetReference != null /*&& !IsSceneLoaded(assetReference)*/ /*&& assetReference.IsValid()*/)
             {
                 if (assetReference.IsValid()) 
                     assetReference.ReleaseAsset();
