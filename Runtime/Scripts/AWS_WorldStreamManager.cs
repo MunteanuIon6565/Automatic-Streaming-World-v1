@@ -101,6 +101,12 @@ namespace AUTOMATIC_WORLD_STREAMING
 
         public void Initialize(Transform customTargetForStream = null)
         {
+            if (!TargetForStream || !AwsChunks || !AwsSettings)
+            {
+                Debug.LogError("!TargetForStream || !AwsChunks || !AwsSettings is missing!");
+                return;
+            }
+            
             if (Instance == null)
             {
                 Instance = this;

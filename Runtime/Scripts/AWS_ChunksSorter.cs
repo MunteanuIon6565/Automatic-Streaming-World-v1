@@ -149,13 +149,13 @@ namespace AUTOMATIC_WORLD_STREAMING
         [ContextMenu("1.SORT TO CHUNKS")]
         public async void SortToChunksByTagsContextMenu()
         {
-            SortToChunksByTags();
-            await Task.Delay(1000);
+            await SortToChunksByTags();
+            
             EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene());
-            EditorSceneManager.OpenScene(EditorSceneManager.GetActiveScene().path, OpenSceneMode.Single);
+            EditorSceneManager.OpenScene(EditorSceneManager.GetActiveScene().path, OpenSceneMode.Additive);
         }
 
-        public void SortToChunksByTags()
+        public async Task SortToChunksByTags()
         {
             List<GameObject> chunkSmallSort = null;
             List<GameObject> chunkMediumSort = null;
@@ -219,6 +219,8 @@ namespace AUTOMATIC_WORLD_STREAMING
             AssetDatabase.Refresh();
             
             Debug.Log("SORT TO CHUNKS Finished.");
+            
+            await Task.Delay(100);
         }
 
         
