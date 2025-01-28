@@ -148,6 +148,7 @@ namespace AUTOMATIC_WORLD_STREAMING
         public void SortToChunksByTagsContextMenu()
         {
             SortToChunksByTags();
+            EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene());
             EditorSceneManager.OpenScene(EditorSceneManager.GetActiveScene().path, OpenSceneMode.Single);
         }
 
