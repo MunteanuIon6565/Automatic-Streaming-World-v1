@@ -145,6 +145,12 @@ namespace AUTOMATIC_WORLD_STREAMING
 
 
         [ContextMenu("1.SORT TO CHUNKS")]
+        public void SortToChunksByTagsContextMenu()
+        {
+            SortToChunksByTags();
+            EditorSceneManager.OpenScene(EditorSceneManager.GetActiveScene().path, OpenSceneMode.Single);
+        }
+
         public void SortToChunksByTags()
         {
             List<GameObject> chunkSmallSort = null;
