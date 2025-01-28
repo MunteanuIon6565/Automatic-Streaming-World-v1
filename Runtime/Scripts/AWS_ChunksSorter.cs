@@ -217,6 +217,8 @@ namespace AUTOMATIC_WORLD_STREAMING
 
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
+
+            SaveAllChunksScenesOpened();
             
             Debug.Log("SORT TO CHUNKS Finished.");
             
@@ -374,6 +376,21 @@ namespace AUTOMATIC_WORLD_STREAMING
             Debug.Log($"Scena a fost adăugată la Addressables cu label-ul \"{AddressableLabelName}\" în grupul \"{AddressableGroupName}\".");
 
             return new AssetReference(guid);
+        }
+
+
+
+        private void SaveAllChunksScenesOpened()
+        {
+            List<Scene> scenesToUnload = new List<Scene>();
+
+            for (int i = 0; i < SceneManager.sceneCount; i++)
+            {
+                Scene loadedScene = SceneManager.GetSceneAt(i);
+                if (loadedScene.name != gameObject.scene.name && loadedScene.isDirty)
+                    scenesToUnload.Add(loadedScene);
+            }
+            EditorSceneManager.SaveScenes(scenesToUnload.ToArray());
         }
 
 
