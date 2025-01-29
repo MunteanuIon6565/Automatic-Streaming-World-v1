@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 #endif
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -31,7 +32,15 @@ namespace AUTOMATIC_WORLD_STREAMING
                 SaveDirtyChunkScenes();
             }
 #endif*/
+
+            Debug.LogError($"Chunk unloaded - {name}: Destroy");
             
+        }
+
+
+        private void Awake()
+        {
+            Debug.LogError($"Chunk loaded - {name}: Awake");
         }
 
 

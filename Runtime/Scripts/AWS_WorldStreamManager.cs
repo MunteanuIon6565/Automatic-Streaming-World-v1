@@ -291,7 +291,7 @@ namespace AUTOMATIC_WORLD_STREAMING
             
             if (string.IsNullOrEmpty(sceneName))
             {
-                Debug.LogWarning("Scene name could not be determined from the AssetReference.");
+                Debug.LogError("Scene name could not be determined from the AssetReference.");
                 return false;
             }
 
@@ -305,14 +305,6 @@ namespace AUTOMATIC_WORLD_STREAMING
             }
 
             return false;
-            
-            /*string GetSceneNameFromAssetReference(AssetReference sceneRef)
-            {
-                string assetPath = sceneRef.AssetGUID;
-
-                string sceneName = System.IO.Path.GetFileNameWithoutExtension(AssetDatabase.GUIDToAssetPath(assetPath));
-                return sceneName;
-            }*/
         }
 
         
