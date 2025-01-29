@@ -1,9 +1,9 @@
-#if UNITY_EDITOR
+using UnityEngine;
 
+#if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
 using UnityEditor.SceneManagement;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEditor;
 using System.IO;
@@ -11,16 +11,18 @@ using System.Linq;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
 using UnityEditor.AddressableAssets.Settings.GroupSchemas;
-using UnityEditor.VersionControl;
 using UnityEngine.AddressableAssets;
 using Task = System.Threading.Tasks.Task;
-
+#endif
 
 namespace AUTOMATIC_WORLD_STREAMING
 {
+#if UNITY_EDITOR
     [ExecuteInEditMode]
+#endif
     public class AWS_ChunksSorter : MonoBehaviour
     {
+#if UNITY_EDITOR
         #region CONSTANTS
         private const string EDITOR_ONLY_TAG = "EditorOnly";
         private const string SMALL_OBJECT_NAME = "Small";
@@ -605,7 +607,7 @@ namespace AUTOMATIC_WORLD_STREAMING
                         Gizmos.DrawWireCube(chunkCenter, m_chunkSize);
                     }
         }
+#endif
     }
 }
 
-#endif
