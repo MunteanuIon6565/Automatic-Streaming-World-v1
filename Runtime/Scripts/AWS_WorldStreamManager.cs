@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
 namespace AUTOMATIC_WORLD_STREAMING
@@ -278,10 +279,16 @@ namespace AUTOMATIC_WORLD_STREAMING
         }
 
         
-        /*private bool IsSceneLoaded(AssetReference sceneReference)
+        private bool IsSceneLoaded(AssetReference sceneReference)
         {
-            string sceneName = AssetDatabase.GUIDToAssetPath(sceneReference.AssetGUID);///*sceneReference.editorAsset.name#1# GetSceneNameFromAssetReference(sceneReference);
+            SceneInstance sceneInstance = default;
+            string sceneName;
+            
+            if (sceneReference.IsValid()) 
+                sceneInstance = (SceneInstance)sceneReference.OperationHandle.Result;
 
+            sceneName = sceneInstance.Scene.name;
+            
             if (string.IsNullOrEmpty(sceneName))
             {
                 Debug.LogWarning("Scene name could not be determined from the AssetReference.");
@@ -305,8 +312,8 @@ namespace AUTOMATIC_WORLD_STREAMING
 
                 string sceneName = System.IO.Path.GetFileNameWithoutExtension(AssetDatabase.GUIDToAssetPath(assetPath));
                 return sceneName;
-            }#1#
-        }*/
+            }*/
+        }
 
         
         private void UnloadChunk(AssetReference assetReference)
@@ -360,7 +367,7 @@ namespace AUTOMATIC_WORLD_STREAMING
                 return;
             }
 #endif
-            if (assetReference != null /*&& !IsSceneLoaded(assetReference)*/ /*&& assetReference.IsValid()*/)
+            if (assetReference != null && !IsSceneLoaded(assetReference) /*&& assetReference.IsValid()*/)
             {
                 if (assetReference.IsValid()) 
                     assetReference.ReleaseAsset();
