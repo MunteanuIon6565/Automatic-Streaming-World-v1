@@ -3,14 +3,15 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 #endif
 
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace AUTOMATIC_WORLD_STREAMING
 {
+#if UNITY_EDITOR
     [ExecuteAlways]
+#endif
     public class AWS_Chunk : MonoBehaviour
     {
         private void OnDestroy()
