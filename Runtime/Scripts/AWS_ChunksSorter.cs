@@ -24,7 +24,7 @@ namespace AUTOMATIC_WORLD_STREAMING
     {
 #if UNITY_EDITOR
         #region CONSTANTS
-        private const string EDITOR_ONLY_TAG = "EditorOnly";
+        //private const string EDITOR_ONLY_TAG = "EditorOnly";
         private const string SMALL_OBJECT_NAME = "Small";
         private const string MEDIUM_OBJECT_NAME = "Medium";
         private const string LARGE_OBJECT_NAME = "Large";
@@ -40,7 +40,7 @@ namespace AUTOMATIC_WORLD_STREAMING
         #region FIELDS
 
         
-        [Header("<color=yellow>Set tag <color=white>EditorOnly</color> on objects which don't need to sort in chunks.\\\n(Sun,Player,Camera...) You can change these tags in AWS_Settings file.</color>")]
+        [Header("<color=yellow>Set tag <color=white>Untagged</color> on objects which don't need to sort in chunks.\\\n(Sun,Player,Camera...) You can change these tags in AWS_Settings file.</color>")]
         [SerializeField] private AWS_Settings m_aws_Settings;
         [SerializeField] private AWS_AllChunksInOneWorld m_AllChunksInOneWorld;
         private Vector3 m_chunkSize => m_aws_Settings.ChunkSize;
@@ -513,7 +513,7 @@ namespace AUTOMATIC_WORLD_STREAMING
                 chunksParentList.Add(chunkParent);
                 
                 chunkParent.AddComponent<AWS_Chunk>().Initialize(m_chunkSize);
-                chunkParent.tag = EDITOR_ONLY_TAG;
+                //chunkParent.tag = EDITOR_ONLY_TAG;
 
                 foreach (var obj in chunk.Value)
                 {
@@ -532,8 +532,8 @@ namespace AUTOMATIC_WORLD_STREAMING
             // remove copies of empty chunk objects
             foreach (var item in FindObjectsByType<Transform>(FindObjectsSortMode.None))
             {
-                if (item.CompareTag(EDITOR_ONLY_TAG) 
-                    && item.name.Contains(MIDDLE_PART_SORT_NAME) 
+                if (/*item.CompareTag(EDITOR_ONLY_TAG) 
+                    &&*/ item.name.Contains(MIDDLE_PART_SORT_NAME) 
                     && item.childCount == 0 
                     && item.gameObject.GetComponentCount() <= 2 
                    ) 
