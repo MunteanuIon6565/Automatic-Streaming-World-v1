@@ -359,12 +359,15 @@ namespace AUTOMATIC_WORLD_STREAMING
                 return;
             }
 #endif
+            Debug.LogError("111   1");
             if (assetReference != null && !IsSceneLoaded(assetReference) /*&& assetReference.IsValid()*/)
             {
+                Debug.LogError("111   2");
                 if (assetReference.IsValid()) 
                     assetReference.ReleaseAsset();
-                
+                Debug.LogError("111   3");
                 assetReference.LoadSceneAsync(LoadSceneMode.Additive);
+                Debug.LogError("111   4");
             }
         }
 
