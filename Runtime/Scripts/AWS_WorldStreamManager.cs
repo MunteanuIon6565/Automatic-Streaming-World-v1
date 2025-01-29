@@ -345,7 +345,7 @@ namespace AUTOMATIC_WORLD_STREAMING
         }
         
 
-        private void LoadChunk(AssetReference assetReference)
+        private async void LoadChunk(AssetReference assetReference)
         {
 #if UNITY_EDITOR
             if (!Application.isPlaying)
@@ -359,15 +359,16 @@ namespace AUTOMATIC_WORLD_STREAMING
                 return;
             }
 #endif
-            Debug.LogError("111   1");
             if (assetReference != null && !IsSceneLoaded(assetReference) /*&& assetReference.IsValid()*/)
             {
-                Debug.LogError("111   2");
                 if (assetReference.IsValid()) 
                     assetReference.ReleaseAsset();
-                Debug.LogError("111   3");
-                assetReference.LoadSceneAsync(LoadSceneMode.Additive);
-                Debug.LogError("111   4");
+                
+                var sceneInstance = await assetReference.LoadSceneAsync(LoadSceneMode.Additive, false).Task;
+                
+                //await UniTask.WaitForFixedUpdate(); // trebuie de importat UniTask ca sa asteptam un fixed update si sa activam scena in fixed update ca sa nu avem asa mare freeze de fizica
+
+                await sceneInstance.ActivateAsync();
             }
         }
 
