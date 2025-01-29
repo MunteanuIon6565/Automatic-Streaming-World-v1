@@ -33,15 +33,6 @@ namespace AUTOMATIC_WORLD_STREAMING
                 SaveDirtyChunkScenes();
             }
 #endif*/
-
-            Debug.LogError($"Chunk unloaded - {name}: Destroy");
-            
-        }
-
-
-        private void Awake()
-        {
-            Debug.LogError($"Chunk loaded - {name}: Awake");
         }
 
 
