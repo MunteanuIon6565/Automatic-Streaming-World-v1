@@ -24,7 +24,6 @@ namespace AUTOMATIC_WORLD_STREAMING
     {
 #if UNITY_EDITOR
         #region CONSTANTS
-        //private const string EDITOR_ONLY_TAG = "EditorOnly";
         private const string SMALL_OBJECT_NAME = "Small";
         private const string MEDIUM_OBJECT_NAME = "Medium";
         private const string LARGE_OBJECT_NAME = "Large";
@@ -561,13 +560,7 @@ namespace AUTOMATIC_WORLD_STREAMING
         #endregion
         
         
-        #region UNITY METHODS
-
         
-
-        #endregion
-        
-
         /// <summary>
         /// Draws Gizmos to visually represent chunk boundaries for debugging in the editor.
         /// </summary>
