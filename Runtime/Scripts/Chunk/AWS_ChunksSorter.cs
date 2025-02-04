@@ -534,7 +534,7 @@ namespace AUTOMATIC_WORLD_STREAMING
                 if (/*item.CompareTag(EDITOR_ONLY_TAG) 
                     &&*/ item.name.Contains(MIDDLE_PART_SORT_NAME) 
                     && item.childCount == 0 
-                    && item.gameObject.GetComponentCount() <= 2 
+                    && item.gameObject.GetComponentCount() <= 3 
                    ) 
                     DestroyImmediate(item.gameObject);
             }
