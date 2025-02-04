@@ -16,6 +16,7 @@ MonoBehaviour:
   defaultExcludedTagsForSort:
   - MainCamera
   - EditorOnly
+  - IgnoreChunkSort
   LoopTimeCheckDistance: 5
   <MinDistanceShow>k__BackingField: 128.5
   <MaxDistanceShow>k__BackingField: 134.3

@@ -31,7 +31,7 @@ namespace AUTOMATIC_WORLD_STREAMING
         public bool UseStreamingBySizeObjects { get; private set; } = false;*/
 
         [SerializeField, Tooltip("It use for sort if <b>UseStreamingBySizeObjects</b> is false.")] 
-        private string[] defaultExcludedTagsForSort = { "MainCamera","EditorOnly" };
+        private string[] defaultExcludedTagsForSort = { "MainCamera","EditorOnly","Untagged" };
         
         [Space(MEDIUM_SIZE_SPACE)] [Header(HEADER_SEPARATOR)] [Header("<b>Runtime Settings")] 
         public float LoopTimeCheckDistance = 5f;

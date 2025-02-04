@@ -265,11 +265,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 539835127}
-  - component: {fileID: 539835128}
   - component: {fileID: 539835126}
+  - component: {fileID: 539835128}
   m_Layer: 0
   m_Name: --STREAMING WORLD MANAGER--
-  m_TagString: EditorOnly
+  m_TagString: IgnoreChunkSort
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -332,7 +332,7 @@ GameObject:
   - component: {fileID: 1524476360}
   m_Layer: 0
   m_Name: Directional Light
-  m_TagString: EditorOnly
+  m_TagString: IgnoreChunkSort
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
