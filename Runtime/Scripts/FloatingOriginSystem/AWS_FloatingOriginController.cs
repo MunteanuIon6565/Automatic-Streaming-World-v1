@@ -24,6 +24,8 @@ namespace AUTOMATIC_WORLD_STREAMING
             m_originShiftObjects ??= new List<AWS_FloatingOriginObject>();
             
             Instance ??= this;
+            m_targetRigidbody ??= GetComponent<Rigidbody>();
+            if (m_targetRigidbody == null) Debug.LogError("No Rigidbody found!");
             
             var sphereCollider = GetComponent<SphereCollider>();
             m_threshold = sphereCollider.radius;
@@ -40,9 +42,9 @@ namespace AUTOMATIC_WORLD_STREAMING
 
         private void ShiftAllObjectsToOrigin(Vector3 positionToShift)
         {
-            //shift player
-            
             OriginOffset += positionToShift;
+            
+            //shift player
             
             foreach (var item in m_originShiftObjects)
             {
