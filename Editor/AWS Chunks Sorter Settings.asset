@@ -17,7 +17,7 @@ MonoBehaviour:
   - MainCamera
   - EditorOnly
   - IgnoreChunkSort
-  LoopTimeCheckDistance: 5
+  LoopTimeCheckDistance: 0.5
   <MinDistanceShow>k__BackingField: 347
   <MaxDistanceShow>k__BackingField: 393.7
   LoopTimeAutomaticSortEditor: 30
