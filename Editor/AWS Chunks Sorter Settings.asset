@@ -18,8 +18,8 @@ MonoBehaviour:
   - EditorOnly
   - IgnoreChunkSort
   LoopTimeCheckDistance: 5
-  <MinDistanceShow>k__BackingField: 128.5
-  <MaxDistanceShow>k__BackingField: 134.3
+  <MinDistanceShow>k__BackingField: 347
+  <MaxDistanceShow>k__BackingField: 393.7
   LoopTimeAutomaticSortEditor: 30
   <MinDistanceShowEditor>k__BackingField: 2500
   <MaxDistanceShowEditor>k__BackingField: 2500

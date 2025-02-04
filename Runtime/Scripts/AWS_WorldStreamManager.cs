@@ -26,7 +26,7 @@ namespace AUTOMATIC_WORLD_STREAMING
         #region FIELDS
 
         public static AWS_WorldStreamManager Instance { get; private set; } = null;
-        public static Vector3 OffsetOrigin { get; private set; } = Vector3.zero;
+        public static Vector3 OffsetOrigin => AWS_FloatingOriginController.OriginOffset;
 
         [field: SerializeField]
         public AWS_Settings AwsSettings { get; private set; }
@@ -158,6 +158,7 @@ namespace AUTOMATIC_WORLD_STREAMING
             var chunkProcessingJob = new ChunkProcessingJob
             {
                 TargetPosition = TargetForStream.position,
+                OriginOffset = (float3)OffsetOrigin,
                 MinDistance = GetMinDistanceShow(),
                 MaxDistance = GetMaxDistanceShow(),
                 ChunkPositions = _chunkPositions,
@@ -231,7 +232,7 @@ namespace AUTOMATIC_WORLD_STREAMING
             _chunksToUnload.Dispose();
         }
 
-        private void ChunkContainers()
+        public void ChunkContainers()
         {
             int chunkCount = _chunkContainers.Count;
             int currentIndex = 0;
@@ -252,7 +253,7 @@ namespace AUTOMATIC_WORLD_STREAMING
             int index = 0;
             foreach (var kvp in _chunkContainers)
             {
-                _chunkPositions[index] = (float3)kvp.Value.WorldPosition + (float3)OffsetOrigin;
+                _chunkPositions[index] = (float3)kvp.Value.WorldPosition;
                 _chunkIndices[index] = _stringToIndexMap[kvp.Key];
                 index++;
             }
@@ -455,6 +456,7 @@ namespace AUTOMATIC_WORLD_STREAMING
         private struct ChunkProcessingJob : IJobParallelFor
         {
             public float3 TargetPosition;
+            public float3 OriginOffset;
             public float MinDistance;
             public float MaxDistance;
 
@@ -464,7 +466,7 @@ namespace AUTOMATIC_WORLD_STREAMING
 
             public void Execute(int index)
             {
-                float distance = math.distance(TargetPosition, ChunkPositions[index]);
+                float distance = math.distance(TargetPosition, ChunkPositions[index] + OriginOffset);
 
                 if (distance < MinDistance)
                 {

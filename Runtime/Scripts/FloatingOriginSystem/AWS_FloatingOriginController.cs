@@ -1,34 +1,33 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 
-
 namespace AUTOMATIC_WORLD_STREAMING
 {
-    [RequireComponent(typeof(SphereCollider))]
     [DefaultExecutionOrder(1000)]
     public class AWS_FloatingOriginController : MonoBehaviour
     {
         public static AWS_FloatingOriginController Instance;
         public static Vector3 OriginOffset { get; private set; } = Vector3.zero;
         
-        [SerializeField] private Rigidbody m_targetRigidbody;
+        [Header("<color=yellow>Don't forget to add AWS_FloatingOriginObject to the target!")]
+        [SerializeField] private Transform m_target;
+        [SerializeField] private float m_threshold = 100f;
 
         private List<AWS_FloatingOriginObject> m_originShiftObjects;
-        private float m_threshold;
 
 
 
+        #region Initialization
+        
         public void Initialize()
         {
             m_originShiftObjects ??= new List<AWS_FloatingOriginObject>();
             
             Instance ??= this;
-            m_targetRigidbody ??= GetComponent<Rigidbody>();
-            if (m_targetRigidbody == null) Debug.LogError("No Rigidbody found!");
-            
-            var sphereCollider = GetComponent<SphereCollider>();
-            m_threshold = sphereCollider.radius;
+            m_target ??= transform;
+            if (m_target == null) Debug.LogError("No Rigidbody found!");
         }
         
         public void UnInitialize()
@@ -37,14 +36,16 @@ namespace AUTOMATIC_WORLD_STREAMING
             m_originShiftObjects = null;
             OriginOffset = Vector3.zero;
         }
-        
-        
 
+        #endregion
+
+
+
+        #region Main Functional
+        
         private void ShiftAllObjectsToOrigin(Vector3 positionToShift)
         {
             OriginOffset += positionToShift;
-            
-            //shift player
             
             foreach (var item in m_originShiftObjects)
             {
@@ -63,12 +64,16 @@ namespace AUTOMATIC_WORLD_STREAMING
             if (m_originShiftObjects.Contains(obj))
                 m_originShiftObjects.Remove(obj);
         }
+
+        #endregion
         
         
         
         //
-        
-        
+
+
+
+        #region UNITY FUNCS
         
         private void Awake()
         {
@@ -77,7 +82,7 @@ namespace AUTOMATIC_WORLD_STREAMING
 
         private void FixedUpdate()
         {
-            var referencePosition = m_targetRigidbody.position;
+            var referencePosition = m_target.position;
 
             if (referencePosition.magnitude >= m_threshold)
             {
@@ -89,6 +94,24 @@ namespace AUTOMATIC_WORLD_STREAMING
         {
             UnInitialize();
         }
+
+        #endregion
+
+
+
+        #region EDITOR
+        
+        private void OnValidate()
+        {
+            m_target ??= transform;
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (m_target) Gizmos.DrawWireSphere( new Vector3( 0, m_target.position.y, 0) /*m_target.position*/,m_threshold);
+        }
+
+        #endregion
     }
 
 
