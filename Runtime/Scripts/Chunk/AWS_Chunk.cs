@@ -4,6 +4,7 @@ using UnityEditor.SceneManagement;
 #endif
 
 using System.Collections.Generic;
+using AUTOMATIC_WORLD_STREAMING.FloatingOriginObjectsType;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,6 +13,7 @@ namespace AUTOMATIC_WORLD_STREAMING
 #if UNITY_EDITOR
     [ExecuteAlways]
 #endif
+    [RequireComponent(typeof(AWS_FloatingOriginTransform))]
     public class AWS_Chunk : MonoBehaviour
     {
         private void OnDestroy()
