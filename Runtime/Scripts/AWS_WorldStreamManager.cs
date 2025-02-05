@@ -10,7 +10,6 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -131,12 +130,15 @@ namespace AUTOMATIC_WORLD_STREAMING
         {
             #if UNITY_EDITOR
 
-            countFrames++;
-            if (countFrames > 1000000) countFrames = 0;
-            if (countFrames % 120 != 0) return;
-            
-            if (EditorSceneManager.GetActiveScene().name.Equals(gameObject.scene)) 
-                EditorSceneManager.SetActiveScene(gameObject.scene);
+            if (!Application.isPlaying)
+            {
+                countFrames++;
+                if (countFrames > 1000000) countFrames = 0;
+                if (countFrames % 120 != 0) return;
+                
+                if (EditorSceneManager.GetActiveScene().name.Equals(gameObject.scene)) 
+                    EditorSceneManager.SetActiveScene(gameObject.scene);
+            }
             #endif
             
             if (!TargetForStream || !AwsChunks || !AwsSettings)
