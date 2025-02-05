@@ -5,32 +5,37 @@ namespace AUTOMATIC_WORLD_STREAMING.FloatingOriginObjectsType
 {
     public class AWS_FloatingOriginRigidbody : AWS_FloatingOriginObject
     {
-        [SerializeField] private Rigidbody m_rigidbody;
+        [SerializeField] private Rigidbody[] m_rigidbodies;
         
         
         
         public async override void ShiftPosition(Vector3 positionToShift)
         {
             base.ShiftPosition(positionToShift);
+
+            foreach (Rigidbody rigidbody in m_rigidbodies)
+            {
+                Vector3 velocity = rigidbody.linearVelocity;
+                bool isKinematic = rigidbody.isKinematic;
+                
+                rigidbody.isKinematic = true;
+                rigidbody.position += positionToShift;
+                Vector3 position = rigidbody.position;
+                
+                rigidbody.linearVelocity = Vector3.zero;
+                rigidbody.isKinematic = isKinematic;
+                rigidbody.position = position;
+                
+                rigidbody.linearVelocity = Vector3.zero;
+                rigidbody.linearVelocity = velocity;
+            }
             
-            Vector3 velocity = m_rigidbody.linearVelocity;
-            bool isKinematic = m_rigidbody.isKinematic;
-            
-            m_rigidbody.isKinematic = true;
-            m_rigidbody.position += positionToShift;
-            Vector3 position = m_rigidbody.position;
-            
-            m_rigidbody.linearVelocity = Vector3.zero;
-            m_rigidbody.isKinematic = isKinematic;
-            m_rigidbody.position = position;
-            
-            m_rigidbody.linearVelocity = Vector3.zero;
-            m_rigidbody.linearVelocity = velocity;
         }
 
         protected override void Start()
         {
-            m_rigidbody.position = transform.GetOriginPos();
+            foreach (Rigidbody rigidbody in m_rigidbodies)
+                rigidbody.position = transform.GetOriginPos();
             
             base.Start();
         }
@@ -38,7 +43,7 @@ namespace AUTOMATIC_WORLD_STREAMING.FloatingOriginObjectsType
 
         private void OnValidate()
         {
-            m_rigidbody ??= GetComponent<Rigidbody>();
+            m_rigidbodies ??= GetComponentsInChildren<Rigidbody>();
         }
     }
 }
