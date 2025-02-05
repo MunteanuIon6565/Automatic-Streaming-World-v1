@@ -426,7 +426,6 @@ namespace AUTOMATIC_WORLD_STREAMING
             var waitForSecondsFixed = new WaitForFixedUpdate();
             
             yield return waitForSecondsFixed;
-            yield return waitForSeconds;
             
             while (Application.isPlaying)
             {
