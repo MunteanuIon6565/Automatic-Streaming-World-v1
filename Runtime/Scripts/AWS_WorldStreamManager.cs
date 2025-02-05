@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 #endif
 
+using System;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
@@ -351,10 +352,17 @@ namespace AUTOMATIC_WORLD_STREAMING
 #if UNITY_EDITOR
             if (!Application.isPlaying)
             {
-                if (!_opennedScenesCache.TryGetValue(assetReference.editorAsset.name, out var _))
+                try
                 {
-                    Scene scene = EditorSceneManager.OpenScene(GetAssetPath(assetReference), OpenSceneMode.Additive);
-                    _opennedScenesCache.TryAdd( scene.name, scene);
+                    if (!_opennedScenesCache.TryGetValue(assetReference.editorAsset.name, out var _))
+                    {
+                        Scene scene = EditorSceneManager.OpenScene(GetAssetPath(assetReference), OpenSceneMode.Additive);
+                        _opennedScenesCache.TryAdd( scene.name, scene);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
                 }
 
                 return;
