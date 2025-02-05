@@ -413,14 +413,17 @@ namespace AUTOMATIC_WORLD_STREAMING
 
         #region UNITY METHODS
 
-        private void Awake()
+        /*private void Awake()
         {
             if (autoInitializeInAwake)
                 Initialize();
-        }
+        }*/
 
         private IEnumerator Start()
         {
+            if (autoInitializeInAwake)
+                Initialize();
+            
             var waitForSeconds = new WaitForSeconds(AwsSettings.LoopTimeCheckDistance);
             while (Application.isPlaying)
             {

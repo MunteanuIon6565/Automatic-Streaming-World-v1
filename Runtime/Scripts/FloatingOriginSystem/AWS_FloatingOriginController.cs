@@ -28,6 +28,8 @@ namespace AUTOMATIC_WORLD_STREAMING
             Instance ??= this;
             m_target ??= transform;
             if (m_target == null) Debug.LogError("No Rigidbody found!");
+            
+            CheckShiftWorld();
         }
         
         public void UnInitialize()
@@ -85,6 +87,11 @@ namespace AUTOMATIC_WORLD_STREAMING
         }
 
         private void FixedUpdate()
+        {
+            CheckShiftWorld();
+        }
+
+        private void CheckShiftWorld()
         {
             var referencePosition = m_target.position;
 
