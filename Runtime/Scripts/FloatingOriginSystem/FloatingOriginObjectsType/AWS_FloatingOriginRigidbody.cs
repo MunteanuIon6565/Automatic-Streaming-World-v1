@@ -14,6 +14,7 @@ namespace AUTOMATIC_WORLD_STREAMING.FloatingOriginObjectsType
             base.ShiftPosition(positionToShift);
             
             Vector3 velocity = m_rigidbody.linearVelocity;
+            Vector3 position = m_rigidbody.position;
             bool isKinematic = m_rigidbody.isKinematic;
             m_rigidbody.linearVelocity = Vector3.zero;
             
@@ -22,7 +23,12 @@ namespace AUTOMATIC_WORLD_STREAMING.FloatingOriginObjectsType
             
             await UniTask.WaitForFixedUpdate();
             
+            m_rigidbody.linearVelocity = Vector3.zero;
+            
+            await UniTask.WaitForFixedUpdate();
+            
             m_rigidbody.isKinematic = isKinematic;
+            m_rigidbody.position = position;
             m_rigidbody.linearVelocity = velocity;
         }
 
