@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace AUTOMATIC_WORLD_STREAMING.FloatingOriginObjectsType
@@ -8,18 +9,21 @@ namespace AUTOMATIC_WORLD_STREAMING.FloatingOriginObjectsType
         
         
         
-        public override void ShiftPosition(Vector3 positionToShift)
+        public async override void ShiftPosition(Vector3 positionToShift)
         {
             base.ShiftPosition(positionToShift);
             
-            /*Vector3 velocity = m_rigidbody.linearVelocity;
+            Vector3 velocity = m_rigidbody.linearVelocity;
             bool isKinematic = m_rigidbody.isKinematic;
+            m_rigidbody.linearVelocity = Vector3.zero;
             
-            m_rigidbody.isKinematic = true;*/
+            m_rigidbody.isKinematic = true;
             m_rigidbody.position += positionToShift;
-            /*m_rigidbody.isKinematic = isKinematic;
             
-            m_rigidbody.linearVelocity = velocity;*/
+            await UniTask.WaitForFixedUpdate();
+            
+            m_rigidbody.isKinematic = isKinematic;
+            m_rigidbody.linearVelocity = velocity;
         }
 
         protected override void Start()
