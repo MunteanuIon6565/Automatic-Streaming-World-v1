@@ -23,7 +23,7 @@ namespace AUTOMATIC_WORLD_STREAMING
     [RequireComponent(typeof(AWS_ChunksSorter))]
     [ExecuteAlways]
 #endif
-    [DefaultExecutionOrder(999)]
+    //[DefaultExecutionOrder(1000)]
     public class AWS_WorldStreamManager : MonoBehaviour
     {
         #region FIELDS
