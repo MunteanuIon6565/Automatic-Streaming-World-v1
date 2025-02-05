@@ -45,7 +45,7 @@ namespace AUTOMATIC_WORLD_STREAMING
         
         private async void ShiftAllObjectsToOrigin(Vector3 positionToShift)
         {
-            Physics.autoSimulation = false;
+            //Physics.autoSimulation = false;
             
             OriginOffset += positionToShift;
             
@@ -54,7 +54,7 @@ namespace AUTOMATIC_WORLD_STREAMING
                 item.ShiftPosition(positionToShift);
             }
             
-            Physics.autoSimulation = true;
+            //Physics.autoSimulation = true;
         }
 
         public void SubscribeObject(AWS_FloatingOriginObject obj)
