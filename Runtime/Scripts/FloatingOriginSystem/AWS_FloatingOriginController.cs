@@ -43,14 +43,18 @@ namespace AUTOMATIC_WORLD_STREAMING
 
         #region Main Functional
         
-        private void ShiftAllObjectsToOrigin(Vector3 positionToShift)
+        private async void ShiftAllObjectsToOrigin(Vector3 positionToShift)
         {
+            Physics.autoSimulation = false;
+            
             OriginOffset += positionToShift;
             
             foreach (var item in m_originShiftObjects)
             {
                 item.ShiftPosition(positionToShift);
             }
+            
+            Physics.autoSimulation = true;
         }
 
         public void SubscribeObject(AWS_FloatingOriginObject obj)
