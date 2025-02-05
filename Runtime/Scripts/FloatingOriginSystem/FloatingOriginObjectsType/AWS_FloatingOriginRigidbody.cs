@@ -12,14 +12,14 @@ namespace AUTOMATIC_WORLD_STREAMING.FloatingOriginObjectsType
         {
             base.ShiftPosition(positionToShift);
             
-            Vector3 velocity = m_rigidbody.linearVelocity;
+            /*Vector3 velocity = m_rigidbody.linearVelocity;
             bool isKinematic = m_rigidbody.isKinematic;
             
-            m_rigidbody.isKinematic = true;
+            m_rigidbody.isKinematic = true;*/
             m_rigidbody.position += positionToShift;
-            m_rigidbody.isKinematic = isKinematic;
+            /*m_rigidbody.isKinematic = isKinematic;
             
-            m_rigidbody.linearVelocity = velocity;
+            m_rigidbody.linearVelocity = velocity;*/
         }
 
         protected override void Start()
