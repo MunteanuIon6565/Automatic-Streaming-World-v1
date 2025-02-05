@@ -23,7 +23,7 @@ namespace AUTOMATIC_WORLD_STREAMING
     [RequireComponent(typeof(AWS_ChunksSorter))]
     [ExecuteAlways]
 #endif
-    [DefaultExecutionOrder(1000)]
+    [DefaultExecutionOrder(999)]
     public class AWS_WorldStreamManager : MonoBehaviour
     {
         #region FIELDS
@@ -133,7 +133,7 @@ namespace AUTOMATIC_WORLD_STREAMING
 
             countFrames++;
             if (countFrames > 1000000) countFrames = 0;
-            if (countFrames % 120 == 0) return;
+            if (countFrames % 120 != 0) return;
             
             if (EditorSceneManager.GetActiveScene().name.Equals(gameObject.scene)) 
                 EditorSceneManager.SetActiveScene(gameObject.scene);
