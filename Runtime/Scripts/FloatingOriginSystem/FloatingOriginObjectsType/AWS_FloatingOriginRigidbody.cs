@@ -16,17 +16,17 @@ namespace AUTOMATIC_WORLD_STREAMING.FloatingOriginObjectsType
             foreach (Rigidbody rigidbody in m_rigidbodies)
             {
                 Vector3 velocity = rigidbody.linearVelocity;
-                bool isKinematic = rigidbody.isKinematic;
+                //bool isKinematic = rigidbody.isKinematic;
                 
-                rigidbody.isKinematic = true;
+                //rigidbody.isKinematic = true;
                 rigidbody.position += positionToShift;
-                Vector3 position = rigidbody.position;
+                //Vector3 position = rigidbody.position;
                 
                 rigidbody.linearVelocity = Vector3.zero;
-                rigidbody.isKinematic = isKinematic;
-                rigidbody.position = position;
+                //rigidbody.isKinematic = isKinematic;
+                //rigidbody.position = position;
                 
-                rigidbody.linearVelocity = Vector3.zero;
+                //rigidbody.linearVelocity = Vector3.zero;
                 rigidbody.linearVelocity = velocity;
             }
             
