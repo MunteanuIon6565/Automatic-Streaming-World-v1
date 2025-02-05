@@ -43,7 +43,7 @@ namespace AUTOMATIC_WORLD_STREAMING
 
         #region Main Functional
         
-        private async void ShiftAllObjectsToOrigin(Vector3 positionToShift)
+        private void ShiftAllObjectsToOrigin(Vector3 positionToShift)
         {
             //Physics.autoSimulation = false;
             
