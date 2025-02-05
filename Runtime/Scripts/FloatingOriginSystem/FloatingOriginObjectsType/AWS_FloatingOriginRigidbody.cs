@@ -20,9 +20,11 @@ namespace AUTOMATIC_WORLD_STREAMING.FloatingOriginObjectsType
             m_rigidbody.position += positionToShift;
             Vector3 position = m_rigidbody.position;
             
-            m_rigidbody.isKinematic = isKinematic;
             m_rigidbody.linearVelocity = Vector3.zero;
+            m_rigidbody.isKinematic = isKinematic;
             m_rigidbody.position = position;
+            
+            m_rigidbody.linearVelocity = Vector3.zero;
             m_rigidbody.linearVelocity = velocity;
         }
 
