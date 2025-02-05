@@ -422,6 +422,10 @@ namespace AUTOMATIC_WORLD_STREAMING
         private IEnumerator Start()
         {
             var waitForSeconds = new WaitForSeconds(AwsSettings.LoopTimeCheckDistance);
+            var waitForSecondsFixed = new WaitForFixedUpdate();
+            
+            yield return waitForSecondsFixed;
+            
             while (Application.isPlaying)
             {
                 CheckStreamChunks();
