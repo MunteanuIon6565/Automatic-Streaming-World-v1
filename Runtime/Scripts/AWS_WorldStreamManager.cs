@@ -375,7 +375,7 @@ namespace AUTOMATIC_WORLD_STREAMING
                 
                 var sceneInstance = await assetReference.LoadSceneAsync(LoadSceneMode.Additive, false).Task;
                 
-                //await UniTask.WaitForFixedUpdate(); // trebuie de importat UniTask ca sa asteptam un fixed update si sa activam scena in fixed update ca sa nu avem asa mare freeze de fizica
+                await UniTask.WaitForFixedUpdate(); // trebuie de importat UniTask ca sa asteptam un fixed update si sa activam scena in fixed update ca sa nu avem asa mare freeze de fizica
 
                 await sceneInstance.ActivateAsync();
             }
