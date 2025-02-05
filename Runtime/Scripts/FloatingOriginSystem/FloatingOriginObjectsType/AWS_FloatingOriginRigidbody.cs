@@ -21,11 +21,11 @@ namespace AUTOMATIC_WORLD_STREAMING.FloatingOriginObjectsType
             m_rigidbody.isKinematic = true;
             m_rigidbody.position += positionToShift;
             
-            await UniTask.WaitForFixedUpdate();
+            //await UniTask.WaitForFixedUpdate();
             
             m_rigidbody.linearVelocity = Vector3.zero;
             
-            await UniTask.WaitForFixedUpdate();
+            //await UniTask.WaitForFixedUpdate();
             
             m_rigidbody.isKinematic = isKinematic;
             m_rigidbody.position = position;
