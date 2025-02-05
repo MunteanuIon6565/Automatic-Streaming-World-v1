@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 
@@ -45,9 +46,9 @@ namespace AUTOMATIC_WORLD_STREAMING
 
         #region Main Functional
         
-        private void ShiftAllObjectsToOrigin(Vector3 positionToShift)
+        private async void ShiftAllObjectsToOrigin(Vector3 positionToShift)
         {
-            //Physics.autoSimulation = false;
+            Physics.autoSimulation = false;
             
             OriginOffset += positionToShift;
             
@@ -55,8 +56,10 @@ namespace AUTOMATIC_WORLD_STREAMING
             {
                 item.ShiftPosition(positionToShift);
             }
+
+            await UniTask.WaitForEndOfFrame();
             
-            //Physics.autoSimulation = true;
+            Physics.autoSimulation = true;
         }
 
         public void SubscribeObject(AWS_FloatingOriginObject obj)
