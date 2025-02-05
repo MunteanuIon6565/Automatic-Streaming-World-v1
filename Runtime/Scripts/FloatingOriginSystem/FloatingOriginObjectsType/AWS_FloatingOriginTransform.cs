@@ -13,9 +13,9 @@ namespace AUTOMATIC_WORLD_STREAMING.FloatingOriginObjectsType
 
         protected override void Start()
         {
-            base.Start();
-            
             transform.position = transform.GetOriginPos();
+            
+            base.Start();
         }
     }
 }

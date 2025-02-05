@@ -24,9 +24,9 @@ namespace AUTOMATIC_WORLD_STREAMING.FloatingOriginObjectsType
 
         protected override void Start()
         {
-            base.Start();
-            
             m_rigidbody.position = transform.GetOriginPos();
+            
+            base.Start();
         }
 
 
