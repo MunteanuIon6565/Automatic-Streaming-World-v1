@@ -292,7 +292,7 @@ namespace AUTOMATIC_WORLD_STREAMING
             
             if (string.IsNullOrEmpty(sceneName))
             {
-                Debug.LogError("Scene name could not be determined from the AssetReference.");
+                //Debug.LogError("Scene name could not be determined from the AssetReference.");
                 return false;
             }
 
