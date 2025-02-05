@@ -12,20 +12,20 @@ namespace AUTOMATIC_WORLD_STREAMING.FloatingOriginObjectsType
         {
             base.ShiftPosition(positionToShift);
             
-            transform.position += positionToShift;
+            m_rigidbody.position += positionToShift;
         }
 
         protected override void Start()
         {
             base.Start();
             
-            transform.position = transform.GetOriginPos();
+            m_rigidbody.position = transform.GetOriginPos();
         }
 
 
         private void OnValidate()
         {
-            //m_rigidbody ??= GetComponent<Rigidbody>();
+            m_rigidbody ??= GetComponent<Rigidbody>();
         }
     }
 }
