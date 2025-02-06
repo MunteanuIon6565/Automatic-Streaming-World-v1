@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace AUTOMATIC_WORLD_STREAMING
 {
-    [DefaultExecutionOrder(-1000)]
+    //[DefaultExecutionOrder(-1000)]
     public class AWS_FloatingOriginController : MonoBehaviour
     {
         public static AWS_FloatingOriginController Instance;
